@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kannada Flashcards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Noto+Sans+Kannada:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Progress bar -->
+  <div id="progress-bar-track">
+    <div id="progress-bar-fill"></div>
+  </div>
+  <p id="progress-label">1 of 20 cards</p>
+
+  <!-- Card arena — the swipeable area -->
+  <div id="card-arena">
+    <div id="card" tabindex="0" role="button" aria-label="Flashcard">
+      
+      <!-- Card inner wrapper — this is what rotates on flip -->
+      <div id="card-inner">
+
+        <!-- FRONT FACE -->
+        <div class="card-face" id="card-front">
+          <div class="card-topbar">
+            <button id="sentence-toggle" aria-pressed="true">sentence ON</button>
+            <span id="card-counter" class="muted">1 / 20</span>
+          </div>
+          <div class="card-body">
+            <p class="kannada-word"></p>
+            <p class="transliteration muted"></p>
+            <p class="tap-hint muted">Tap to reveal</p>
+          </div>
+          <div class="sentence-section">
+            <hr class="sentence-divider">
+            <p class="sentence-kannada"></p>
+            <p class="sentence-translit muted"></p>
+            <p class="sentence-hindi muted"></p>
+          </div>
+        </div>
+
+        <!-- BACK FACE -->
+        <div class="card-face" id="card-back">
+          <div class="card-topbar">
+            <button id="sentence-toggle-back" aria-pressed="true">sentence ON</button>
+            <span class="card-counter-back muted">1 / 20</span>
+          </div>
+          <div class="card-body">
+            <p class="kannada-word"></p>
+            <p class="transliteration muted"></p>
+            <p class="meaning"></p>
+            <span class="pos-pill muted"></span>
+          </div>
+          <div class="breakdown-section">
+            <hr class="section-divider">
+            <div class="breakdown-parts"></div>
+            <div class="other-forms"></div>
+          </div>
+          <div class="sentence-section">
+            <hr class="sentence-divider">
+            <p class="sentence-kannada"></p>
+            <p class="sentence-translit muted"></p>
+            <p class="sentence-hindi muted"></p>
+          </div>
+          <div class="action-buttons">
+            <button class="btn-dont-know" aria-label="I don't know this word">✗ Don't know</button>
+            <button class="btn-know" aria-label="I know this word">Know it ✓</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Swipe overlay labels (hidden until drag) -->
+      <div class="swipe-label swipe-know">Know it ✓</div>
+      <div class="swipe-label swipe-dont">✗ Don't know</div>
+    </div>
+  </div>
+
+  <!-- Session summary screen (hidden until session complete) -->
+  <div id="summary" hidden>
+    <h2>Session complete</h2>
+    <div class="summary-stats">
+      <span id="known-count"></span>
+      <span id="unknown-count"></span>
+    </div>
+    <div id="missed-thumbnails"></div>
+    <button id="btn-review-missed">Review missed cards</button>
+    <button id="btn-new-session">Start new session</button>
+  </div>
+
+  <script src="cards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
