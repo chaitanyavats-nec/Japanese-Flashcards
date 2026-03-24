@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #FAF8F4;
+  background: linear-gradient(135deg, #FAF8F4 0%, #ECE7DB 100%);
   color: #1A1714;
   font-family: 'DM Sans', sans-serif;
   height: 100vh;
@@ -38,6 +38,8 @@ button {
   background: #C45C3A;
   transition: width 300ms ease;
   width: 0%;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 8px rgba(196, 92, 58, 0.4);
 }
 
 #progress-label {
@@ -61,10 +63,11 @@ button {
 /* Card Outer */
 #card {
   width: 100%;
-  max-width: 360px;
+  max-width: 92vw;
+  width: 360px;
   min-height: 480px;
-  height: 60vh;
-  max-height: 540px;
+  height: 65vh;
+  max-height: 620px;
   position: relative;
   border-radius: 20px;
   user-select: none;
@@ -73,6 +76,7 @@ button {
   background: transparent;
   padding: 0;
   cursor: pointer;
+  animation: slideUp 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 #card:focus-visible { outline: 3px solid #C45C3A; outline-offset: 4px; }
 
@@ -83,7 +87,7 @@ button {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.03);
   border-radius: 20px;
 }
 
@@ -109,6 +113,25 @@ button {
   -webkit-overflow-scrolling: touch;
 }
 
+#card-back::-webkit-scrollbar {
+  width: 6px;
+}
+#card-back::-webkit-scrollbar-track {
+  background: transparent;
+}
+#card-back::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+#card-back::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* Breakdown Section */
 .breakdown-section {
   width: 100%;
@@ -132,10 +155,16 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: #fff;
-  border: 1px solid #E8E4DF;
-  border-radius: 8px;
-  padding: 6px 8px;
+  background: #FCFBFA;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 8px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.part-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 .part-chip-kannada {
   font-family: 'Noto Sans Kannada', sans-serif;
@@ -191,6 +220,89 @@ button {
   color: #7A7470;
   margin-left: 4px;
 }
+
+/* Inflections Section */
+.inflections-section {
+  width: 100%;
+  margin-top: 16px;
+  text-align: left;
+}
+.inflections-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7A7470;
+  margin-bottom: 8px;
+}
+.inflection-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  gap: 8px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+.inflection-row-verb {
+  grid-template-columns: 40px 1fr 1fr;
+}
+.inflection-row.base-form {
+  border-left: 2px solid #C45C3A;
+  padding-left: 6px;
+  margin-left: -8px;
+}
+.inf-label { font-size: 10px; color: #7A7470; }
+.inf-kannada { font-family: 'Noto Sans Kannada', sans-serif; font-size: 13px; font-weight: 500; }
+.inf-translit { font-size: 11px; color: #7A7470; }
+.inf-note { font-size: 10px; color: #7A7470; font-style: italic; }
+
+.inflection-tab-strip {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #E8E4DF;
+  margin-bottom: 8px;
+}
+.inflection-tab {
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #7A7470;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.inflection-tab.active {
+  border-bottom-color: #C45C3A;
+  color: #C45C3A;
+}
+
+.verb-extras {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #E8E4DF;
+}
+.verb-extra-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+  padding: 2px 0;
+}
+
+/* Responsive Enhancements */
+@media (min-width: 768px) {
+  #card {
+    width: 440px;
+    height: 70vh;
+    max-height: 680px;
+  }
+  .kannada-word {
+    font-size: min(60px, 8vw);
+    line-height: min(70px, 8vw);
+  }
+  .part-chip-kannada {
+    font-size: 15px;
+  }
+}
+
 
 /* Topbar */
 .card-topbar {
@@ -319,14 +431,18 @@ button {
 .btn-know {
   border: 1.5px solid #C45C3A;
   color: #C45C3A;
+  transition: all 150ms ease;
 }
-.btn-know:active { background: rgba(196, 92, 58, 0.05); }
+.btn-know:hover { background: rgba(196, 92, 58, 0.08); }
+.btn-know:active { background: rgba(196, 92, 58, 0.15); transform: scale(0.96); }
 
 .btn-dont-know {
   border: 1.5px solid #B4B2A9;
   color: #7A7470;
+  transition: all 150ms ease;
 }
-.btn-dont-know:active { background: rgba(180, 178, 169, 0.05); }
+.btn-dont-know:hover { background: rgba(180, 178, 169, 0.08); }
+.btn-dont-know:active { background: rgba(180, 178, 169, 0.15); transform: scale(0.96); }
 
 /* Swipe Labels */
 .swipe-label {
@@ -388,12 +504,13 @@ button {
 }
 
 .summary-stats span {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 16px 24px;
+  border-radius: 16px;
   background: #fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
 }
 
 #known-count { color: #2D7A4F; }
@@ -408,15 +525,23 @@ button {
   margin-bottom: 32px;
   max-height: 30vh;
   overflow-y: auto;
+  padding-bottom: 8px;
 }
 
 .missed-thumb {
   font-family: 'Noto Sans Kannada', sans-serif;
-  padding: 8px 12px;
-  background: #F1EFE8;
-  color: #7A7470;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 10px 16px;
+  background: #fff;
+  color: #C45C3A;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid rgba(196, 92, 58, 0.1);
+  transition: transform 0.2s ease;
+}
+.missed-thumb:hover {
+  transform: translateY(-2px);
 }
 
 #summary button {
@@ -427,7 +552,14 @@ button {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 12px;
-  transition: opacity 200ms ease;
+  transition: all 200ms ease;
+}
+#summary button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+#summary button:active {
+  transform: translateY(0) scale(0.98);
 }
 #summary button:disabled {
   opacity: 0.5;

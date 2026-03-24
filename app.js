@@ -130,6 +130,96 @@ function render() {
     bBreakdown.style.display = 'none';
   }
 
+  const bInflections = back.querySelector('.inflections-section');
+  if (current.inflections && bInflections) {
+    bInflections.style.display = 'block';
+    const labelEl = bInflections.querySelector('.inflections-label');
+    const contentEl = bInflections.querySelector('.inflections-content');
+    contentEl.innerHTML = '';
+
+    if (current.inflections.type === 'verb') {
+      labelEl.textContent = 'conjugation';
+      const tabStrip = document.createElement('div');
+      tabStrip.className = 'inflection-tab-strip';
+      const tenses = ['present', 'past', 'future'];
+      const tabs = [];
+      const blocks = [];
+
+      tenses.forEach((tense, idx) => {
+        const tab = document.createElement('div');
+        tab.className = `inflection-tab ${idx === 0 ? 'active' : ''}`;
+        tab.textContent = tense;
+        tabs.push(tab);
+        tabStrip.appendChild(tab);
+        
+        const block = document.createElement('div');
+        block.style.display = idx === 0 ? 'block' : 'none';
+        
+        current.inflections.tenses[tense].forEach(form => {
+          const row = document.createElement('div');
+          row.className = 'inflection-row inflection-row-verb';
+          row.innerHTML = `
+            <span class="inf-label">${form.label}</span>
+            <span class="inf-kannada">${form.kannada}</span>
+            <span class="inf-translit">${form.translit}</span>
+          `;
+          block.appendChild(row);
+        });
+        blocks.push(block);
+        
+        tab.addEventListener('click', (e) => {
+          e.stopPropagation();
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          blocks.forEach(b => b.style.display = 'none');
+          block.style.display = 'block';
+        });
+      });
+      contentEl.appendChild(tabStrip);
+      blocks.forEach(b => contentEl.appendChild(b));
+      
+      const extras = document.createElement('div');
+      extras.className = 'verb-extras';
+      if (current.inflections.negativeForm) {
+        extras.innerHTML += `
+          <div class="verb-extra-row">
+            <span class="inf-label">negative</span>
+            <span class="inf-kannada">${current.inflections.negativeForm.kannada}</span>
+            <span class="inf-translit">${current.inflections.negativeForm.translit}</span>
+          </div>`;
+      }
+      if (current.inflections.verbalNoun) {
+        extras.innerHTML += `
+          <div class="verb-extra-row">
+            <span class="inf-label">verbal noun</span>
+            <span class="inf-kannada">${current.inflections.verbalNoun.kannada}</span>
+            <span class="inf-translit">${current.inflections.verbalNoun.translit}</span>
+          </div>`;
+      }
+      contentEl.appendChild(extras);
+      
+    } else {
+      labelEl.textContent = 'forms';
+      current.inflections.forms.forEach((form, idx) => {
+        const row = document.createElement('div');
+        row.className = `inflection-row ${idx === 0 ? 'base-form' : ''}`;
+        let html = `
+          <span class="inf-label">${form.label}</span>
+          <span class="inf-kannada">${form.kannada}</span>
+          <span class="inf-translit">${form.translit}</span>
+        `;
+        if (current.inflections.type === 'adjective' && form.note) {
+          row.style.gridTemplateColumns = '80px 1fr 1fr 1fr';
+          html += `<span class="inf-note">${form.note}</span>`;
+        }
+        row.innerHTML = html;
+        contentEl.appendChild(row);
+      });
+    }
+  } else if (bInflections) {
+    bInflections.style.display = 'none';
+  }
+
   document.getElementById('card-inner').classList.toggle('flipped', state.isFlipped);
   setSentenceVisible(state.showSentence);
 }
