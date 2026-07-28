@@ -1,0 +1,31 @@
+{
+  "name": "japanese-flashcards",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build:cards": "node scripts/build-cards.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaitanyavats-nec/Kannada-Flashcards.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaitanyavats-nec/Kannada-Flashcards/issues"
+  },
+  "homepage": "https://github.com/chaitanyavats-nec/Kannada-Flashcards#readme",
+  "description": "",
+  "dependencies": {
+    "kuroshiro": "^1.2.0",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
+    "node-fetch": "^2.7.0",
+    "unbzip2-stream": "^1.4.3",
+    "unzipper": "^0.12.5",
+    "wanakana": "^5.3.1"
+  }
+}

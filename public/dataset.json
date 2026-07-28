@@ -1,0 +1,1376 @@
+[
+  {
+    "id": "0001",
+    "kanji": "食べる",
+    "hiragana": "たべる",
+    "katakana": "タベル",
+    "romaji": "taberu",
+    "englishMeanings": [
+      "to eat"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani6"
+    ],
+    "image": {
+      "localPath": "images/0001.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "食べる",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/098df.svg"
+    ],
+    "verbType": "ichidan",
+    "conjugations": {
+      "present": "食べる",
+      "presentPolite": "食べます",
+      "past": "食べた",
+      "pastPolite": "食べました",
+      "negative": "食べない",
+      "negativePolite": "食べません",
+      "pastNegative": "食べなかった",
+      "teForm": "食べて",
+      "potential": "食べられる",
+      "volitional": "食べよう"
+    },
+    "exampleSentence": {
+      "japanese": "これは食べるです。",
+      "english": "This is to eat.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0002",
+    "kanji": "飲む",
+    "hiragana": "のむ",
+    "katakana": "ノム",
+    "romaji": "nomu",
+    "englishMeanings": [
+      "to drink",
+      "to swallow",
+      "to take (medicine)"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani10"
+    ],
+    "image": {
+      "localPath": "images/0002.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "飲む",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/098f2.svg"
+    ],
+    "verbType": "godan",
+    "conjugations": {
+      "present": "飲む",
+      "presentPolite": "飲みます",
+      "past": "飲んだ",
+      "pastPolite": "飲みました",
+      "negative": "飲まない",
+      "negativePolite": "飲みません",
+      "pastNegative": "飲まなかった",
+      "teForm": "飲んで",
+      "potential": "飲める",
+      "volitional": "飲もう"
+    },
+    "exampleSentence": {
+      "japanese": "これは飲むです。",
+      "english": "This is to drink.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0003",
+    "kanji": "見る",
+    "hiragana": "みる",
+    "katakana": "ミル",
+    "romaji": "miru",
+    "englishMeanings": [
+      "to see",
+      "to look",
+      "to watch",
+      "to view",
+      "to observe"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani4",
+      "wanikani22"
+    ],
+    "image": {
+      "localPath": "images/0003.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "見る",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/0898b.svg"
+    ],
+    "verbType": "ichidan",
+    "conjugations": {
+      "present": "見る",
+      "presentPolite": "見ます",
+      "past": "見た",
+      "pastPolite": "見ました",
+      "negative": "見ない",
+      "negativePolite": "見ません",
+      "pastNegative": "見なかった",
+      "teForm": "見て",
+      "potential": "見られる",
+      "volitional": "見よう"
+    },
+    "exampleSentence": {
+      "japanese": "これは見るです。",
+      "english": "This is to see.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0004",
+    "kanji": "行く",
+    "hiragana": "いく",
+    "katakana": "イク",
+    "romaji": "iku",
+    "englishMeanings": [
+      "to go",
+      "to move (towards)",
+      "to head (towards)",
+      "to leave (for)"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N1",
+    "categories": [
+      "wanikani5"
+    ],
+    "image": {
+      "localPath": "images/0004.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "行く",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/0884c.svg"
+    ],
+    "verbType": "godan",
+    "conjugations": {
+      "present": "行く",
+      "presentPolite": "行きます",
+      "past": "行った",
+      "pastPolite": "行きました",
+      "negative": "行かない",
+      "negativePolite": "行きません",
+      "pastNegative": "行かなかった",
+      "teForm": "行って",
+      "potential": "行ける",
+      "volitional": "行こう"
+    },
+    "exampleSentence": {
+      "japanese": "これは行くです。",
+      "english": "This is to go.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0005",
+    "kanji": "来る",
+    "hiragana": "くる",
+    "katakana": "クル",
+    "romaji": "kuru",
+    "englishMeanings": [
+      "to come (spatially or temporally)",
+      "to approach",
+      "to arrive"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani5"
+    ],
+    "image": {
+      "localPath": "images/0005.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "来る",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06765.svg"
+    ],
+    "verbType": "kuru",
+    "conjugations": {
+      "present": "来る",
+      "presentPolite": "きます",
+      "past": "きた",
+      "pastPolite": "きました",
+      "negative": "こない",
+      "negativePolite": "きません",
+      "pastNegative": "こなかった",
+      "teForm": "きて",
+      "potential": "こられる",
+      "volitional": "こよう"
+    },
+    "exampleSentence": {
+      "japanese": "これは来るです。",
+      "english": "This is to come (spatially or temporally).",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0006",
+    "kanji": null,
+    "hiragana": "する",
+    "katakana": "スル",
+    "romaji": "suru",
+    "englishMeanings": [
+      "to do",
+      "to carry out",
+      "to perform"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N3",
+    "categories": [],
+    "image": {
+      "localPath": "images/0006.jpeg",
+      "source": "pexels",
+      "photographer": "Bimbim Sindu",
+      "photographerUrl": "https://www.pexels.com/@bimbim-sindu-96724782"
+    },
+    "audio": {
+      "ttsText": "する",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [],
+    "verbType": "suru",
+    "conjugations": {
+      "present": "する",
+      "presentPolite": "します",
+      "past": "した",
+      "pastPolite": "しました",
+      "negative": "しない",
+      "negativePolite": "しません",
+      "pastNegative": "しなかった",
+      "teForm": "して",
+      "potential": "できる",
+      "volitional": "しよう"
+    },
+    "exampleSentence": {
+      "japanese": "これはするです。",
+      "english": "This is to do.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0007",
+    "kanji": "大きい",
+    "hiragana": "おおきい",
+    "katakana": "オオキイ",
+    "romaji": "ookii",
+    "englishMeanings": [
+      "big",
+      "large",
+      "great"
+    ],
+    "partOfSpeech": "adjective",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani1"
+    ],
+    "image": {
+      "localPath": "images/0007.jpeg",
+      "source": "pexels",
+      "photographer": "Tima Miroshnichenko",
+      "photographerUrl": "https://www.pexels.com/@tima-miroshnichenko"
+    },
+    "audio": {
+      "ttsText": "大きい",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/05927.svg"
+    ],
+    "isNaAdjective": false,
+    "exampleSentence": {
+      "japanese": "これは大きいです。",
+      "english": "This is big.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0008",
+    "kanji": "小さい",
+    "hiragana": "ちいさい",
+    "katakana": "チイサイ",
+    "romaji": "chiisai",
+    "englishMeanings": [
+      "small",
+      "little",
+      "tiny"
+    ],
+    "partOfSpeech": "adjective",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0008.png",
+      "source": "pexels",
+      "photographer": "Alex Ravvas",
+      "photographerUrl": "https://www.pexels.com/@alexravvas"
+    },
+    "audio": {
+      "ttsText": "小さい",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/05c0f.svg"
+    ],
+    "isNaAdjective": false,
+    "exampleSentence": {
+      "japanese": "これは小さいです。",
+      "english": "This is small.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0009",
+    "kanji": "新しい",
+    "hiragana": "あたらしい",
+    "katakana": "アタラシイ",
+    "romaji": "atarashii",
+    "englishMeanings": [
+      "new",
+      "novel",
+      "fresh",
+      "recent",
+      "latest",
+      "up-to-date",
+      "modern"
+    ],
+    "partOfSpeech": "adjective",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani9"
+    ],
+    "image": {
+      "localPath": "images/0009.jpeg",
+      "source": "pexels",
+      "photographer": "Bjorn Pierre",
+      "photographerUrl": "https://www.pexels.com/@bjorn-pierre-2147988187"
+    },
+    "audio": {
+      "ttsText": "新しい",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/065b0.svg"
+    ],
+    "isNaAdjective": false,
+    "exampleSentence": {
+      "japanese": "これは新しいです。",
+      "english": "This is new.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0010",
+    "kanji": "古い",
+    "hiragana": "ふるい",
+    "katakana": "フルイ",
+    "romaji": "furui",
+    "englishMeanings": [
+      "old",
+      "aged",
+      "ancient",
+      "antiquated",
+      "antique",
+      "timeworn"
+    ],
+    "partOfSpeech": "adjective",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani3"
+    ],
+    "image": {
+      "localPath": "images/0010.jpeg",
+      "source": "pexels",
+      "photographer": "Valeria Benier Cherniuk",
+      "photographerUrl": "https://www.pexels.com/@valeria-benier-cherniuk-2151296704"
+    },
+    "audio": {
+      "ttsText": "古い",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/053e4.svg"
+    ],
+    "isNaAdjective": false,
+    "exampleSentence": {
+      "japanese": "これは古いです。",
+      "english": "This is old.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0011",
+    "kanji": "水",
+    "hiragana": "みず",
+    "katakana": "ミズ",
+    "romaji": "mizu",
+    "englishMeanings": [
+      "water (esp. cool or cold)"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0011.jpeg",
+      "source": "pexels",
+      "photographer": "Nothing Ahead",
+      "photographerUrl": "https://www.pexels.com/@ian-panelo"
+    },
+    "audio": {
+      "ttsText": "水",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06c34.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "水を...",
+        "translation": "... the water (esp. cool or cold)"
+      },
+      {
+        "particle": "が",
+        "example": "水が...",
+        "translation": "the water (esp. cool or cold) ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは水です。",
+      "english": "This is water (esp. cool or cold).",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0012",
+    "kanji": "本",
+    "hiragana": "ほん",
+    "katakana": "ホン",
+    "romaji": "hon",
+    "englishMeanings": [
+      "book",
+      "volume",
+      "script"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0012.jpeg",
+      "source": "pexels",
+      "photographer": "Through Noyan's Lens",
+      "photographerUrl": "https://www.pexels.com/@through-noyan-s-lens-2151445904"
+    },
+    "audio": {
+      "ttsText": "本",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/0672c.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "本を...",
+        "translation": "... the book"
+      },
+      {
+        "particle": "が",
+        "example": "本が...",
+        "translation": "the book ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは本です。",
+      "english": "This is book.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0013",
+    "kanji": "人",
+    "hiragana": "ひと",
+    "katakana": "ヒト",
+    "romaji": "hito",
+    "englishMeanings": [
+      "person",
+      "someone",
+      "somebody"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani1"
+    ],
+    "image": {
+      "localPath": "images/0013.jpeg",
+      "source": "pexels",
+      "photographer": "JUAN HIOP",
+      "photographerUrl": "https://www.pexels.com/@juan-hiop-202978628"
+    },
+    "audio": {
+      "ttsText": "人",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/04eba.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "人を...",
+        "translation": "... the person"
+      },
+      {
+        "particle": "が",
+        "example": "人が...",
+        "translation": "the person ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは人です。",
+      "english": "This is person.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0014",
+    "kanji": "車",
+    "hiragana": "くるま",
+    "katakana": "クルマ",
+    "romaji": "kuruma",
+    "englishMeanings": [
+      "car",
+      "automobile",
+      "vehicle"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani4"
+    ],
+    "image": {
+      "localPath": "images/0014.png",
+      "source": "pexels",
+      "photographer": "Deepak KP",
+      "photographerUrl": "https://www.pexels.com/@deepak-kp-432261610"
+    },
+    "audio": {
+      "ttsText": "車",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/08eca.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "車を...",
+        "translation": "... the car"
+      },
+      {
+        "particle": "が",
+        "example": "車が...",
+        "translation": "the car ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは車です。",
+      "english": "This is car.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0015",
+    "kanji": "犬",
+    "hiragana": "いぬ",
+    "katakana": "イヌ",
+    "romaji": "inu",
+    "englishMeanings": [
+      "dog (Canis (lupus) familiaris)",
+      "canine"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0015.jpeg",
+      "source": "pexels",
+      "photographer": "Suvan Chowdhury",
+      "photographerUrl": "https://www.pexels.com/@suvan-chowdhury-37305"
+    },
+    "audio": {
+      "ttsText": "犬",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/072ac.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "犬を...",
+        "translation": "... the dog (Canis (lupus) familiaris)"
+      },
+      {
+        "particle": "が",
+        "example": "犬が...",
+        "translation": "the dog (Canis (lupus) familiaris) ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは犬です。",
+      "english": "This is dog (Canis (lupus) familiaris).",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0016",
+    "kanji": "猫",
+    "hiragana": "ねこ",
+    "katakana": "ネコ",
+    "romaji": "neko",
+    "englishMeanings": [
+      "cat (esp. the domestic cat, Felis catus)",
+      "feline"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani15"
+    ],
+    "image": {
+      "localPath": "images/0016.jpeg",
+      "source": "pexels",
+      "photographer": "Sefa Demirtaş",
+      "photographerUrl": "https://www.pexels.com/@sefa-demirtas-2152709769"
+    },
+    "audio": {
+      "ttsText": "猫",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/0732b.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "猫を...",
+        "translation": "... the cat (esp. the domestic cat, Felis catus)"
+      },
+      {
+        "particle": "が",
+        "example": "猫が...",
+        "translation": "the cat (esp. the domestic cat, Felis catus) ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは猫です。",
+      "english": "This is cat (esp. the domestic cat, Felis catus).",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0017",
+    "kanji": "日",
+    "hiragana": "にち",
+    "katakana": "ニチ",
+    "romaji": "nichi",
+    "englishMeanings": [
+      "Sunday"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N3",
+    "categories": [],
+    "image": {
+      "localPath": "images/0017.jpeg",
+      "source": "pexels",
+      "photographer": "Rahul Pandit",
+      "photographerUrl": "https://www.pexels.com/@rahulp9800"
+    },
+    "audio": {
+      "ttsText": "日",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/065e5.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "日を...",
+        "translation": "... the Sunday"
+      },
+      {
+        "particle": "が",
+        "example": "日が...",
+        "translation": "the Sunday ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは日です。",
+      "english": "This is Sunday.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0018",
+    "kanji": "月",
+    "hiragana": "つき",
+    "katakana": "ツキ",
+    "romaji": "tsuki",
+    "englishMeanings": [
+      "Moon"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N3",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0018.jpeg",
+      "source": "pexels",
+      "photographer": "Daniel Olivier",
+      "photographerUrl": "https://www.pexels.com/@daniel-olivier-578240085"
+    },
+    "audio": {
+      "ttsText": "月",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06708.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "月を...",
+        "translation": "... the Moon"
+      },
+      {
+        "particle": "が",
+        "example": "月が...",
+        "translation": "the Moon ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは月です。",
+      "english": "This is Moon.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0019",
+    "kanji": "木",
+    "hiragana": "き",
+    "katakana": "キ",
+    "romaji": "ki",
+    "englishMeanings": [
+      "tree",
+      "shrub",
+      "bush"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani2"
+    ],
+    "image": {
+      "localPath": "images/0019.jpeg",
+      "source": "pexels",
+      "photographer": "🇻🇳🇻🇳Nguyễn Tiến Thịnh 🇻🇳🇻🇳",
+      "photographerUrl": "https://www.pexels.com/@nguy-n-ti-n-th-nh-2150376175"
+    },
+    "audio": {
+      "ttsText": "木",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06728.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "木を...",
+        "translation": "... the tree"
+      },
+      {
+        "particle": "が",
+        "example": "木が...",
+        "translation": "the tree ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは木です。",
+      "english": "This is tree.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0020",
+    "kanji": "お金",
+    "hiragana": "おかね",
+    "katakana": "オカネ",
+    "romaji": "okane",
+    "englishMeanings": [
+      "money"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani5"
+    ],
+    "image": {
+      "localPath": "images/0020.jpeg",
+      "source": "pexels",
+      "photographer": "Wellington Cruz",
+      "photographerUrl": "https://www.pexels.com/@wellington-cruz-528848301"
+    },
+    "audio": {
+      "ttsText": "お金",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/091d1.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "お金を...",
+        "translation": "... the money"
+      },
+      {
+        "particle": "が",
+        "example": "お金が...",
+        "translation": "the money ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これはお金です。",
+      "english": "This is money.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0021",
+    "kanji": "私",
+    "hiragana": "わたし",
+    "katakana": "ワタシ",
+    "romaji": "watashi",
+    "englishMeanings": [
+      "I",
+      "me"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani6"
+    ],
+    "image": {
+      "localPath": "images/0021.jpeg",
+      "source": "pexels",
+      "photographer": "Nothing Ahead",
+      "photographerUrl": "https://www.pexels.com/@ian-panelo"
+    },
+    "audio": {
+      "ttsText": "私",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/079c1.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "私を...",
+        "translation": "... the I"
+      },
+      {
+        "particle": "が",
+        "example": "私が...",
+        "translation": "the I ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは私です。",
+      "english": "This is I.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0022",
+    "kanji": null,
+    "hiragana": "あなた",
+    "katakana": "アナタ",
+    "romaji": "anata",
+    "englishMeanings": [
+      "you"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N1",
+    "categories": [],
+    "image": {
+      "localPath": "images/0022.jpeg",
+      "source": "pexels",
+      "photographer": "Towfiqu barbhuiya",
+      "photographerUrl": "https://www.pexels.com/@towfiqu-barbhuiya-3440682"
+    },
+    "audio": {
+      "ttsText": "あなた",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "あなたを...",
+        "translation": "... the you"
+      },
+      {
+        "particle": "が",
+        "example": "あなたが...",
+        "translation": "the you ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これはあなたです。",
+      "english": "This is you.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0023",
+    "kanji": "学校",
+    "hiragana": "がっこう",
+    "katakana": "ガッコウ",
+    "romaji": "gakkou",
+    "englishMeanings": [
+      "school"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani7"
+    ],
+    "image": {
+      "localPath": "images/0023.jpeg",
+      "source": "pexels",
+      "photographer": "Anh Lee",
+      "photographerUrl": "https://www.pexels.com/@anhleephoto"
+    },
+    "audio": {
+      "ttsText": "学校",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/05b66.svg",
+      "kanjivg/06821.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "学校を...",
+        "translation": "... the school"
+      },
+      {
+        "particle": "が",
+        "example": "学校が...",
+        "translation": "the school ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは学校です。",
+      "english": "This is school.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0024",
+    "kanji": "先生",
+    "hiragana": "せんせい",
+    "katakana": "センセイ",
+    "romaji": "sensei",
+    "englishMeanings": [
+      "teacher",
+      "instructor",
+      "master"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani4"
+    ],
+    "image": {
+      "localPath": "images/0024.jpeg",
+      "source": "pexels",
+      "photographer": "Pavel Danilyuk",
+      "photographerUrl": "https://www.pexels.com/@pavel-danilyuk"
+    },
+    "audio": {
+      "ttsText": "先生",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/05148.svg",
+      "kanjivg/0751f.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "先生を...",
+        "translation": "... the teacher"
+      },
+      {
+        "particle": "が",
+        "example": "先生が...",
+        "translation": "the teacher ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは先生です。",
+      "english": "This is teacher.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0025",
+    "kanji": "学生",
+    "hiragana": "がくせい",
+    "katakana": "ガクセイ",
+    "romaji": "gakusei",
+    "englishMeanings": [
+      "student (esp. a university student)"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani5"
+    ],
+    "image": {
+      "localPath": "images/0025.jpeg",
+      "source": "pexels",
+      "photographer": "This And No Internet 25",
+      "photographerUrl": "https://www.pexels.com/@this-and-no-internet-25-288559"
+    },
+    "audio": {
+      "ttsText": "学生",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/05b66.svg",
+      "kanjivg/0751f.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "学生を...",
+        "translation": "... the student (esp. a university student)"
+      },
+      {
+        "particle": "が",
+        "example": "学生が...",
+        "translation": "the student (esp. a university student) ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは学生です。",
+      "english": "This is student (esp. a university student).",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0026",
+    "kanji": "今日",
+    "hiragana": "きょう",
+    "katakana": "キョウ",
+    "romaji": "kyou",
+    "englishMeanings": [
+      "today",
+      "this day"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N3",
+    "categories": [
+      "wanikani3"
+    ],
+    "image": {
+      "localPath": "images/0026.jpeg",
+      "source": "pexels",
+      "photographer": "Taslim Haque",
+      "photographerUrl": "https://www.pexels.com/@taslim-haque-3234047"
+    },
+    "audio": {
+      "ttsText": "今日",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/04eca.svg",
+      "kanjivg/065e5.svg"
+    ],
+    "verbType": "godan",
+    "conjugations": {
+      "present": "今日",
+      "presentPolite": "今ります",
+      "past": "今った",
+      "pastPolite": "今りました",
+      "negative": "今らない",
+      "negativePolite": "今りません",
+      "pastNegative": "今らなかった",
+      "teForm": "今って",
+      "potential": "今れる",
+      "volitional": "今ろう"
+    },
+    "exampleSentence": {
+      "japanese": "これは今日です。",
+      "english": "This is today.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0027",
+    "kanji": "明日",
+    "hiragana": "あした",
+    "katakana": "アシタ",
+    "romaji": "ashita",
+    "englishMeanings": [
+      "tomorrow"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N4",
+    "categories": [
+      "wanikani8"
+    ],
+    "image": {
+      "localPath": "images/0027.jpeg",
+      "source": "pexels",
+      "photographer": "Eleana Melidis",
+      "photographerUrl": "https://www.pexels.com/@eleana-melidis-106560974"
+    },
+    "audio": {
+      "ttsText": "明日",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/0660e.svg",
+      "kanjivg/065e5.svg"
+    ],
+    "verbType": "godan",
+    "conjugations": {
+      "present": "明日",
+      "presentPolite": "明ります",
+      "past": "明った",
+      "pastPolite": "明りました",
+      "negative": "明らない",
+      "negativePolite": "明りません",
+      "pastNegative": "明らなかった",
+      "teForm": "明って",
+      "potential": "明れる",
+      "volitional": "明ろう"
+    },
+    "exampleSentence": {
+      "japanese": "これは明日です。",
+      "english": "This is tomorrow.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0028",
+    "kanji": "昨日",
+    "hiragana": "きのう",
+    "katakana": "キノウ",
+    "romaji": "kinou",
+    "englishMeanings": [
+      "yesterday"
+    ],
+    "partOfSpeech": "verb",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani15"
+    ],
+    "image": {
+      "localPath": "images/0028.jpeg",
+      "source": "pexels",
+      "photographer": "Thirdman",
+      "photographerUrl": "https://www.pexels.com/@thirdman"
+    },
+    "audio": {
+      "ttsText": "昨日",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06628.svg",
+      "kanjivg/065e5.svg"
+    ],
+    "verbType": "godan",
+    "conjugations": {
+      "present": "昨日",
+      "presentPolite": "昨ります",
+      "past": "昨った",
+      "pastPolite": "昨りました",
+      "negative": "昨らない",
+      "negativePolite": "昨りません",
+      "pastNegative": "昨らなかった",
+      "teForm": "昨って",
+      "potential": "昨れる",
+      "volitional": "昨ろう"
+    },
+    "exampleSentence": {
+      "japanese": "これは昨日です。",
+      "english": "This is yesterday.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0029",
+    "kanji": "時間",
+    "hiragana": "じかん",
+    "katakana": "ジカン",
+    "romaji": "jikan",
+    "englishMeanings": [
+      "time"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani8"
+    ],
+    "image": {
+      "localPath": "images/0029.jpeg",
+      "source": "pexels",
+      "photographer": "Tima Miroshnichenko",
+      "photographerUrl": "https://www.pexels.com/@tima-miroshnichenko"
+    },
+    "audio": {
+      "ttsText": "時間",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/06642.svg",
+      "kanjivg/09593.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "時間を...",
+        "translation": "... the time"
+      },
+      {
+        "particle": "が",
+        "example": "時間が...",
+        "translation": "the time ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは時間です。",
+      "english": "This is time.",
+      "source": "mock"
+    }
+  },
+  {
+    "id": "0030",
+    "kanji": "友達",
+    "hiragana": "ともだち",
+    "katakana": "トモダチ",
+    "romaji": "tomodachi",
+    "englishMeanings": [
+      "friend",
+      "companion"
+    ],
+    "partOfSpeech": "noun",
+    "jlptLevel": "JLPT-N5",
+    "categories": [
+      "wanikani18"
+    ],
+    "image": {
+      "localPath": "images/0030.jpeg",
+      "source": "pexels",
+      "photographer": "Johan Toro",
+      "photographerUrl": "https://www.pexels.com/@johantoro21"
+    },
+    "audio": {
+      "ttsText": "友達",
+      "lang": "ja-JP"
+    },
+    "strokeOrderSvgs": [
+      "kanjivg/053cb.svg",
+      "kanjivg/09054.svg"
+    ],
+    "isNaAdjective": false,
+    "particleUsage": [
+      {
+        "particle": "を",
+        "example": "友達を...",
+        "translation": "... the friend"
+      },
+      {
+        "particle": "が",
+        "example": "友達が...",
+        "translation": "the friend ..."
+      }
+    ],
+    "exampleSentence": {
+      "japanese": "これは友達です。",
+      "english": "This is friend.",
+      "source": "mock"
+    }
+  }
+]

@@ -1,12 +1,39 @@
 const state = {
+  allCards: [],
   deck: [],
   remaining: [],
   known: [],
   unknown: [],
   currentIndex: 0,
   isFlipped: false,
-  showSentence: true,
+  progress: {},
+  streak: 0
 };
+
+// Persistence functions
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem('flashcards_progress');
+    if (saved) state.progress = JSON.parse(saved);
+  } catch (e) {
+    console.error("Failed to load progress from localStorage", e);
+  }
+}
+
+function saveProgress(wordId, status) {
+  if (!state.progress[wordId]) {
+    state.progress[wordId] = { timesReviewed: 0 };
+  }
+  state.progress[wordId].status = status;
+  state.progress[wordId].timesReviewed++;
+  state.progress[wordId].lastReviewedAt = new Date().toISOString();
+  
+  try {
+    localStorage.setItem('flashcards_progress', JSON.stringify(state.progress));
+  } catch (e) {
+    console.error("Failed to save progress", e);
+  }
+}
 
 function shuffle(arr) {
   const a = [...arr];
@@ -17,19 +44,65 @@ function shuffle(arr) {
   return a;
 }
 
+function renderHomeScreen() {
+  document.getElementById('home-screen').hidden = false;
+  document.getElementById('card-arena').hidden = true;
+  document.getElementById('summary').hidden = true;
+  document.getElementById('arena-header').hidden = true;
+  document.getElementById('progress-bar-track').hidden = true;
+
+  const collectionsList = document.getElementById('collections-list');
+  collectionsList.innerHTML = '';
+
+  // Group cards into collections. For now, we group by jlptLevel.
+  const collections = {};
+  state.allCards.forEach(card => {
+    const level = card.jlptLevel || 'JLPT-N5';
+    if (!collections[level]) collections[level] = [];
+    collections[level].push(card);
+  });
+
+  // Sort collections by N-level intuitively if possible
+  const sortedKeys = Object.keys(collections).sort().reverse(); 
+
+  sortedKeys.forEach(key => {
+    const cards = collections[key];
+    const knownCount = cards.filter(c => state.progress[c.id] && state.progress[c.id].status === 'know').length;
+    const total = cards.length;
+    const percent = total > 0 ? (knownCount / total) * 100 : 0;
+
+    const cardEl = document.createElement('div');
+    cardEl.className = 'collection-card';
+    cardEl.innerHTML = `
+      <div class="collection-header">
+        <h3 class="collection-title">${key.replace('-', ' ')} Vocabulary</h3>
+        <span class="collection-badge">${total} Words</span>
+      </div>
+      <div class="collection-stats">${knownCount} / ${total} known</div>
+      <div class="collection-progress-bg">
+        <div class="collection-progress-fill" style="width: ${percent}%"></div>
+      </div>
+    `;
+    cardEl.onclick = () => initSession(cards);
+    collectionsList.appendChild(cardEl);
+  });
+}
+
 function initSession(cardsArray) {
   if (!cardsArray || cardsArray.length === 0) return;
-
   state.deck = cardsArray;
+  // For the session, we prioritize un-known or unseen cards if we want, but for now just shuffle all
   state.remaining = shuffle([...cardsArray]);
   state.known = [];
   state.unknown = [];
   state.currentIndex = 0;
   state.isFlipped = false;
-  state.showSentence = true;
 
+  document.getElementById('home-screen').hidden = true;
   document.getElementById('card-arena').hidden = false;
   document.getElementById('summary').hidden = true;
+  document.getElementById('arena-header').hidden = false;
+  document.getElementById('progress-bar-track').hidden = false;
 
   const card = document.getElementById('card');
   card.style.transition = 'none';
@@ -48,6 +121,13 @@ function initSession(cardsArray) {
   });
 }
 
+function speak(text, lang) {
+  if (!window.speechSynthesis) return;
+  const ut = new SpeechSynthesisUtterance(text);
+  ut.lang = lang;
+  window.speechSynthesis.speak(ut);
+}
+
 function render() {
   if (state.currentIndex >= state.remaining.length) {
     showSummary();
@@ -55,7 +135,6 @@ function render() {
   }
 
   const current = state.remaining[state.currentIndex];
-
   const progressRatio = state.currentIndex / state.remaining.length;
   document.getElementById('progress-bar-fill').style.width = `${progressRatio * 100}%`;
   document.getElementById('progress-label').textContent = `${state.currentIndex + 1} of ${state.remaining.length} cards`;
@@ -64,181 +143,103 @@ function render() {
   document.getElementById('card-counter').textContent = counterText;
   document.querySelector('.card-counter-back').textContent = counterText;
 
+  // Front Face
   const front = document.getElementById('card-front');
-  front.querySelector('.kannada-word').textContent = current.kannada;
-  front.querySelector('.transliteration').textContent = current.transliteration;
-
-  const fSent = front.querySelector('.sentence-section');
-  fSent.querySelector('.sentence-kannada').textContent = current.sentence.kannada;
-  fSent.querySelector('.sentence-translit').textContent = current.sentence.transliteration;
-  fSent.querySelector('.sentence-hindi').textContent = current.sentence.hindi;
-
-  const back = document.getElementById('card-back');
-  back.querySelector('.kannada-word').textContent = current.kannada;
-  back.querySelector('.transliteration').textContent = current.transliteration;
-  back.querySelector('.meaning').textContent = `${current.hindi} · ${current.english}`;
-  back.querySelector('.pos-pill').textContent = current.partOfSpeech;
-
-  const bSent = back.querySelector('.sentence-section');
-  bSent.querySelector('.sentence-kannada').textContent = current.sentence.kannada;
-  bSent.querySelector('.sentence-translit').textContent = current.sentence.transliteration;
-  bSent.querySelector('.sentence-hindi').textContent = current.sentence.hindi;
-
-  const bBreakdown = back.querySelector('.breakdown-section');
-  if (current.breakdown && bBreakdown) {
-    bBreakdown.style.display = 'block';
-    const partsCont = bBreakdown.querySelector('.breakdown-parts');
-    partsCont.innerHTML = '';
-    current.breakdown.parts.forEach((p, idx) => {
-      const chip = document.createElement('div');
-      chip.className = 'part-chip';
-      chip.innerHTML = `
-        <span class="part-chip-kannada">${p.text}</span>
-        <span class="part-chip-translit">${p.transliteration}</span>
-        <span class="part-chip-type">${p.type}</span>
-        <span class="part-chip-meaning">"${p.meaning}"</span>
-      `;
-      partsCont.appendChild(chip);
-      if (idx < current.breakdown.parts.length - 1) {
-        const sep = document.createElement('div');
-        sep.className = 'part-chip-separator';
-        sep.textContent = '+';
-        partsCont.appendChild(sep);
-      }
-    });
-
-    const formsCont = bBreakdown.querySelector('.other-forms');
-    formsCont.innerHTML = '';
-    if (current.breakdown.otherForms && current.breakdown.otherForms.length > 0) {
-      current.breakdown.otherForms.forEach(form => {
-        const label = document.createElement('div');
-        label.className = 'form-label';
-        label.textContent = form.label;
-
-        const content = document.createElement('div');
-        content.innerHTML = `
-          <span class="form-kannada">${form.kannada}</span>
-          <span class="form-translit">${form.transliteration}</span>
-          <span class="form-hindi">(${form.hindi})</span>
-        `;
-
-        formsCont.appendChild(label);
-        formsCont.appendChild(content);
-      });
-    }
-  } else if (bBreakdown) {
-    bBreakdown.style.display = 'none';
+  const imgEl = front.querySelector('.card-image');
+  const creditEl = front.querySelector('.image-credit');
+  
+  if (current.image && current.image.localPath) {
+    imgEl.src = `public/${current.image.localPath}`;
+    imgEl.style.display = 'block';
+    creditEl.innerHTML = `Photo by <a href="${current.image.photographerUrl}" target="_blank">${current.image.photographer}</a>`;
+  } else {
+    imgEl.src = '';
+    imgEl.style.display = 'none';
+    creditEl.innerHTML = '';
   }
 
-  const bInflections = back.querySelector('.inflections-section');
-  if (current.inflections && bInflections) {
-    bInflections.style.display = 'block';
-    const labelEl = bInflections.querySelector('.inflections-label');
-    const contentEl = bInflections.querySelector('.inflections-content');
-    contentEl.innerHTML = '';
+  front.querySelector('.kanji-word').textContent = current.kanji || current.hiragana;
+  front.querySelector('.hiragana-word').textContent = current.kanji ? current.hiragana : '';
+  
+  const btnAudio = front.querySelector('.btn-audio');
+  btnAudio.onclick = (e) => {
+    e.stopPropagation();
+    speak(current.audio.ttsText, current.audio.lang);
+  };
 
-    if (current.inflections.type === 'verb') {
-      labelEl.textContent = 'conjugation';
-      const tabStrip = document.createElement('div');
-      tabStrip.className = 'inflection-tab-strip';
-      const tenses = ['present', 'past', 'future'];
-      const tabs = [];
-      const blocks = [];
-
-      tenses.forEach((tense, idx) => {
-        const tab = document.createElement('div');
-        tab.className = `inflection-tab ${idx === 0 ? 'active' : ''}`;
-        tab.textContent = tense;
-        tabs.push(tab);
-        tabStrip.appendChild(tab);
-        
-        const block = document.createElement('div');
-        block.style.display = idx === 0 ? 'block' : 'none';
-        
-        current.inflections.tenses[tense].forEach(form => {
-          const row = document.createElement('div');
-          row.className = 'inflection-row inflection-row-verb';
-          row.innerHTML = `
-            <span class="inf-label">${form.label}</span>
-            <span class="inf-kannada">${form.kannada}</span>
-            <span class="inf-translit">${form.translit}</span>
-          `;
-          block.appendChild(row);
-        });
-        blocks.push(block);
-        
-        tab.addEventListener('click', (e) => {
-          e.stopPropagation();
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          blocks.forEach(b => b.style.display = 'none');
-          block.style.display = 'block';
-        });
-      });
-      contentEl.appendChild(tabStrip);
-      blocks.forEach(b => contentEl.appendChild(b));
-      
-      const extras = document.createElement('div');
-      extras.className = 'verb-extras';
-      if (current.inflections.negativeForm) {
-        extras.innerHTML += `
-          <div class="verb-extra-row">
-            <span class="inf-label">negative</span>
-            <span class="inf-kannada">${current.inflections.negativeForm.kannada}</span>
-            <span class="inf-translit">${current.inflections.negativeForm.translit}</span>
-          </div>`;
-      }
-      if (current.inflections.verbalNoun) {
-        extras.innerHTML += `
-          <div class="verb-extra-row">
-            <span class="inf-label">verbal noun</span>
-            <span class="inf-kannada">${current.inflections.verbalNoun.kannada}</span>
-            <span class="inf-translit">${current.inflections.verbalNoun.translit}</span>
-          </div>`;
-      }
-      contentEl.appendChild(extras);
-      
-    } else {
-      labelEl.textContent = 'forms';
-      current.inflections.forms.forEach((form, idx) => {
-        const row = document.createElement('div');
-        row.className = `inflection-row ${idx === 0 ? 'base-form' : ''}`;
-        let html = `
-          <span class="inf-label">${form.label}</span>
-          <span class="inf-kannada">${form.kannada}</span>
-          <span class="inf-translit">${form.translit}</span>
-        `;
-        if (current.inflections.type === 'adjective' && form.note) {
-          row.style.gridTemplateColumns = '80px 1fr 1fr 1fr';
-          html += `<span class="inf-note">${form.note}</span>`;
-        }
-        row.innerHTML = html;
-        contentEl.appendChild(row);
-      });
+  // Preload next image
+  if (state.currentIndex + 1 < state.remaining.length) {
+    const next = state.remaining[state.currentIndex + 1];
+    if (next.image && next.image.localPath) {
+      const preload = new Image();
+      preload.src = `public/${next.image.localPath}`;
     }
-  } else if (bInflections) {
-    bInflections.style.display = 'none';
+  }
+
+  // Back Face
+  const back = document.getElementById('card-back');
+  
+  back.querySelector('.romaji-word').textContent = current.romaji;
+  back.querySelector('.katakana-word').textContent = current.katakana;
+  back.querySelector('.meaning').textContent = current.englishMeanings.join(', ');
+  
+  let posText = current.partOfSpeech;
+  if (current.verbType) posText += ` (${current.verbType})`;
+  else if (current.isNaAdjective) posText += ` (na-adjective)`;
+  back.querySelector('.pos-pill').textContent = posText;
+
+  // Kanji VG
+  const kanjiCont = back.querySelector('.kanji-vg-container');
+  kanjiCont.innerHTML = '';
+  if (current.strokeOrderSvgs && current.strokeOrderSvgs.length > 0) {
+    current.strokeOrderSvgs.forEach(svgPath => {
+      fetch(`public/${svgPath}`)
+        .then(res => res.text())
+        .then(svgText => { kanjiCont.innerHTML += svgText; })
+        .catch(e => console.log('SVG not found', e));
+    });
+  }
+
+  // Grammar (Conjugations / Particles)
+  const grammarSec = back.querySelector('.grammar-section');
+  grammarSec.innerHTML = '';
+  if (current.conjugations) {
+    grammarSec.innerHTML = '<hr class="section-divider"><div class="grammar-title">Conjugations</div>';
+    const grid = document.createElement('div');
+    grid.className = 'conjugation-grid';
+    const keys = ['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'];
+    keys.forEach(k => {
+      if (current.conjugations[k]) {
+        grid.innerHTML += `<div class="conj-label">${k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
+                           <div class="conj-value">${current.conjugations[k]}</div>`;
+      }
+    });
+    grammarSec.appendChild(grid);
+  } else if (current.particleUsage) {
+    grammarSec.innerHTML = '<hr class="section-divider"><div class="grammar-title">Particle Usage</div>';
+    const list = document.createElement('div');
+    list.className = 'particle-list';
+    current.particleUsage.forEach(p => {
+      list.innerHTML += `<div class="particle-row">
+                           <span class="p-bold">${p.particle}</span>
+                           <span>${p.example}</span>
+                           <span class="muted">(${p.translation})</span>
+                         </div>`;
+    });
+    grammarSec.appendChild(list);
+  }
+
+  // Example Sentence
+  const bSent = back.querySelector('.sentence-section');
+  if (current.exampleSentence) {
+    bSent.style.display = 'block';
+    bSent.querySelector('.sentence-japanese').textContent = current.exampleSentence.japanese;
+    bSent.querySelector('.sentence-english').textContent = current.exampleSentence.english;
+  } else {
+    bSent.style.display = 'none';
   }
 
   document.getElementById('card-inner').classList.toggle('flipped', state.isFlipped);
-  setSentenceVisible(state.showSentence);
-}
-
-function setSentenceVisible(show) {
-  state.showSentence = show;
-  document.querySelectorAll('.sentence-section').forEach(el => {
-    if (show) {
-      el.style.maxHeight = '200px';
-      el.style.opacity = '1';
-    } else {
-      el.style.maxHeight = '0';
-      el.style.opacity = '0';
-    }
-  });
-  document.querySelectorAll('[id^="sentence-toggle"]').forEach(btn => {
-    btn.setAttribute('aria-pressed', String(show));
-    btn.textContent = show ? 'sentence ON' : 'sentence OFF';
-  });
 }
 
 function flipCard() {
@@ -248,7 +249,10 @@ function flipCard() {
 
 function advanceDeck(verdict) {
   const current = state.remaining[state.currentIndex];
+  
   verdict === 'know' ? state.known.push(current) : state.unknown.push(current);
+  saveProgress(current.id, verdict);
+
   state.currentIndex++;
   state.isFlipped = false;
 
@@ -298,31 +302,29 @@ function resetOverlays() {
 
 function showSummary() {
   document.getElementById('card-arena').hidden = true;
+  document.getElementById('arena-header').hidden = true;
+  document.getElementById('progress-bar-track').hidden = true;
   document.getElementById('summary').hidden = false;
-
-  document.getElementById('known-count').textContent = `✓ ${state.known.length} known`;
-  document.getElementById('unknown-count').textContent = `✗ ${state.unknown.length} to review`;
-
-  const thumbsContainer = document.getElementById('missed-thumbnails');
-  thumbsContainer.innerHTML = '';
-
-  state.unknown.forEach(card => {
-    const thumb = document.createElement('div');
-    thumb.className = 'missed-thumb';
-    thumb.textContent = card.kannada;
-    thumbsContainer.appendChild(thumb);
+  
+  document.getElementById('known-count').textContent = `${state.known.length} ✓`;
+  document.getElementById('unknown-count').textContent = `${state.unknown.length} ✗`;
+  
+  const missedCont = document.getElementById('missed-thumbnails');
+  missedCont.innerHTML = '';
+  state.unknown.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'missed-thumb';
+    el.textContent = c.kanji || c.hiragana;
+    missedCont.appendChild(el);
   });
-
+  
   document.getElementById('btn-review-missed').disabled = state.unknown.length === 0;
 }
 
 // Global Event Listeners
 document.getElementById('card').addEventListener('click', e => {
-  if (e.target.id === 'sentence-toggle' || e.target.id === 'sentence-toggle-back') {
-    setSentenceVisible(!state.showSentence);
-    return;
-  }
   if (e.target.closest('button')) return; // ignore action buttons
+  if (e.target.tagName === 'A') return; // ignore links
   flipCard();
 });
 
@@ -339,7 +341,13 @@ document.getElementById('btn-review-missed').addEventListener('click', () => {
   initSession(state.unknown);
 });
 document.getElementById('btn-new-session').addEventListener('click', () => {
-  initSession(window.CARDS);
+  initSession(state.deck); // restart same deck
+});
+document.getElementById('btn-back-home').addEventListener('click', () => {
+  renderHomeScreen();
+});
+document.getElementById('btn-summary-home').addEventListener('click', () => {
+  renderHomeScreen();
 });
 
 // Pointer events for dragging
@@ -347,7 +355,7 @@ let startX, startY, startTime, isDragging = false, dragX = 0;
 const swipeCard = document.getElementById('card');
 
 swipeCard.addEventListener('pointerdown', e => {
-  if (e.target.closest('button')) return;
+  if (e.target.closest('button') || e.target.tagName === 'A') return;
   startX = e.clientX;
   startY = e.clientY;
   startTime = Date.now();
@@ -361,10 +369,7 @@ swipeCard.addEventListener('pointermove', e => {
   if (!isDragging) return;
   dragX = e.clientX - startX;
   const dragY = e.clientY - startY;
-
-  if (Math.abs(dragX) > Math.abs(dragY)) {
-    e.preventDefault();
-  }
+  if (Math.abs(dragX) > Math.abs(dragY)) e.preventDefault();
 
   const rot = dragX / swipeCard.offsetWidth * 15;
   swipeCard.style.transform = `translateX(${dragX}px) rotate(${rot}deg)`;
@@ -396,7 +401,7 @@ swipeCard.addEventListener('pointerup', e => {
 
 // Keyboard
 document.addEventListener('keydown', e => {
-  if (document.getElementById('card-arena').hidden) return; // if in summary
+  if (document.getElementById('card-arena').hidden) return; 
 
   if (e.key === 'ArrowRight') judgeCard('know');
   if (e.key === 'ArrowLeft') judgeCard('dont');
@@ -407,8 +412,16 @@ document.addEventListener('keydown', e => {
 });
 
 // Init
-window.addEventListener('DOMContentLoaded', () => {
-  if (window.CARDS) {
-    initSession(window.CARDS);
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    loadProgress();
+    const res = await fetch('public/dataset.json');
+    if (!res.ok) throw new Error('Network response was not ok');
+    const cards = await res.json();
+    state.allCards = cards;
+    renderHomeScreen();
+  } catch (e) {
+    console.error('Failed to load dataset:', e);
+    document.getElementById('progress-label').textContent = 'Error loading data.';
   }
 });
