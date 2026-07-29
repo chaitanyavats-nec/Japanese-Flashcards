@@ -54,10 +54,10 @@ function renderHomeScreen() {
   const collectionsList = document.getElementById('collections-list');
   collectionsList.innerHTML = '';
 
-  // Group cards into collections. For now, we group by jlptLevel.
+  // Group cards into collections by their category assigned in the pipeline
   const collections = {};
   state.allCards.forEach(card => {
-    const level = card.jlptLevel || 'JLPT-N5';
+    const level = (card.categories && card.categories.length > 0) ? card.categories[0] : 'Uncategorized';
     if (!collections[level]) collections[level] = [];
     collections[level].push(card);
   });
@@ -75,7 +75,7 @@ function renderHomeScreen() {
     cardEl.className = 'collection-card';
     cardEl.innerHTML = `
       <div class="collection-header">
-        <h3 class="collection-title">${key.replace('-', ' ')} Vocabulary</h3>
+        <h3 class="collection-title">${key}</h3>
         <span class="collection-badge">${total} Words</span>
       </div>
       <div class="collection-stats">${knownCount} / ${total} known</div>

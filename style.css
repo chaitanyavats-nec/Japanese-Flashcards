@@ -11,6 +11,7 @@ body {
   overflow: hidden;
 }
 
+[hidden] { display: none !important; }
 .muted { color: #7A7470; }
 button { font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; background: none; }
 

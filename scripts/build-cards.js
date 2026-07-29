@@ -156,78 +156,84 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function build() {
   const wordlistPath = path.join(__dirname, '../wordlist.json');
-  const words = JSON.parse(fs.readFileSync(wordlistPath, 'utf8'));
+  const categorizedWords = JSON.parse(fs.readFileSync(wordlistPath, 'utf8'));
   
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
   
   const generatedCards = [];
+  let globalIndex = 0;
   
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    console.log(`Processing ${i+1}/${words.length}: ${word}`);
-    
-    const res = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(word)}`, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-    });
-    const jishoData = await res.json();
-    const entry = jishoData.data && jishoData.data[0];
-    
-    if (!entry) {
-      console.warn(`No data found for ${word}`);
-      continue;
-    }
-    
-    const id = String(i + 1).padStart(4, '0');
-    
-    // Determine forms
-    const isKanji = /[\u4e00-\u9faf]/.test(word);
-    let kanji = null;
-    let hiragana = null;
+  for (const [category, words] of Object.entries(categorizedWords)) {
+    for (let i = 0; i < words.length; i++) {
+      globalIndex++;
+      const word = words[i];
+      console.log(`Processing [${category}]: ${word}`);
+      
+      const res = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(word)}`, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+      });
+      const jishoData = await res.json();
+      const entry = jishoData.data && jishoData.data[0];
+      
+      if (!entry) {
+        console.warn(`No data found for ${word}`);
+        continue;
+      }
+      
+      const id = String(globalIndex).padStart(4, '0');
+      
+      // Determine forms
+      const isKanji = /[\u4e00-\u9faf]/.test(word);
+      let kanji = null;
+      let hiragana = null;
 
-    if (isKanji) {
-      kanji = word;
-      hiragana = entry.japanese[0].reading || await kuroshiro.convert(word, { to: "hiragana" });
-    } else {
-      hiragana = word;
-    }
-    
-    // Reading might be missing if word has no kanji in entry
-    if (!hiragana && entry.japanese[0].word) {
-      hiragana = entry.japanese[0].word;
-    }
+      if (isKanji) {
+        kanji = word;
+        hiragana = entry.japanese[0].reading || await kuroshiro.convert(word, { to: "hiragana" });
+      } else {
+        hiragana = word;
+      }
+      
+      // Reading might be missing if word has no kanji in entry
+      if (!hiragana && entry.japanese[0].word) {
+        hiragana = entry.japanese[0].word;
+      }
 
-    const katakana = wanakana.toKatakana(hiragana);
-    const romaji = wanakana.toRomaji(hiragana);
-    
-    const englishMeanings = entry.senses[0].english_definitions;
-    
-    const partsOfSpeech = entry.senses[0].parts_of_speech.join(', ').toLowerCase();
-    let partOfSpeech = "noun";
-    let verbType = null;
-    let isNaAdjective = false;
-    
-    if (partsOfSpeech.includes('verb')) {
-      partOfSpeech = "verb";
-      if (partsOfSpeech.includes('ichidan')) verbType = "ichidan";
-      else if (partsOfSpeech.includes('suru')) verbType = "suru";
-      else if (partsOfSpeech.includes('kuru')) verbType = "kuru";
-      else verbType = "godan";
-    } else if (partsOfSpeech.includes('adjective') || partsOfSpeech.includes('adjectival')) {
-      partOfSpeech = "adjective";
-      if (partsOfSpeech.includes('na-adjective')) isNaAdjective = true;
-    }
+      const katakana = wanakana.toKatakana(hiragana);
+      const romaji = wanakana.toRomaji(hiragana);
+      
+      const englishMeanings = entry.senses[0].english_definitions;
+      
+      const partsOfSpeech = entry.senses[0].parts_of_speech.join(', ').toLowerCase();
+      let partOfSpeech = "noun";
+      let verbType = null;
+      let isNaAdjective = false;
+      
+      if (partsOfSpeech.includes('verb')) {
+        partOfSpeech = "verb";
+        if (partsOfSpeech.includes('ichidan')) verbType = "ichidan";
+        else if (partsOfSpeech.includes('suru')) verbType = "suru";
+        else if (partsOfSpeech.includes('kuru')) verbType = "kuru";
+        else verbType = "godan";
+      } else if (partsOfSpeech.includes('adjective') || partsOfSpeech.includes('adjectival')) {
+        partOfSpeech = "adjective";
+        if (partsOfSpeech.includes('na-adjective')) isNaAdjective = true;
+      }
 
-    const jlptLevel = entry.jlpt.length > 0 ? entry.jlpt[0].toUpperCase() : "N5";
-    const categories = entry.tags || [];
+      const jlptLevel = entry.jlpt.length > 0 ? entry.jlpt[0].toUpperCase() : "N5";
+      
+      // Assign the category from our dictionary structure!
+      const categories = [category];
 
-    // Image
-    let imageQuery = englishMeanings[0].split(' ')[0]; // Basic first word search
-    if (imageQuery.includes("to ")) imageQuery = imageQuery.replace("to ", "");
-    let imageObj = await fetchPexelsImage(imageQuery, id);
-    
-    // Kanji SVGs
-    const strokeOrderSvgs = [];
+      // Image (Pexels disabled temporarily per user request to save rate limits)
+      let imageObj = null;
+      // let imageQuery = englishMeanings[0].split(' ')[0];
+      // if (imageQuery.includes("to ")) imageQuery = imageQuery.replace("to ", "");
+      // imageObj = await fetchPexelsImage(imageQuery, id);
+      
+      // Kanji SVGs
+      const strokeOrderSvgs = [];
     if (kanji) {
       const kanjiList = kanji.match(/[\u4e00-\u9faf]/g) || [];
       for (const k of new Set(kanjiList)) {
@@ -265,15 +271,16 @@ async function build() {
       // Could add adjective conjugation here
     }
     
-    // Mock sentence
-    card.exampleSentence = {
-      japanese: `これは${kanji || hiragana}です。`,
-      english: `This is ${englishMeanings[0]}.`,
-      source: "mock"
-    };
+      // Mock sentence
+      card.exampleSentence = {
+        japanese: `これは${kanji || hiragana}です。`,
+        english: `This is ${englishMeanings[0]}.`,
+        source: "mock"
+      };
 
-    generatedCards.push(card);
-    await sleep(500); // Rate limit for Jisho API slightly
+      generatedCards.push(card);
+      await sleep(100); // Rate limit for Jisho API
+    }
   }
   
   const outputPath = path.join(PUBLIC_DIR, 'dataset.json');
