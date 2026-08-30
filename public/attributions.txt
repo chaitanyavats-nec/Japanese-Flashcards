@@ -1,4 +1,0 @@
-Attributions:
-- JMdict XML: Copyright Electronic Dictionary Research and Development Group (EDRDG), CC-BY-SA 3.0.
-- Tatoeba sentences: CC-BY 2.0 (tatoeba.org).
-- KanjiVG: Copyright Ulrich Apel, CC-BY-SA 3.0 (github.com/KanjiVG/kanjivg).

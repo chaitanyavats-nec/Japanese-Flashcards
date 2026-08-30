@@ -8,7 +8,15 @@ const state = {
   isFlipped: false,
   progress: {},
   streak: 0,
-  showKanji: true
+  showKanji: true,
+  strokeShown: false
+};
+
+const LEVEL_COLORS = {
+  1: 'var(--level-1)',
+  2: 'var(--level-2)',
+  3: 'var(--level-3)',
+  4: 'var(--level-4)'
 };
 
 // Persistence functions
@@ -28,7 +36,7 @@ function saveProgress(wordId, status) {
   state.progress[wordId].status = status;
   state.progress[wordId].timesReviewed++;
   state.progress[wordId].lastReviewedAt = new Date().toISOString();
-  
+
   try {
     localStorage.setItem('flashcards_progress', JSON.stringify(state.progress));
   } catch (e) {
@@ -55,33 +63,36 @@ function renderHomeScreen() {
   const collectionsList = document.getElementById('collections-list');
   collectionsList.innerHTML = '';
 
-  // Group cards into collections by their category assigned in the pipeline
-  const collections = {};
+  // Group cards into their progressive tier (Level 1..4), preserving tier order
+  const levels = new Map();
   state.allCards.forEach(card => {
-    const level = (card.categories && card.categories.length > 0) ? card.categories[0] : 'Uncategorized';
-    if (!collections[level]) collections[level] = [];
-    collections[level].push(card);
+    const tier = card.tier || 1;
+    if (!levels.has(tier)) levels.set(tier, { name: card.tierName || `Level ${tier}`, cards: [] });
+    levels.get(tier).cards.push(card);
   });
 
-  // Sort collections by N-level intuitively if possible
-  const sortedKeys = Object.keys(collections).sort().reverse(); 
+  const sortedTiers = Array.from(levels.keys()).sort((a, b) => a - b);
 
-  sortedKeys.forEach(key => {
-    const cards = collections[key];
+  sortedTiers.forEach(tier => {
+    const { name, cards } = levels.get(tier);
     const knownCount = cards.filter(c => state.progress[c.id] && state.progress[c.id].status === 'know').length;
     const total = cards.length;
     const percent = total > 0 ? (knownCount / total) * 100 : 0;
+    const color = LEVEL_COLORS[tier] || LEVEL_COLORS[4];
 
     const cardEl = document.createElement('div');
     cardEl.className = 'collection-card';
     cardEl.innerHTML = `
-      <div class="collection-header">
-        <h3 class="collection-title">${key}</h3>
-        <span class="collection-badge">${total} Words</span>
-      </div>
-      <div class="collection-stats">${knownCount} / ${total} known</div>
-      <div class="collection-progress-bg">
-        <div class="collection-progress-fill" style="width: ${percent}%"></div>
+      <div class="level-badge" style="background:${color}; --level-glow:${color};">${tier}</div>
+      <div class="collection-main">
+        <div class="collection-header">
+          <h3 class="collection-title">${name.replace(/^Level \d+\s*·\s*/, '')}</h3>
+          <span class="collection-badge">${total} words</span>
+        </div>
+        <div class="collection-stats">${knownCount} / ${total} known</div>
+        <div class="collection-progress-bg">
+          <div class="collection-progress-fill" style="width: ${percent}%; background:${color};"></div>
+        </div>
       </div>
     `;
     cardEl.onclick = () => initSession(cards);
@@ -92,7 +103,6 @@ function renderHomeScreen() {
 function initSession(cardsArray) {
   if (!cardsArray || cardsArray.length === 0) return;
   state.deck = cardsArray;
-  // For the session, we prioritize un-known or unseen cards if we want, but for now just shuffle all
   state.remaining = shuffle([...cardsArray]);
   state.known = [];
   state.unknown = [];
@@ -108,7 +118,7 @@ function initSession(cardsArray) {
   const card = document.getElementById('card');
   card.style.animation = 'none';
   void card.offsetWidth; // trigger reflow
-  card.style.animation = 'slideUp 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+  card.style.animation = 'slideUp 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
   card.style.transition = 'none';
   card.style.transform = 'none';
   card.style.opacity = '1';
@@ -120,7 +130,7 @@ function initSession(cardsArray) {
   resetOverlays();
 
   requestAnimationFrame(() => {
-    inner.style.transition = 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1)';
+    inner.style.transition = 'transform 480ms cubic-bezier(0.4, 0, 0.2, 1)';
     render();
   });
 }
@@ -132,6 +142,14 @@ function speak(text, lang) {
   window.speechSynthesis.speak(ut);
 }
 
+function updateScrollFade() {
+  const scrollable = document.querySelector('.card-scrollable');
+  const fade = document.querySelector('.scroll-fade');
+  if (!scrollable || !fade) return;
+  const hasMore = scrollable.scrollHeight - scrollable.scrollTop - scrollable.clientHeight > 12;
+  fade.classList.toggle('visible', hasMore);
+}
+
 function render() {
   if (state.currentIndex >= state.remaining.length) {
     showSummary();
@@ -139,6 +157,7 @@ function render() {
   }
 
   const current = state.remaining[state.currentIndex];
+  state.strokeShown = false;
   const progressRatio = state.currentIndex / state.remaining.length;
   document.getElementById('progress-bar-fill').style.width = `${progressRatio * 100}%`;
   document.getElementById('progress-label').textContent = `${state.currentIndex + 1} of ${state.remaining.length} cards`;
@@ -146,77 +165,74 @@ function render() {
   const counterText = `${state.currentIndex + 1} / ${state.remaining.length}`;
   document.getElementById('card-counter').textContent = counterText;
   document.querySelector('.card-counter-back').textContent = counterText;
+  document.getElementById('card-tag').textContent = current.theme || current.tierName || '';
 
   // Front Face
   const front = document.getElementById('card-front');
-  const imgEl = front.querySelector('.card-image');
-  const creditEl = front.querySelector('.image-credit');
-  
-  if (current.image && current.image.localPath) {
-    imgEl.src = `public/${current.image.localPath}`;
-    imgEl.style.display = 'block';
-    creditEl.innerHTML = `Photo by <a href="${current.image.photographerUrl}" target="_blank">${current.image.photographer}</a>`;
-  } else {
-    imgEl.src = '';
-    imgEl.style.display = 'none';
-    creditEl.innerHTML = '';
-  }
-
   const displayKanji = state.showKanji && current.kanji;
   front.querySelector('.kanji-word').textContent = displayKanji ? current.kanji : current.hiragana;
   front.querySelector('.hiragana-word').textContent = displayKanji ? current.hiragana : '';
   const romajiFront = front.querySelector('.romaji-word-front');
   if (romajiFront) romajiFront.textContent = current.romaji;
-  
+
   const btnAudio = front.querySelector('.btn-audio');
   btnAudio.onclick = (e) => {
     e.stopPropagation();
     speak(current.audio.ttsText, current.audio.lang);
   };
 
-  // Preload next image
-  if (state.currentIndex + 1 < state.remaining.length) {
-    const next = state.remaining[state.currentIndex + 1];
-    if (next.image && next.image.localPath) {
-      const preload = new Image();
-      preload.src = `public/${next.image.localPath}`;
-    }
-  }
-
   // Back Face
   const back = document.getElementById('card-back');
-  
+
   const japBack = back.querySelector('.japanese-word-back');
   if (japBack) {
     japBack.textContent = displayKanji ? current.kanji : current.hiragana;
   }
-  
+
   back.querySelector('.romaji-word').textContent = current.romaji;
   back.querySelector('.katakana-word').textContent = current.katakana;
   back.querySelector('.meaning').textContent = current.englishMeanings.join(', ');
-  
+
   let posText = current.partOfSpeech;
   if (current.verbType) posText += ` (${current.verbType})`;
   else if (current.isNaAdjective) posText += ` (na-adjective)`;
   back.querySelector('.pos-pill').textContent = posText;
 
-  // Kanji VG
+  // Kanji stroke order — collapsed behind a toggle
+  const strokeToggle = back.querySelector('.stroke-toggle');
   const kanjiCont = back.querySelector('.kanji-vg-container');
   kanjiCont.innerHTML = '';
-  if (displayKanji && current.strokeOrderSvgs && current.strokeOrderSvgs.length > 0) {
-    current.strokeOrderSvgs.forEach(svgPath => {
-      fetch(`public/${svgPath}`)
-        .then(res => res.text())
-        .then(svgText => { kanjiCont.innerHTML += svgText; })
-        .catch(e => console.log('SVG not found', e));
-    });
-  }
+  kanjiCont.hidden = true;
+  kanjiCont.classList.remove('playing');
+  strokeToggle.classList.remove('expanded');
+  strokeToggle.querySelector('span').textContent = 'Show stroke order';
 
-  // Grammar (Conjugations / Particles)
+  const hasStrokes = displayKanji && current.strokeOrderSvgs && current.strokeOrderSvgs.length > 0;
+  strokeToggle.hidden = !hasStrokes;
+  strokeToggle.onclick = () => {
+    state.strokeShown = !state.strokeShown;
+    kanjiCont.hidden = !state.strokeShown;
+    strokeToggle.classList.toggle('expanded', state.strokeShown);
+    strokeToggle.querySelector('span').textContent = state.strokeShown ? 'Hide stroke order' : 'Show stroke order';
+
+    if (state.strokeShown && !kanjiCont.dataset.loaded) {
+      kanjiCont.dataset.loaded = '1';
+      current.strokeOrderSvgs.forEach(svgPath => {
+        fetch(`public/${svgPath}`)
+          .then(res => res.text())
+          .then(svgText => { kanjiCont.innerHTML += svgText; })
+          .catch(e => console.log('SVG not found', e));
+      });
+    }
+    requestAnimationFrame(() => kanjiCont.classList.add('playing'));
+    setTimeout(updateScrollFade, 50);
+  };
+
+  // Grammar (Conjugations)
   const grammarSec = back.querySelector('.grammar-section');
   grammarSec.innerHTML = '';
   if (current.conjugations) {
-    grammarSec.innerHTML = '<hr class="section-divider"><div class="grammar-title">Conjugations</div>';
+    grammarSec.innerHTML = '<div class="grammar-title">Conjugations</div>';
     const grid = document.createElement('div');
     grid.className = 'conjugation-grid';
     const keys = ['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'];
@@ -227,31 +243,18 @@ function render() {
       }
     });
     grammarSec.appendChild(grid);
-  } else if (current.particleUsage) {
-    grammarSec.innerHTML = '<hr class="section-divider"><div class="grammar-title">Particle Usage</div>';
-    const list = document.createElement('div');
-    list.className = 'particle-list';
-    current.particleUsage.forEach(p => {
-      list.innerHTML += `<div class="particle-row">
-                           <span class="p-bold">${p.particle}</span>
-                           <span>${p.example}</span>
-                           <span class="muted">(${p.translation})</span>
-                         </div>`;
-    });
-    grammarSec.appendChild(list);
   }
 
   // Example Sentence
   const bSent = back.querySelector('.sentence-section');
   if (current.exampleSentence) {
     bSent.style.display = 'block';
-    
-    // Toggle kanji logic for the sentence
+
     const sentJap = bSent.querySelector('.sentence-japanese');
-    sentJap.textContent = displayKanji ? 
-      current.exampleSentence.japanese : 
+    sentJap.textContent = displayKanji ?
+      current.exampleSentence.japanese :
       (current.exampleSentence.hiragana || current.exampleSentence.japanese);
-      
+
     const sentRomaji = bSent.querySelector('.sentence-romaji');
     if (sentRomaji) {
       if (current.exampleSentence.romaji) {
@@ -261,23 +264,25 @@ function render() {
         sentRomaji.style.display = 'none';
       }
     }
-    
+
     bSent.querySelector('.sentence-english').textContent = current.exampleSentence.english;
   } else {
     bSent.style.display = 'none';
   }
 
   document.getElementById('card-inner').classList.toggle('flipped', state.isFlipped);
+  requestAnimationFrame(updateScrollFade);
 }
 
 function flipCard() {
   state.isFlipped = !state.isFlipped;
   document.getElementById('card-inner').classList.toggle('flipped', state.isFlipped);
+  setTimeout(updateScrollFade, 480);
 }
 
 function advanceDeck(verdict) {
   const current = state.remaining[state.currentIndex];
-  
+
   verdict === 'know' ? state.known.push(current) : state.unknown.push(current);
   saveProgress(current.id, verdict);
 
@@ -296,7 +301,7 @@ function advanceDeck(verdict) {
   resetOverlays();
 
   requestAnimationFrame(() => {
-    inner.style.transition = 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1)';
+    inner.style.transition = 'transform 480ms cubic-bezier(0.4, 0, 0.2, 1)';
     if (state.currentIndex >= state.remaining.length) {
       document.getElementById('progress-bar-fill').style.width = `100%`;
       document.getElementById('progress-label').textContent = `${state.remaining.length} of ${state.remaining.length} cards`;
@@ -335,10 +340,10 @@ function showSummary() {
   document.getElementById('arena-header').hidden = true;
   document.getElementById('progress-bar-track').hidden = true;
   document.getElementById('summary').hidden = false;
-  
+
   document.getElementById('known-count').textContent = `${state.known.length} ✓`;
   document.getElementById('unknown-count').textContent = `${state.unknown.length} ✗`;
-  
+
   const missedCont = document.getElementById('missed-thumbnails');
   missedCont.innerHTML = '';
   state.unknown.forEach(c => {
@@ -347,7 +352,7 @@ function showSummary() {
     el.textContent = c.kanji || c.hiragana;
     missedCont.appendChild(el);
   });
-  
+
   document.getElementById('btn-review-missed').disabled = state.unknown.length === 0;
 }
 
@@ -366,6 +371,8 @@ document.querySelector('.btn-dont-know').addEventListener('click', e => {
   e.stopPropagation();
   judgeCard('dont');
 });
+
+document.querySelector('.card-scrollable').addEventListener('scroll', updateScrollFade);
 
 document.getElementById('btn-review-missed').addEventListener('click', () => {
   initSession(state.unknown);
@@ -432,7 +439,7 @@ swipeCard.addEventListener('pointerup', e => {
 
 // Keyboard
 document.addEventListener('keydown', e => {
-  if (document.getElementById('card-arena').hidden) return; 
+  if (document.getElementById('card-arena').hidden) return;
 
   if (e.key === 'ArrowRight') judgeCard('know');
   if (e.key === 'ArrowLeft') judgeCard('dont');
@@ -446,7 +453,7 @@ document.addEventListener('keydown', e => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     loadProgress();
-    
+
     const savedKanji = localStorage.getItem('flashcards_show_kanji');
     if (savedKanji !== null) {
       state.showKanji = savedKanji === 'true';
