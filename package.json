@@ -24,8 +24,6 @@
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "node-fetch": "^2.7.0",
-    "unbzip2-stream": "^1.4.3",
-    "unzipper": "^0.12.5",
     "wanakana": "^5.3.1"
   }
 }

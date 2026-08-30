@@ -3,17 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Japanese Flashcards</title>
+  <title>Nihongo — Japanese Flashcards</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Noto+Sans+Japanese:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Home Screen -->
   <div id="home-screen">
     <div class="home-header">
-      <h1>Collections</h1>
+      <div class="brand">
+        <span class="brand-mark">日</span>
+        <div class="brand-text">
+          <h1>Learning Path</h1>
+          <p class="brand-subtitle">Progress through Japanese, one level at a time</p>
+        </div>
+      </div>
       <div class="header-actions">
         <label class="setting-toggle">
           <input type="checkbox" id="toggle-kanji">
@@ -43,37 +49,35 @@
   <!-- Card arena — the swipeable area -->
   <div id="card-arena" hidden>
     <div id="card" tabindex="0" role="button" aria-label="Flashcard">
-      
+
       <!-- Card inner wrapper — this is what rotates on flip -->
       <div id="card-inner">
 
         <!-- FRONT FACE -->
         <div class="card-face" id="card-front">
           <div class="card-topbar">
+            <span id="card-tag" class="tag-chip"></span>
             <span id="card-counter" class="muted"></span>
           </div>
           <div class="card-body">
-            <div class="card-image-container">
-               <img class="card-image" src="" alt="" />
-               <div class="image-credit muted"></div>
-            </div>
             <div class="word-group">
                <p class="kanji-word"></p>
                <p class="hiragana-word muted"></p>
                <p class="romaji-word-front muted"></p>
             </div>
-            <button class="btn-audio" aria-label="Play pronunciation">🔊</button>
+            <button class="btn-audio" aria-label="Play pronunciation">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="4 8 8 8 12 4 12 20 8 16 4 16 4 8"></polygon><path d="M16 8.5a4.5 4.5 0 0 1 0 7"></path><path d="M18.5 6a8 8 0 0 1 0 12"></path></svg>
+            </button>
             <p class="tap-hint muted">Tap to reveal</p>
           </div>
         </div>
 
         <!-- BACK FACE -->
         <div class="card-face" id="card-back">
-          <div class="card-topbar">
-            <span class="card-counter-back muted"></span>
-          </div>
           <div class="card-scrollable">
-            <div class="kanji-vg-container"></div>
+            <div class="card-topbar">
+              <span class="card-counter-back muted"></span>
+            </div>
             <div class="back-word-group">
                <p class="japanese-word-back"></p>
                <p class="romaji-word"></p>
@@ -81,22 +85,38 @@
                <p class="meaning"></p>
                <span class="pos-pill muted"></span>
             </div>
-            
+
+            <button class="stroke-toggle" hidden>
+              <span>Show stroke order</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="kanji-vg-container" hidden></div>
+
             <div class="grammar-section">
-               <!-- Populated with conjugations or particles -->
-            </div>
-            
-            <div class="sentence-section">
-              <hr class="section-divider">
-              <p class="sentence-japanese"></p>
-              <p class="sentence-romaji muted"></p>
-              <p class="sentence-english muted"></p>
+               <!-- Populated with conjugations -->
             </div>
 
-            <div class="action-buttons">
-              <button class="btn-dont-know" aria-label="I don't know this word">✗ Don't know</button>
-              <button class="btn-know" aria-label="I know this word">Know it ✓</button>
+            <div class="sentence-section">
+              <div class="sentence-card">
+                <p class="sentence-japanese"></p>
+                <p class="sentence-romaji muted"></p>
+                <div class="sentence-divider"></div>
+                <p class="sentence-english"></p>
+              </div>
             </div>
+            <div class="scroll-spacer"></div>
+          </div>
+          <div class="scroll-fade"></div>
+
+          <div class="action-buttons">
+            <button class="btn-dont-know" aria-label="I don't know this word">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              Don't know
+            </button>
+            <button class="btn-know" aria-label="I know this word">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Know it
+            </button>
           </div>
         </div>
 
@@ -110,6 +130,7 @@
 
   <!-- Session complete actions -->
   <div id="summary" hidden>
+    <div class="summary-badge">🎉</div>
     <h2>Session Complete!</h2>
     <div class="summary-stats">
       <span id="known-count">0 ✓</span>
