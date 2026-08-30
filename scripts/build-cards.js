@@ -61,6 +61,33 @@ async function fetchPexelsImage(query, wordId) {
   return null;
 }
 
+async function fetchTatoebaSentence(word) {
+  try {
+    const url = `https://tatoeba.org/en/api_v0/search?from=jpn&to=eng&query=${encodeURIComponent(word)}`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data.results || data.results.length === 0) return null;
+    
+    // Find a result that has an English translation
+    const result = data.results.find(r => r.translations && r.translations.flat().some(t => t.lang === 'eng'));
+    if (result) {
+      const engTrans = result.translations.flat().find(t => t.lang === 'eng');
+      if (engTrans) {
+        return {
+          japanese: result.text,
+          english: engTrans.text,
+          source: "tatoeba"
+        };
+      }
+    }
+    return null;
+  } catch (e) {
+    console.error(`Tatoeba fetch error for ${word}:`, e.message);
+    return null;
+  }
+}
+
 function conjugateVerb(base, verbType) {
   const conj = {
     present: base,
@@ -271,12 +298,28 @@ async function build() {
       // Could add adjective conjugation here
     }
     
-      // Mock sentence
-      card.exampleSentence = {
-        japanese: `これは${kanji || hiragana}です。`,
-        english: `This is ${englishMeanings[0]}.`,
-        source: "mock"
-      };
+      // Tatoeba sentence
+      let sentenceObj = await fetchTatoebaSentence(kanji || hiragana);
+      if (!sentenceObj) {
+        // Fallback
+        sentenceObj = {
+          japanese: `これは${kanji || hiragana}です。`,
+          english: `This is ${englishMeanings[0]}.`,
+          source: "mock"
+        };
+      }
+      
+      try {
+        sentenceObj.hiragana = await kuroshiro.convert(sentenceObj.japanese, { to: "hiragana" });
+        sentenceObj.romaji = wanakana.toRomaji(sentenceObj.hiragana);
+      } catch (e) {
+        console.error("Sentence conversion failed", e);
+        sentenceObj.hiragana = sentenceObj.japanese;
+        sentenceObj.romaji = sentenceObj.japanese;
+      }
+      
+      card.exampleSentence = sentenceObj;
+      await sleep(1000); // Rate limit for Tatoeba API
 
       generatedCards.push(card);
       await sleep(100); // Rate limit for Jisho API

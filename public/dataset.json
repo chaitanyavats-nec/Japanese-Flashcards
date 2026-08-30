@@ -36,9 +36,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは犬です。",
-      "english": "This is dog (Canis (lupus) familiaris).",
-      "source": "mock"
+      "japanese": "負け犬！",
+      "english": "Loser!",
+      "source": "tatoeba",
+      "hiragana": "まけいぬ！",
+      "romaji": "makeinu!"
     }
   },
   {
@@ -78,9 +80,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは猫です。",
-      "english": "This is cat (esp. the domestic cat, Felis catus).",
-      "source": "mock"
+      "japanese": "猫だ！",
+      "english": "Cat!",
+      "source": "tatoeba",
+      "hiragana": "ねこだ！",
+      "romaji": "nekoda!"
     }
   },
   {
@@ -119,9 +123,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは鳥です。",
-      "english": "This is bird.",
-      "source": "mock"
+      "japanese": "一石二鳥",
+      "english": "I killed two birds with one stone.",
+      "source": "tatoeba",
+      "hiragana": "いっせきにちょう",
+      "romaji": "issekinichou"
     }
   },
   {
@@ -160,9 +166,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは魚です。",
-      "english": "This is fish.",
-      "source": "mock"
+      "japanese": "魚、美味しい？",
+      "english": "Is the fish tasty?",
+      "source": "tatoeba",
+      "hiragana": "さかな、おいしい？",
+      "romaji": "sakana,oishii?"
     }
   },
   {
@@ -205,9 +213,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは牛です。",
-      "english": "This is cattle (Bos taurus).",
-      "source": "mock"
+      "japanese": "牛肉は高い。",
+      "english": "Beef is expensive.",
+      "source": "tatoeba",
+      "hiragana": "ぎゅうにくはたかい。",
+      "romaji": "gyuunikuhatakai."
     }
   },
   {
@@ -246,9 +256,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは馬です。",
-      "english": "This is horse.",
-      "source": "mock"
+      "japanese": "馬鹿な！",
+      "english": "No way!",
+      "source": "tatoeba",
+      "hiragana": "ばかな！",
+      "romaji": "bakana!"
     }
   },
   {
@@ -287,9 +299,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは豚です。",
-      "english": "This is pig (Sus scrofa domesticus).",
-      "source": "mock"
+      "japanese": "嘘つく豚だ、お前。",
+      "english": "You're a lying pig.",
+      "source": "tatoeba",
+      "hiragana": "うそつくぶただ、おまえ。",
+      "romaji": "usotsukubutada,omae."
     }
   },
   {
@@ -329,9 +343,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは動物です。",
-      "english": "This is animal.",
-      "source": "mock"
+      "japanese": "茶色の動物は？",
+      "english": "What animal is brown?",
+      "source": "tatoeba",
+      "hiragana": "ちゃいろのどうぶつは？",
+      "romaji": "chaironodoubutsuha?"
     }
   },
   {
@@ -372,9 +388,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは木です。",
-      "english": "This is tree.",
-      "source": "mock"
+      "japanese": "木が浮く。",
+      "english": "Wood floats.",
+      "source": "tatoeba",
+      "hiragana": "きがうく。",
+      "romaji": "kigauku."
     }
   },
   {
@@ -416,9 +434,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは花です。",
-      "english": "This is flower.",
-      "source": "mock"
+      "japanese": "本物の花？",
+      "english": "Is the flower real?",
+      "source": "tatoeba",
+      "hiragana": "ほんもののはな？",
+      "romaji": "honmononohana?"
     }
   },
   {
@@ -458,9 +478,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは山です。",
-      "english": "This is mountain.",
-      "source": "mock"
+      "japanese": "入山した。",
+      "english": "I went into the mountains.",
+      "source": "tatoeba",
+      "hiragana": "いりやました。",
+      "romaji": "iriyamashita."
     }
   },
   {
@@ -500,9 +522,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは川です。",
-      "english": "This is river.",
-      "source": "mock"
+      "japanese": "川に行こうよ。",
+      "english": "Let's go to the river.",
+      "source": "tatoeba",
+      "hiragana": "かわにいこうよ。",
+      "romaji": "kawaniikouyo."
     }
   },
   {
@@ -543,9 +567,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは空です。",
-      "english": "This is sky.",
-      "source": "mock"
+      "japanese": "缶は空よ。",
+      "english": "The can is empty.",
+      "source": "tatoeba",
+      "hiragana": "かんはそらよ。",
+      "romaji": "kanhasorayo."
     }
   },
   {
@@ -586,9 +612,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは海です。",
-      "english": "This is sea.",
-      "source": "mock"
+      "japanese": "大海の一滴。",
+      "english": "A drop in the bucket.",
+      "source": "tatoeba",
+      "hiragana": "たいかいのいってき。",
+      "romaji": "taikainoitteki."
     }
   },
   {
@@ -628,9 +656,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは太陽です。",
-      "english": "This is Sun.",
-      "source": "mock"
+      "japanese": "太陽はいいね。",
+      "english": "I like the sun.",
+      "source": "tatoeba",
+      "hiragana": "たいようはいいね。",
+      "romaji": "taiyouhaiine."
     }
   },
   {
@@ -669,9 +699,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは月です。",
-      "english": "This is Moon.",
-      "source": "mock"
+      "japanese": "月見て！",
+      "english": "Look at the moon.",
+      "source": "tatoeba",
+      "hiragana": "つきみて！",
+      "romaji": "tsukimite!"
     }
   },
   {
@@ -712,9 +744,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは星です。",
-      "english": "This is star (usu. excluding the Sun).",
-      "source": "mock"
+      "japanese": "見て！流れ星！",
+      "english": "Look! A falling star!",
+      "source": "tatoeba",
+      "hiragana": "みて！ながれぼし！",
+      "romaji": "mite!nagareboshi!"
     }
   },
   {
@@ -753,9 +787,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは雨です。",
-      "english": "This is rain.",
-      "source": "mock"
+      "japanese": "雨はどこ？",
+      "english": "Where is the rain?",
+      "source": "tatoeba",
+      "hiragana": "あめはどこ？",
+      "romaji": "amehadoko?"
     }
   },
   {
@@ -795,9 +831,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは雪です。",
-      "english": "This is snow.",
-      "source": "mock"
+      "japanese": "雪合戦だ！",
+      "english": "Snowball fight!",
+      "source": "tatoeba",
+      "hiragana": "ゆきがっせんだ！",
+      "romaji": "yukigassenda!"
     }
   },
   {
@@ -839,9 +877,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは風です。",
-      "english": "This is wind.",
-      "source": "mock"
+      "japanese": "風邪かな？",
+      "english": "Do I have a cold?",
+      "source": "tatoeba",
+      "hiragana": "かぜかな？",
+      "romaji": "kazekana?"
     }
   },
   {
@@ -880,9 +920,11 @@
       "volitional": "食べよう"
     },
     "exampleSentence": {
-      "japanese": "これは食べるです。",
-      "english": "This is to eat.",
-      "source": "mock"
+      "japanese": "食べる？",
+      "english": "Do you want to eat?",
+      "source": "tatoeba",
+      "hiragana": "たべる？",
+      "romaji": "taberu?"
     }
   },
   {
@@ -923,9 +965,11 @@
       "volitional": "飲もう"
     },
     "exampleSentence": {
-      "japanese": "これは飲むです。",
-      "english": "This is to drink.",
-      "source": "mock"
+      "japanese": "緑茶飲む？",
+      "english": "Do you drink green tea?",
+      "source": "tatoeba",
+      "hiragana": "りょくちゃのむ？",
+      "romaji": "ryokuchanomu?"
     }
   },
   {
@@ -968,9 +1012,11 @@
       "volitional": "見よう"
     },
     "exampleSentence": {
-      "japanese": "これは見るです。",
-      "english": "This is to see.",
-      "source": "mock"
+      "japanese": "アニメ見る？",
+      "english": "Do you watch anime?",
+      "source": "tatoeba",
+      "hiragana": "アニメみる？",
+      "romaji": "animemiru?"
     }
   },
   {
@@ -1012,9 +1058,11 @@
       "volitional": "行こう"
     },
     "exampleSentence": {
-      "japanese": "これは行くです。",
-      "english": "This is to go.",
-      "source": "mock"
+      "japanese": "行く？",
+      "english": "You're leaving?",
+      "source": "tatoeba",
+      "hiragana": "いく？",
+      "romaji": "iku?"
     }
   },
   {
@@ -1055,9 +1103,11 @@
       "volitional": "こよう"
     },
     "exampleSentence": {
-      "japanese": "これは来るです。",
-      "english": "This is to come (spatially or temporally).",
-      "source": "mock"
+      "japanese": "来る？",
+      "english": "Are you coming?",
+      "source": "tatoeba",
+      "hiragana": "くる？",
+      "romaji": "kuru?"
     }
   },
   {
@@ -1096,9 +1146,11 @@
       "volitional": "しよう"
     },
     "exampleSentence": {
-      "japanese": "これはするです。",
-      "english": "This is to do.",
-      "source": "mock"
+      "japanese": "するな！",
+      "english": "Don't do it!",
+      "source": "tatoeba",
+      "hiragana": "するな！",
+      "romaji": "suruna!"
     }
   },
   {
@@ -1137,9 +1189,11 @@
       "volitional": "寝よう"
     },
     "exampleSentence": {
-      "japanese": "これは寝るです。",
-      "english": "This is to sleep (lying down).",
-      "source": "mock"
+      "japanese": "寝るの？",
+      "english": "Are you going to bed?",
+      "source": "tatoeba",
+      "hiragana": "ねるの？",
+      "romaji": "neruno?"
     }
   },
   {
@@ -1180,9 +1234,11 @@
       "volitional": "起きよう"
     },
     "exampleSentence": {
-      "japanese": "これは起きるです。",
-      "english": "This is to get up.",
-      "source": "mock"
+      "japanese": "いつ起きるの？",
+      "english": "When are you going to get up?",
+      "source": "tatoeba",
+      "hiragana": "いつおきるの？",
+      "romaji": "itsuokiruno?"
     }
   },
   {
@@ -1224,9 +1280,11 @@
       "volitional": "話そう"
     },
     "exampleSentence": {
-      "japanese": "これは話すです。",
-      "english": "This is to talk.",
-      "source": "mock"
+      "japanese": "話す。",
+      "english": "Speak.",
+      "source": "tatoeba",
+      "hiragana": "はなす。",
+      "romaji": "hanasu."
     }
   },
   {
@@ -1265,9 +1323,11 @@
       "volitional": "聞こう"
     },
     "exampleSentence": {
-      "japanese": "これは聞くです。",
-      "english": "This is to hear.",
-      "source": "mock"
+      "japanese": "なぜ聞くの？",
+      "english": "Why do you ask?",
+      "source": "tatoeba",
+      "hiragana": "なぜきくの？",
+      "romaji": "nazekikuno?"
     }
   },
   {
@@ -1306,9 +1366,11 @@
       "volitional": "読もう"
     },
     "exampleSentence": {
-      "japanese": "これは読むです。",
-      "english": "This is to read.",
-      "source": "mock"
+      "japanese": "俺の日記を読むな！",
+      "english": "Don't read my diary.",
+      "source": "tatoeba",
+      "hiragana": "おれのにっきをよむな！",
+      "romaji": "orenonikkiwoyomuna!"
     }
   },
   {
@@ -1349,9 +1411,11 @@
       "volitional": "書こう"
     },
     "exampleSentence": {
-      "japanese": "これは書くです。",
-      "english": "This is to write.",
-      "source": "mock"
+      "japanese": "名前はどう書くの？",
+      "english": "How do you spell your name?",
+      "source": "tatoeba",
+      "hiragana": "なまえはどうかくの？",
+      "romaji": "namaehadoukakuno?"
     }
   },
   {
@@ -1391,9 +1455,11 @@
       "volitional": "買おう"
     },
     "exampleSentence": {
-      "japanese": "これは買うです。",
-      "english": "This is to buy.",
-      "source": "mock"
+      "japanese": "それ買うよ。",
+      "english": "I'll buy it.",
+      "source": "tatoeba",
+      "hiragana": "それかうよ。",
+      "romaji": "sorekauyo."
     }
   },
   {
@@ -1432,9 +1498,11 @@
       "volitional": "泳ごう"
     },
     "exampleSentence": {
-      "japanese": "これは泳ぐです。",
-      "english": "This is to swim.",
-      "source": "mock"
+      "japanese": "彼は泳ぐのが怖い。",
+      "english": "He is afraid of swimming.",
+      "source": "tatoeba",
+      "hiragana": "かれはおよぐのがこわい。",
+      "romaji": "karehaoyogunogakowai."
     }
   },
   {
@@ -1475,9 +1543,11 @@
       "volitional": "遊ぼう"
     },
     "exampleSentence": {
-      "japanese": "これは遊ぶです。",
-      "english": "This is to play (games, sports).",
-      "source": "mock"
+      "japanese": "ここで遊ぶな。",
+      "english": "Don't play here.",
+      "source": "tatoeba",
+      "hiragana": "ここであそぶな。",
+      "romaji": "kokodeasobuna."
     }
   },
   {
@@ -1518,9 +1588,11 @@
       "volitional": "会おう"
     },
     "exampleSentence": {
-      "japanese": "これは会うです。",
-      "english": "This is to meet.",
-      "source": "mock"
+      "japanese": "今日、会うよ。",
+      "english": "I'll see him today.",
+      "source": "tatoeba",
+      "hiragana": "きょう、あうよ。",
+      "romaji": "kyou,auyo."
     }
   },
   {
@@ -1559,9 +1631,11 @@
       "volitional": "待とう"
     },
     "exampleSentence": {
-      "japanese": "これは待つです。",
-      "english": "This is to wait.",
-      "source": "mock"
+      "japanese": "待つな。",
+      "english": "Don't wait.",
+      "source": "tatoeba",
+      "hiragana": "まつな。",
+      "romaji": "matsuna."
     }
   },
   {
@@ -1604,9 +1678,11 @@
       "volitional": "立とう"
     },
     "exampleSentence": {
-      "japanese": "これは立つです。",
-      "english": "This is to stand (up).",
-      "source": "mock"
+      "japanese": "役に立つはずだ。",
+      "english": "This ought to help.",
+      "source": "tatoeba",
+      "hiragana": "やくにたつはずだ。",
+      "romaji": "yakunitatsuhazuda."
     }
   },
   {
@@ -1648,9 +1724,11 @@
       "volitional": "座ろう"
     },
     "exampleSentence": {
-      "japanese": "これは座るです。",
-      "english": "This is to sit (down).",
-      "source": "mock"
+      "japanese": "私の座る場所ある？",
+      "english": "Is there any room for me?",
+      "source": "tatoeba",
+      "hiragana": "わたしのすわるばしょある？",
+      "romaji": "watashinosuwarubashoaru?"
     }
   },
   {
@@ -1690,9 +1768,11 @@
       "volitional": "死のう"
     },
     "exampleSentence": {
-      "japanese": "これは死ぬです。",
-      "english": "This is to die.",
-      "source": "mock"
+      "japanese": "死ぬな！",
+      "english": "Don't die.",
+      "source": "tatoeba",
+      "hiragana": "しぬな！",
+      "romaji": "shinuna!"
     }
   },
   {
@@ -1733,9 +1813,11 @@
       "volitional": "呼ぼう"
     },
     "exampleSentence": {
-      "japanese": "これは呼ぶです。",
-      "english": "This is to call out (to).",
-      "source": "mock"
+      "japanese": "警察を呼ぶ気？",
+      "english": "Are you going to call the police?",
+      "source": "tatoeba",
+      "hiragana": "けいさつをよぶき？",
+      "romaji": "keisatsuwoyobuki?"
     }
   },
   {
@@ -1779,9 +1861,11 @@
       "volitional": "分かろう"
     },
     "exampleSentence": {
-      "japanese": "これは分かるです。",
-      "english": "This is to understand.",
-      "source": "mock"
+      "japanese": "分かる。",
+      "english": "I understand.",
+      "source": "tatoeba",
+      "hiragana": "わかる。",
+      "romaji": "wakaru."
     }
   },
   {
@@ -1823,9 +1907,11 @@
       "volitional": "帰ろう"
     },
     "exampleSentence": {
-      "japanese": "これは帰るです。",
-      "english": "This is to return.",
-      "source": "mock"
+      "japanese": "家に帰るの？",
+      "english": "Are you going home?",
+      "source": "tatoeba",
+      "hiragana": "いえにかえるの？",
+      "romaji": "ienikaeruno?"
     }
   },
   {
@@ -1868,9 +1954,11 @@
       "volitional": "乗ろう"
     },
     "exampleSentence": {
-      "japanese": "これは乗るです。",
-      "english": "This is to get on (train, plane, bus, ship, etc.).",
-      "source": "mock"
+      "japanese": "車に乗る。",
+      "english": "I'll take a car.",
+      "source": "tatoeba",
+      "hiragana": "くるまにのる。",
+      "romaji": "kurumaninoru."
     }
   },
   {
@@ -1911,9 +1999,11 @@
       "volitional": "降りよう"
     },
     "exampleSentence": {
-      "japanese": "これは降りるです。",
-      "english": "This is to descend (e.g. a mountain).",
-      "source": "mock"
+      "japanese": "終点で降りる。",
+      "english": "We'll get off at the last station.",
+      "source": "tatoeba",
+      "hiragana": "しゅうてんでおりる。",
+      "romaji": "shuutendeoriru."
     }
   },
   {
@@ -1954,9 +2044,11 @@
       "volitional": "開けよう"
     },
     "exampleSentence": {
-      "japanese": "これは開けるです。",
-      "english": "This is to open (a door, etc.).",
-      "source": "mock"
+      "japanese": "窓を開けるな。",
+      "english": "Don't open the window.",
+      "source": "tatoeba",
+      "hiragana": "まどをあけるな。",
+      "romaji": "madowoakeruna."
     }
   },
   {
@@ -1996,9 +2088,11 @@
       "volitional": "閉めよう"
     },
     "exampleSentence": {
-      "japanese": "これは閉めるです。",
-      "english": "This is to close.",
-      "source": "mock"
+      "japanese": "ドアを閉めるね。",
+      "english": "I'll close the door.",
+      "source": "tatoeba",
+      "hiragana": "ドアをしめるね。",
+      "romaji": "doawoshimerune."
     }
   },
   {
@@ -2038,9 +2132,11 @@
       "volitional": "教えよう"
     },
     "exampleSentence": {
-      "japanese": "これは教えるです。",
-      "english": "This is to teach.",
-      "source": "mock"
+      "japanese": "トムは教える。",
+      "english": "Tom teaches.",
+      "source": "tatoeba",
+      "hiragana": "トムはおしえる。",
+      "romaji": "tomuhaoshieru."
     }
   },
   {
@@ -2084,9 +2180,11 @@
       "volitional": "覚えよう"
     },
     "exampleSentence": {
-      "japanese": "これは覚えるです。",
-      "english": "This is to memorize.",
-      "source": "mock"
+      "japanese": "覚えるの、簡単よ。",
+      "english": "It's easy to learn.",
+      "source": "tatoeba",
+      "hiragana": "おぼえるの、かんたんよ。",
+      "romaji": "oboeruno,kantan'yo."
     }
   },
   {
@@ -2129,9 +2227,11 @@
       "volitional": "忘れよう"
     },
     "exampleSentence": {
-      "japanese": "これは忘れるです。",
-      "english": "This is to forget.",
-      "source": "mock"
+      "japanese": "それを忘れる。",
+      "english": "Forget it.",
+      "source": "tatoeba",
+      "hiragana": "それをわすれる。",
+      "romaji": "sorewowasureru."
     }
   },
   {
@@ -2173,9 +2273,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはお母さんです。",
-      "english": "This is mother.",
-      "source": "mock"
+      "japanese": "お母さんは何歳？",
+      "english": "How old is Mom?",
+      "source": "tatoeba",
+      "hiragana": "おかあさんはなんさい？",
+      "romaji": "okaasanhanansai?"
     }
   },
   {
@@ -2220,9 +2322,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはお父さんです。",
-      "english": "This is father.",
-      "source": "mock"
+      "japanese": "お父さんは何て？",
+      "english": "What did dad say?",
+      "source": "tatoeba",
+      "hiragana": "おとうさんはなにて？",
+      "romaji": "otousanhananite?"
     }
   },
   {
@@ -2262,9 +2366,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは兄です。",
-      "english": "This is older brother.",
-      "source": "mock"
+      "japanese": "女兄弟はいる？",
+      "english": "Do you have any sisters?",
+      "source": "tatoeba",
+      "hiragana": "じょきょうだいはいる？",
+      "romaji": "jokyoudaihairu?"
     }
   },
   {
@@ -2305,9 +2411,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは弟です。",
-      "english": "This is younger brother.",
-      "source": "mock"
+      "japanese": "弟の名前は？",
+      "english": "What's your younger brother's name?",
+      "source": "tatoeba",
+      "hiragana": "おとうとのなまえは？",
+      "romaji": "otoutononamaeha?"
     }
   },
   {
@@ -2347,9 +2455,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは姉です。",
-      "english": "This is older sister.",
-      "source": "mock"
+      "japanese": "姉はいない。",
+      "english": "I don't have an older sister.",
+      "source": "tatoeba",
+      "hiragana": "あねはいない。",
+      "romaji": "anehainai."
     }
   },
   {
@@ -2388,9 +2498,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは妹です。",
-      "english": "This is younger sister.",
-      "source": "mock"
+      "japanese": "妹は美人だ。",
+      "english": "My sister is pretty.",
+      "source": "tatoeba",
+      "hiragana": "いもうとはびじんだ。",
+      "romaji": "imoutohabijinda."
     }
   },
   {
@@ -2430,9 +2542,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは家族です。",
-      "english": "This is family.",
-      "source": "mock"
+      "japanese": "大家族なの？",
+      "english": "Do you have a big family?",
+      "source": "tatoeba",
+      "hiragana": "だいかぞくなの？",
+      "romaji": "daikazokunano?"
     }
   },
   {
@@ -2473,9 +2587,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは両親です。",
-      "english": "This is parents.",
-      "source": "mock"
+      "japanese": "両親に電話して。",
+      "english": "Call your parents.",
+      "source": "tatoeba",
+      "hiragana": "りょうしんにでんわして。",
+      "romaji": "ryoushinnidenwashite."
     }
   },
   {
@@ -2515,9 +2631,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは祖父です。",
-      "english": "This is grandfather.",
-      "source": "mock"
+      "japanese": "私の祖父です。",
+      "english": "This is my grandfather.",
+      "source": "tatoeba",
+      "hiragana": "わたしのそふです。",
+      "romaji": "watashinosofudesu."
     }
   },
   {
@@ -2557,9 +2675,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは祖母です。",
-      "english": "This is grandmother.",
-      "source": "mock"
+      "japanese": "祖母は目が見えません。",
+      "english": "My grandmother cannot see.",
+      "source": "tatoeba",
+      "hiragana": "そぼはめがみえません。",
+      "romaji": "sobohamegamiemasen."
     }
   },
   {
@@ -2599,9 +2719,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは男です。",
-      "english": "This is man.",
-      "source": "mock"
+      "japanese": "ゲス男。",
+      "english": "Jerk.",
+      "source": "tatoeba",
+      "hiragana": "ゲスおとこ。",
+      "romaji": "gesuotoko."
     }
   },
   {
@@ -2641,9 +2763,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは女です。",
-      "english": "This is woman.",
-      "source": "mock"
+      "japanese": "女です。",
+      "english": "I'm a woman.",
+      "source": "tatoeba",
+      "hiragana": "おんなです。",
+      "romaji": "onnadesu."
     }
   },
   {
@@ -2685,9 +2809,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは男の子です。",
-      "english": "This is boy.",
-      "source": "mock"
+      "japanese": "男の子ですよ。",
+      "english": "It's a boy.",
+      "source": "tatoeba",
+      "hiragana": "おとこのこですよ。",
+      "romaji": "otokonokodesuyo."
     }
   },
   {
@@ -2729,9 +2855,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは女の子です。",
-      "english": "This is girl.",
-      "source": "mock"
+      "japanese": "この女の子は誰？",
+      "english": "Who is this girl?",
+      "source": "tatoeba",
+      "hiragana": "このおんなのこはだれ？",
+      "romaji": "konoonnanokohadare?"
     }
   },
   {
@@ -2760,9 +2888,11 @@
     ],
     "isNaAdjective": true,
     "exampleSentence": {
-      "japanese": "これは大人です。",
-      "english": "This is adult.",
-      "source": "mock"
+      "japanese": "トムは大人だ。",
+      "english": "Tom is an adult.",
+      "source": "tatoeba",
+      "hiragana": "トムはおとなだ。",
+      "romaji": "tomuhaotonada."
     }
   },
   {
@@ -2803,9 +2933,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは子供です。",
-      "english": "This is child.",
-      "source": "mock"
+      "japanese": "子供好き？",
+      "english": "Do you like kids?",
+      "source": "tatoeba",
+      "hiragana": "こどもすき？",
+      "romaji": "kodomosuki?"
     }
   },
   {
@@ -2846,9 +2978,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは人です。",
-      "english": "This is person.",
-      "source": "mock"
+      "japanese": "朝型人間？",
+      "english": "Are you a morning person?",
+      "source": "tatoeba",
+      "hiragana": "ちょうがたにんげん？",
+      "romaji": "chougataningen?"
     }
   },
   {
@@ -2889,9 +3023,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは友達です。",
-      "english": "This is friend.",
-      "source": "mock"
+      "japanese": "友達ですか？",
+      "english": "Is he a friend?",
+      "source": "tatoeba",
+      "hiragana": "ともだちですか？",
+      "romaji": "tomodachidesuka?"
     }
   },
   {
@@ -2933,9 +3069,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは先生です。",
-      "english": "This is teacher.",
-      "source": "mock"
+      "japanese": "先生なの？",
+      "english": "Are you a teacher?",
+      "source": "tatoeba",
+      "hiragana": "せんせいなの？",
+      "romaji": "senseinano?"
     }
   },
   {
@@ -2975,9 +3113,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは学生です。",
-      "english": "This is student (esp. a university student).",
-      "source": "mock"
+      "japanese": "学生？",
+      "english": "Are you a student?",
+      "source": "tatoeba",
+      "hiragana": "がくせい？",
+      "romaji": "gakusei?"
     }
   },
   {
@@ -3018,9 +3158,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは医者です。",
-      "english": "This is doctor.",
-      "source": "mock"
+      "japanese": "彼は医者だ。",
+      "english": "He is a doctor.",
+      "source": "tatoeba",
+      "hiragana": "かれはいしゃだ。",
+      "romaji": "karehaishada."
     }
   },
   {
@@ -3063,9 +3205,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは警察官です。",
-      "english": "This is police officer.",
-      "source": "mock"
+      "japanese": "トムは警察官です。",
+      "english": "Tom is a police officer.",
+      "source": "tatoeba",
+      "hiragana": "トムはけいさつかんです。",
+      "romaji": "tomuhakeisatsukandesu."
     }
   },
   {
@@ -3106,9 +3250,11 @@
       "volitional": "今ろう"
     },
     "exampleSentence": {
-      "japanese": "これは今日です。",
-      "english": "This is today.",
-      "source": "mock"
+      "japanese": "今日は。",
+      "english": "Hello!",
+      "source": "tatoeba",
+      "hiragana": "きょうは。",
+      "romaji": "kyouha."
     }
   },
   {
@@ -3148,9 +3294,11 @@
       "volitional": "明ろう"
     },
     "exampleSentence": {
-      "japanese": "これは明日です。",
-      "english": "This is tomorrow.",
-      "source": "mock"
+      "japanese": "明日暇？",
+      "english": "Are you free tomorrow?",
+      "source": "tatoeba",
+      "hiragana": "あしたひま？",
+      "romaji": "ashitahima?"
     }
   },
   {
@@ -3190,9 +3338,11 @@
       "volitional": "昨ろう"
     },
     "exampleSentence": {
-      "japanese": "これは昨日です。",
-      "english": "This is yesterday.",
-      "source": "mock"
+      "japanese": "昨日、泳いだ？",
+      "english": "Did you swim yesterday?",
+      "source": "tatoeba",
+      "hiragana": "きのう、およいだ？",
+      "romaji": "kinou,oyoida?"
     }
   },
   {
@@ -3235,9 +3385,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは今です。",
-      "english": "This is now.",
-      "source": "mock"
+      "japanese": "今すぐ！",
+      "english": "Go!",
+      "source": "tatoeba",
+      "hiragana": "いますぐ！",
+      "romaji": "imasugu!"
     }
   },
   {
@@ -3277,9 +3429,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは時間です。",
-      "english": "This is time.",
-      "source": "mock"
+      "japanese": "時間なの？",
+      "english": "Is it time?",
+      "source": "tatoeba",
+      "hiragana": "じかんなの？",
+      "romaji": "jikannano?"
     }
   },
   {
@@ -3321,9 +3475,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは時計です。",
-      "english": "This is clock.",
-      "source": "mock"
+      "japanese": "時計してる？",
+      "english": "Are you wearing a watch?",
+      "source": "tatoeba",
+      "hiragana": "とけいしてる？",
+      "romaji": "tokeishiteru?"
     }
   },
   {
@@ -3362,9 +3518,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは朝です。",
-      "english": "This is morning.",
-      "source": "mock"
+      "japanese": "朝型人間？",
+      "english": "Are you a morning person?",
+      "source": "tatoeba",
+      "hiragana": "ちょうがたにんげん？",
+      "romaji": "chougataningen?"
     }
   },
   {
@@ -3404,9 +3562,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは昼です。",
-      "english": "This is noon.",
-      "source": "mock"
+      "japanese": "昼食！",
+      "english": "Lunch break!",
+      "source": "tatoeba",
+      "hiragana": "ちゅうしょく！",
+      "romaji": "chuushoku!"
     }
   },
   {
@@ -3446,9 +3606,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは夜です。",
-      "english": "This is night.",
-      "source": "mock"
+      "japanese": "夜が来た！",
+      "english": "Night has fallen!",
+      "source": "tatoeba",
+      "hiragana": "よるがきた！",
+      "romaji": "yorugakita!"
     }
   },
   {
@@ -3489,9 +3651,11 @@
       "volitional": "毎ろう"
     },
     "exampleSentence": {
-      "japanese": "これは毎日です。",
-      "english": "This is every day.",
-      "source": "mock"
+      "japanese": "平凡な毎日さ。",
+      "english": "I live an ordinary life.",
+      "source": "tatoeba",
+      "hiragana": "へいぼんなまいにちさ。",
+      "romaji": "heibonnamainichisa."
     }
   },
   {
@@ -3531,9 +3695,11 @@
       "volitional": "毎ろう"
     },
     "exampleSentence": {
-      "japanese": "これは毎週です。",
-      "english": "This is every week.",
-      "source": "mock"
+      "japanese": "毎週それをしてるんだ。",
+      "english": "I do that every week.",
+      "source": "tatoeba",
+      "hiragana": "まいしゅうそれをしてるんだ。",
+      "romaji": "maishuusorewoshiterunda."
     }
   },
   {
@@ -3575,9 +3741,11 @@
       "volitional": "毎ろう"
     },
     "exampleSentence": {
-      "japanese": "これは毎月です。",
-      "english": "This is every month.",
-      "source": "mock"
+      "japanese": "毎月給料をもらいます。",
+      "english": "I get paid every month.",
+      "source": "tatoeba",
+      "hiragana": "まいつききゅうりょうをもらいます。",
+      "romaji": "maitsukikyuuryouwomoraimasu."
     }
   },
   {
@@ -3619,9 +3787,11 @@
       "volitional": "毎ろう"
     },
     "exampleSentence": {
-      "japanese": "これは毎年です。",
-      "english": "This is every year.",
-      "source": "mock"
+      "japanese": "毎年同じだよ。",
+      "english": "It's the same every year.",
+      "source": "tatoeba",
+      "hiragana": "まいとしおなじだよ。",
+      "romaji": "maitoshionajidayo."
     }
   },
   {
@@ -3662,9 +3832,11 @@
       "volitional": "月曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは月曜日です。",
-      "english": "This is Monday.",
-      "source": "mock"
+      "japanese": "月曜日でいい？",
+      "english": "Is Monday OK?",
+      "source": "tatoeba",
+      "hiragana": "げつようびでいい？",
+      "romaji": "getsuyoubideii?"
     }
   },
   {
@@ -3705,9 +3877,11 @@
       "volitional": "火曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは火曜日です。",
-      "english": "This is Tuesday.",
-      "source": "mock"
+      "japanese": "今日は火曜日です。",
+      "english": "Today is Tuesday.",
+      "source": "tatoeba",
+      "hiragana": "きょうはかようびです。",
+      "romaji": "kyouhakayoubidesu."
     }
   },
   {
@@ -3748,9 +3922,11 @@
       "volitional": "水曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは水曜日です。",
-      "english": "This is Wednesday.",
-      "source": "mock"
+      "japanese": "今日は水曜日です。",
+      "english": "Today is Wednesday.",
+      "source": "tatoeba",
+      "hiragana": "きょうはすいようびです。",
+      "romaji": "kyouhasuiyoubidesu."
     }
   },
   {
@@ -3791,9 +3967,11 @@
       "volitional": "木曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは木曜日です。",
-      "english": "This is Thursday.",
-      "source": "mock"
+      "japanese": "今日は木曜日です。",
+      "english": "Today is Thursday.",
+      "source": "tatoeba",
+      "hiragana": "きょうはもくようびです。",
+      "romaji": "kyouhamokuyoubidesu."
     }
   },
   {
@@ -3834,9 +4012,11 @@
       "volitional": "金曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは金曜日です。",
-      "english": "This is Friday.",
-      "source": "mock"
+      "japanese": "花の金曜日だ！",
+      "english": "Thank God it's Friday!",
+      "source": "tatoeba",
+      "hiragana": "はなのきんようびだ！",
+      "romaji": "hananokin'youbida!"
     }
   },
   {
@@ -3877,9 +4057,11 @@
       "volitional": "土曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは土曜日です。",
-      "english": "This is Saturday.",
-      "source": "mock"
+      "japanese": "土曜日だよ。",
+      "english": "It is Saturday.",
+      "source": "tatoeba",
+      "hiragana": "どようびだよ。",
+      "romaji": "doyoubidayo."
     }
   },
   {
@@ -3919,9 +4101,11 @@
       "volitional": "日曜ろう"
     },
     "exampleSentence": {
-      "japanese": "これは日曜日です。",
-      "english": "This is Sunday.",
-      "source": "mock"
+      "japanese": "日曜日、暇？",
+      "english": "Are you free on Sunday?",
+      "source": "tatoeba",
+      "hiragana": "にちようび、ひま？",
+      "romaji": "nichiyoubi,hima?"
     }
   },
   {
@@ -3960,9 +4144,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは週です。",
-      "english": "This is week.",
-      "source": "mock"
+      "japanese": "また来週！",
+      "english": "See you next week!",
+      "source": "tatoeba",
+      "hiragana": "またらいしゅう！",
+      "romaji": "mataraishuu!"
     }
   },
   {
@@ -4001,9 +4187,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは月です。",
-      "english": "This is Moon.",
-      "source": "mock"
+      "japanese": "月見て！",
+      "english": "Look at the moon.",
+      "source": "tatoeba",
+      "hiragana": "つきみて！",
+      "romaji": "tsukimite!"
     }
   },
   {
@@ -4042,9 +4230,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは年です。",
-      "english": "This is year.",
-      "source": "mock"
+      "japanese": "年末です。",
+      "english": "It's the end of the year.",
+      "source": "tatoeba",
+      "hiragana": "ねんまつです。",
+      "romaji": "nenmatsudesu."
     }
   },
   {
@@ -4084,9 +4274,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは春です。",
-      "english": "This is spring.",
-      "source": "mock"
+      "japanese": "春は曙。",
+      "english": "In spring, the dawn.",
+      "source": "tatoeba",
+      "hiragana": "はるはあけぼの。",
+      "romaji": "haruhaakebono."
     }
   },
   {
@@ -4125,9 +4317,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは夏です。",
-      "english": "This is summer.",
-      "source": "mock"
+      "japanese": "夏だね。",
+      "english": "It's summer.",
+      "source": "tatoeba",
+      "hiragana": "なつだね。",
+      "romaji": "natsudane."
     }
   },
   {
@@ -4167,9 +4361,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは秋です。",
-      "english": "This is autumn.",
-      "source": "mock"
+      "japanese": "秋ですね。",
+      "english": "Autumn is here.",
+      "source": "tatoeba",
+      "hiragana": "あきですね。",
+      "romaji": "akidesune."
     }
   },
   {
@@ -4208,9 +4404,11 @@
       "volitional": "ろう"
     },
     "exampleSentence": {
-      "japanese": "これは冬です。",
-      "english": "This is winter.",
-      "source": "mock"
+      "japanese": "冬眠したい。",
+      "english": "I want to hibernate.",
+      "source": "tatoeba",
+      "hiragana": "とうみんしたい。",
+      "romaji": "touminshitai."
     }
   },
   {
@@ -4249,9 +4447,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは水です。",
-      "english": "This is water (esp. cool or cold).",
-      "source": "mock"
+      "japanese": "水をくれ！",
+      "english": "Give me water!",
+      "source": "tatoeba",
+      "hiragana": "みずをくれ！",
+      "romaji": "mizuwokure!"
     }
   },
   {
@@ -4290,9 +4490,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはお茶です。",
-      "english": "This is tea (esp. green or barley).",
-      "source": "mock"
+      "japanese": "お茶です。",
+      "english": "It's tea.",
+      "source": "tatoeba",
+      "hiragana": "おちゃです。",
+      "romaji": "ochadesu."
     }
   },
   {
@@ -4329,9 +4531,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはコーヒーです。",
-      "english": "This is coffee.",
-      "source": "mock"
+      "japanese": "コーヒー買った？",
+      "english": "Did you get coffee?",
+      "source": "tatoeba",
+      "hiragana": "コーヒーかった？",
+      "romaji": "koohiikatta?"
     }
   },
   {
@@ -4371,9 +4575,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは牛乳です。",
-      "english": "This is (cow's) milk.",
-      "source": "mock"
+      "japanese": "牛乳を飲んだ。",
+      "english": "I drank milk.",
+      "source": "tatoeba",
+      "hiragana": "ぎゅうにゅうをのんだ。",
+      "romaji": "gyuunyuuwononda."
     }
   },
   {
@@ -4412,9 +4618,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはご飯です。",
-      "english": "This is cooked rice.",
-      "source": "mock"
+      "japanese": "ご飯！",
+      "english": "Lunch break!",
+      "source": "tatoeba",
+      "hiragana": "ごはん！",
+      "romaji": "gohan!"
     }
   },
   {
@@ -4452,9 +4660,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはパンです。",
-      "english": "This is bread.",
-      "source": "mock"
+      "japanese": "パン買ったよ。",
+      "english": "I bought some bread.",
+      "source": "tatoeba",
+      "hiragana": "パンかったよ。",
+      "romaji": "pankattayo."
     }
   },
   {
@@ -4493,9 +4703,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは肉です。",
-      "english": "This is flesh.",
-      "source": "mock"
+      "japanese": "肉が安い。",
+      "english": "The meat is cheap.",
+      "source": "tatoeba",
+      "hiragana": "にくがやすい。",
+      "romaji": "nikugayasui."
     }
   },
   {
@@ -4534,9 +4746,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは魚です。",
-      "english": "This is fish.",
-      "source": "mock"
+      "japanese": "魚、美味しい？",
+      "english": "Is the fish tasty?",
+      "source": "tatoeba",
+      "hiragana": "さかな、おいしい？",
+      "romaji": "sakana,oishii?"
     }
   },
   {
@@ -4578,9 +4792,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは卵です。",
-      "english": "This is eggs.",
-      "source": "mock"
+      "japanese": "卵はどこ。",
+      "english": "Where are the eggs?",
+      "source": "tatoeba",
+      "hiragana": "たまごはどこ。",
+      "romaji": "tamagohadoko."
     }
   },
   {
@@ -4620,9 +4836,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは野菜です。",
-      "english": "This is vegetable.",
-      "source": "mock"
+      "japanese": "茄子は野菜よ。",
+      "english": "The eggplant is a vegetable.",
+      "source": "tatoeba",
+      "hiragana": "なすびはやさいよ。",
+      "romaji": "nasubihayasaiyo."
     }
   },
   {
@@ -4662,9 +4880,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは果物です。",
-      "english": "This is fruit.",
-      "source": "mock"
+      "japanese": "好きな果物は？",
+      "english": "What's your favorite fruit?",
+      "source": "tatoeba",
+      "hiragana": "すきなくだものは？",
+      "romaji": "sukinakudamonoha?"
     }
   },
   {
@@ -4701,9 +4921,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはりんごです。",
-      "english": "This is apple (fruit).",
-      "source": "mock"
+      "japanese": "はい、りんご。",
+      "english": "Here's an apple.",
+      "source": "tatoeba",
+      "hiragana": "はい、りんご。",
+      "romaji": "hai,ringo."
     }
   },
   {
@@ -4744,9 +4966,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはみかんです。",
-      "english": "This is mandarin (esp. the satsuma mandarin (Citrus unshiu)).",
-      "source": "mock"
+      "japanese": "このみかんは食べ頃だ。",
+      "english": "These oranges are good to eat.",
+      "source": "tatoeba",
+      "hiragana": "このみかんはたべごろだ。",
+      "romaji": "konomikanhatabegoroda."
     }
   },
   {
@@ -4789,9 +5013,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはお菓子です。",
-      "english": "This is confections.",
-      "source": "mock"
+      "japanese": "お菓子買ってよ。",
+      "english": "Buy me a snack.",
+      "source": "tatoeba",
+      "hiragana": "おかしかってよ。",
+      "romaji": "okashikatteyo."
     }
   },
   {
@@ -4833,9 +5059,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは塩です。",
-      "english": "This is salt.",
-      "source": "mock"
+      "japanese": "塩ください。",
+      "english": "The salt, if you please.",
+      "source": "tatoeba",
+      "hiragana": "しおください。",
+      "romaji": "shiokudasai."
     }
   },
   {
@@ -4875,9 +5103,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは砂糖です。",
-      "english": "This is sugar.",
-      "source": "mock"
+      "japanese": "砂糖がない。",
+      "english": "We have no sugar.",
+      "source": "tatoeba",
+      "hiragana": "さとうがない。",
+      "romaji": "satouganai."
     }
   },
   {
@@ -4919,9 +5149,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは醤油です。",
-      "english": "This is soy sauce.",
-      "source": "mock"
+      "japanese": "トム、そこの醤油取って。",
+      "english": "Tom, please pass me that soy sauce.",
+      "source": "tatoeba",
+      "hiragana": "トム、そこのしょうゆとって。",
+      "romaji": "tomu,sokonoshouyutotte."
     }
   },
   {
@@ -4961,9 +5193,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは朝ご飯です。",
-      "english": "This is breakfast.",
-      "source": "mock"
+      "japanese": "朝ご飯よ！",
+      "english": "Breakfast!",
+      "source": "tatoeba",
+      "hiragana": "あさごはんよ！",
+      "romaji": "asagohan'yo!"
     }
   },
   {
@@ -5004,9 +5238,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは昼ご飯です。",
-      "english": "This is lunch.",
-      "source": "mock"
+      "japanese": "お昼ご飯中ですか？",
+      "english": "Are you eating lunch?",
+      "source": "tatoeba",
+      "hiragana": "おひるごはんちゅうですか？",
+      "romaji": "ohirugohanchuudesuka?"
     }
   },
   {
@@ -5047,9 +5283,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは晩ご飯です。",
-      "english": "This is dinner.",
-      "source": "mock"
+      "japanese": "晩ご飯は何？",
+      "english": "What's for dinner?",
+      "source": "tatoeba",
+      "hiragana": "ばんごはんはなに？",
+      "romaji": "bangohanhanani?"
     }
   },
   {
@@ -5093,9 +5331,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは食堂です。",
-      "english": "This is dining room.",
-      "source": "mock"
+      "japanese": "食堂はどこですか。",
+      "english": "Where is the cafeteria?",
+      "source": "tatoeba",
+      "hiragana": "しょくどうはどこですか。",
+      "romaji": "shokudouhadokodesuka."
     }
   },
   {
@@ -5132,9 +5372,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはレストランです。",
-      "english": "This is restaurant (esp. Western-style).",
-      "source": "mock"
+      "japanese": "レストランは満席です。",
+      "english": "The restaurant is full.",
+      "source": "tatoeba",
+      "hiragana": "レストランはまんせきです。",
+      "romaji": "resutoranhamansekidesu."
     }
   },
   {
@@ -5176,9 +5418,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは家です。",
-      "english": "This is house.",
-      "source": "mock"
+      "japanese": "家内だ。",
+      "english": "She's my wife.",
+      "source": "tatoeba",
+      "hiragana": "かないだ。",
+      "romaji": "kanaida."
     }
   },
   {
@@ -5218,9 +5462,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは学校です。",
-      "english": "This is school.",
-      "source": "mock"
+      "japanese": "学校だよ。",
+      "english": "I'm at school.",
+      "source": "tatoeba",
+      "hiragana": "がっこうだよ。",
+      "romaji": "gakkoudayo."
     }
   },
   {
@@ -5262,9 +5508,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは会社です。",
-      "english": "This is company.",
-      "source": "mock"
+      "japanese": "まだ会社なの？",
+      "english": "Are you still at the office?",
+      "source": "tatoeba",
+      "hiragana": "まだかいしゃなの？",
+      "romaji": "madakaishanano?"
     }
   },
   {
@@ -5308,9 +5556,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは病院です。",
-      "english": "This is hospital.",
-      "source": "mock"
+      "japanese": "病院に行った。",
+      "english": "I went to the hospital.",
+      "source": "tatoeba",
+      "hiragana": "びょういんにいった。",
+      "romaji": "byouinniitta."
     }
   },
   {
@@ -5351,9 +5601,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは銀行です。",
-      "english": "This is bank.",
-      "source": "mock"
+      "japanese": "銀行に行かねば。",
+      "english": "I have to go to the bank.",
+      "source": "tatoeba",
+      "hiragana": "ぎんこうにいかねば。",
+      "romaji": "ginkouniikaneba."
     }
   },
   {
@@ -5394,9 +5646,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは郵便局です。",
-      "english": "This is post office.",
-      "source": "mock"
+      "japanese": "郵便局に行くの？",
+      "english": "Are you going to the post office?",
+      "source": "tatoeba",
+      "hiragana": "ゆうびんきょくにいくの？",
+      "romaji": "yuubinkyokuniikuno?"
     }
   },
   {
@@ -5438,9 +5692,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは店です。",
-      "english": "This is store.",
-      "source": "mock"
+      "japanese": "店内で。",
+      "english": "For here, please.",
+      "source": "tatoeba",
+      "hiragana": "てんないで。",
+      "romaji": "tennaide."
     }
   },
   {
@@ -5480,9 +5736,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは駅です。",
-      "english": "This is railway station.",
-      "source": "mock"
+      "japanese": "あれが駅なの？",
+      "english": "Is that the station?",
+      "source": "tatoeba",
+      "hiragana": "あれがえきなの？",
+      "romaji": "aregaekinano?"
     }
   },
   {
@@ -5525,9 +5783,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは道です。",
-      "english": "This is road.",
-      "source": "mock"
+      "japanese": "武道が大好き！",
+      "english": "I love martial arts!",
+      "source": "tatoeba",
+      "hiragana": "ぶどうがだいすき！",
+      "romaji": "budougadaisuki!"
     }
   },
   {
@@ -5567,9 +5827,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは公園です。",
-      "english": "This is (public) park.",
-      "source": "mock"
+      "japanese": "公園で会えない？",
+      "english": "Can we meet at the park?",
+      "source": "tatoeba",
+      "hiragana": "こうえんであえない？",
+      "romaji": "kouendeaenai?"
     }
   },
   {
@@ -5612,9 +5874,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは映画館です。",
-      "english": "This is movie theatre.",
-      "source": "mock"
+      "japanese": "映画館に行きたい。",
+      "english": "I want to go to the cinema.",
+      "source": "tatoeba",
+      "hiragana": "えいがかんにいきたい。",
+      "romaji": "eigakanniikitai."
     }
   },
   {
@@ -5655,9 +5919,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは図書館です。",
-      "english": "This is library.",
-      "source": "mock"
+      "japanese": "図書館にいるの？",
+      "english": "Are you in the library?",
+      "source": "tatoeba",
+      "hiragana": "としょかんにいるの？",
+      "romaji": "toshokanniiruno?"
     }
   },
   {
@@ -5699,9 +5965,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは町です。",
-      "english": "This is town.",
-      "source": "mock"
+      "japanese": "広い町ね！",
+      "english": "What a large town!",
+      "source": "tatoeba",
+      "hiragana": "ひろいまちね！",
+      "romaji": "hiroimachine!"
     }
   },
   {
@@ -5741,9 +6009,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは国です。",
-      "english": "This is country.",
-      "source": "mock"
+      "japanese": "山国です。",
+      "english": "It's a very mountainous country.",
+      "source": "tatoeba",
+      "hiragana": "やまぐにです。",
+      "romaji": "yamagunidesu."
     }
   },
   {
@@ -5783,9 +6053,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは外国です。",
-      "english": "This is foreign country.",
-      "source": "mock"
+      "japanese": "外国人だ。",
+      "english": "I am a foreigner.",
+      "source": "tatoeba",
+      "hiragana": "がいこくじんだ。",
+      "romaji": "gaikokujinda."
     }
   },
   {
@@ -5826,9 +6098,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは車です。",
-      "english": "This is car.",
-      "source": "mock"
+      "japanese": "駐車禁止！",
+      "english": "No parking!",
+      "source": "tatoeba",
+      "hiragana": "ちゅうしゃきんし！",
+      "romaji": "chuushakinshi!"
     }
   },
   {
@@ -5869,9 +6143,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは電車です。",
-      "english": "This is train.",
-      "source": "mock"
+      "japanese": "電車来たよ。",
+      "english": "Here comes the train.",
+      "source": "tatoeba",
+      "hiragana": "でんしゃきたよ。",
+      "romaji": "denshakitayo."
     }
   },
   {
@@ -5913,9 +6189,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは自転車です。",
-      "english": "This is bicycle.",
-      "source": "mock"
+      "japanese": "自転車は？",
+      "english": "And your bike?",
+      "source": "tatoeba",
+      "hiragana": "じてんしゃは？",
+      "romaji": "jitenshaha?"
     }
   },
   {
@@ -5959,9 +6237,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは飛行機です。",
-      "english": "This is airplane.",
-      "source": "mock"
+      "japanese": "紙飛行機だよ。",
+      "english": "I made a paper plane.",
+      "source": "tatoeba",
+      "hiragana": "かみひこうきだよ。",
+      "romaji": "kamihikoukidayo."
     }
   },
   {
@@ -5998,9 +6278,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはバスです。",
-      "english": "This is bus.",
-      "source": "mock"
+      "japanese": "バスケ得意？",
+      "english": "Are you good at basketball?",
+      "source": "tatoeba",
+      "hiragana": "バスケとくい？",
+      "romaji": "basuketokui?"
     }
   },
   {
@@ -6037,9 +6319,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これはタクシーです。",
-      "english": "This is taxi.",
-      "source": "mock"
+      "japanese": "タクシー代あるの？",
+      "english": "Do you have money for a taxi?",
+      "source": "tatoeba",
+      "hiragana": "タクシーだいあるの？",
+      "romaji": "takushiidaiaruno?"
     }
   },
   {
@@ -6082,9 +6366,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは船です。",
-      "english": "This is ship.",
-      "source": "mock"
+      "japanese": "船だよ。",
+      "english": "That's definitely a boat.",
+      "source": "tatoeba",
+      "hiragana": "ふねだよ。",
+      "romaji": "funedayo."
     }
   },
   {
@@ -6127,9 +6413,11 @@
       }
     ],
     "exampleSentence": {
-      "japanese": "これは地下鉄です。",
-      "english": "This is subway.",
-      "source": "mock"
+      "japanese": "地下鉄に乗ろう。",
+      "english": "Let's take the subway.",
+      "source": "tatoeba",
+      "hiragana": "ちかてつにのろう。",
+      "romaji": "chikatetsuninorou."
     }
   },
   {
@@ -6158,9 +6446,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは大きいです。",
-      "english": "This is big.",
-      "source": "mock"
+      "japanese": "大きいね。",
+      "english": "It's big.",
+      "source": "tatoeba",
+      "hiragana": "おおきいね。",
+      "romaji": "ookiine."
     }
   },
   {
@@ -6189,9 +6479,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは小さいです。",
-      "english": "This is small.",
-      "source": "mock"
+      "japanese": "小さい！",
+      "english": "So small!",
+      "source": "tatoeba",
+      "hiragana": "ちいさい！",
+      "romaji": "chiisai!"
     }
   },
   {
@@ -6224,9 +6516,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは新しいです。",
-      "english": "This is new.",
-      "source": "mock"
+      "japanese": "それ、新しい車？",
+      "english": "Is that a new car?",
+      "source": "tatoeba",
+      "hiragana": "それ、あたらしいくるま？",
+      "romaji": "sore,atarashiikuruma?"
     }
   },
   {
@@ -6258,9 +6552,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは古いです。",
-      "english": "This is old.",
-      "source": "mock"
+      "japanese": "古い物が好きだ｡",
+      "english": "I like old things.",
+      "source": "tatoeba",
+      "hiragana": "ふるいものがすきだ｡",
+      "romaji": "furuimonogasukida｡"
     }
   },
   {
@@ -6292,9 +6588,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは良いです。",
-      "english": "This is good.",
-      "source": "mock"
+      "japanese": "良い旅を！",
+      "english": "Have a nice trip!",
+      "source": "tatoeba",
+      "hiragana": "よいたびを！",
+      "romaji": "yoitabiwo!"
     }
   },
   {
@@ -6323,9 +6621,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは悪いです。",
-      "english": "This is bad.",
-      "source": "mock"
+      "japanese": "悪い子ね！",
+      "english": "You're bad.",
+      "source": "tatoeba",
+      "hiragana": "わるいこね！",
+      "romaji": "waruikone!"
     }
   },
   {
@@ -6355,9 +6655,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは暑いです。",
-      "english": "This is hot.",
-      "source": "mock"
+      "japanese": "暑い？",
+      "english": "Is it hot?",
+      "source": "tatoeba",
+      "hiragana": "あつい？",
+      "romaji": "atsui?"
     }
   },
   {
@@ -6384,9 +6686,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは寒いです。",
-      "english": "This is cold (e.g. weather).",
-      "source": "mock"
+      "japanese": "寒いの？",
+      "english": "Are you cold?",
+      "source": "tatoeba",
+      "hiragana": "さむいの？",
+      "romaji": "samuino?"
     }
   },
   {
@@ -6413,9 +6717,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは熱いです。",
-      "english": "This is hot (to the touch).",
-      "source": "mock"
+      "japanese": "熱い？",
+      "english": "Is it hot?",
+      "source": "tatoeba",
+      "hiragana": "あつい？",
+      "romaji": "atsui?"
     }
   },
   {
@@ -6445,9 +6751,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは冷たいです。",
-      "english": "This is cold (to the touch).",
-      "source": "mock"
+      "japanese": "水は冷たい？",
+      "english": "Is the water cold?",
+      "source": "tatoeba",
+      "hiragana": "みずはつめたい？",
+      "romaji": "mizuhatsumetai?"
     }
   },
   {
@@ -6475,9 +6783,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは高いです。",
-      "english": "This is high.",
-      "source": "mock"
+      "japanese": "金は高い。",
+      "english": "Gold is expensive.",
+      "source": "tatoeba",
+      "hiragana": "きんはたかい。",
+      "romaji": "kinhatakai."
     }
   },
   {
@@ -6505,9 +6815,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは安いです。",
-      "english": "This is cheap.",
-      "source": "mock"
+      "japanese": "安いね。",
+      "english": "That's cheap, isn't it?",
+      "source": "tatoeba",
+      "hiragana": "やすいね。",
+      "romaji": "yasuine."
     }
   },
   {
@@ -6534,9 +6846,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは低いです。",
-      "english": "This is low (rank, degree, value, content, quality, etc.).",
-      "source": "mock"
+      "japanese": "血圧が低いんだ。",
+      "english": "I have low blood pressure.",
+      "source": "tatoeba",
+      "hiragana": "けつあつがひくいんだ。",
+      "romaji": "ketsuatsugahikuinda."
     }
   },
   {
@@ -6565,9 +6879,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは広いです。",
-      "english": "This is spacious.",
-      "source": "mock"
+      "japanese": "広いな！",
+      "english": "God, this place is huge!",
+      "source": "tatoeba",
+      "hiragana": "ひろいな！",
+      "romaji": "hiroina!"
     }
   },
   {
@@ -6597,9 +6913,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは狭いです。",
-      "english": "This is narrow.",
-      "source": "mock"
+      "japanese": "狭い部屋でしょ？",
+      "english": "It's a small room, isn't it?",
+      "source": "tatoeba",
+      "hiragana": "せまいへやでしょ？",
+      "romaji": "semaiheyadesho?"
     }
   },
   {
@@ -6630,9 +6948,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは難しいです。",
-      "english": "This is difficult.",
-      "source": "mock"
+      "japanese": "難しいわ。",
+      "english": "It's so hard.",
+      "source": "tatoeba",
+      "hiragana": "むずかしいわ。",
+      "romaji": "muzukashiiwa."
     }
   },
   {
@@ -6661,9 +6981,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは易しいです。",
-      "english": "This is easy.",
-      "source": "mock"
+      "japanese": "その本は易しい。",
+      "english": "The book is easy.",
+      "source": "tatoeba",
+      "hiragana": "そのほんはやさしい。",
+      "romaji": "sonohonhayasashii."
     }
   },
   {
@@ -6694,9 +7016,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは美味しいです。",
-      "english": "This is good(-tasting).",
-      "source": "mock"
+      "japanese": "美味しい！",
+      "english": "Yummy!",
+      "source": "tatoeba",
+      "hiragana": "おいしい！",
+      "romaji": "oishii!"
     }
   },
   {
@@ -6727,9 +7051,11 @@
     "strokeOrderSvgs": [],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これはまずいです。",
-      "english": "This is bad(-tasting).",
-      "source": "mock"
+      "japanese": "魚は不味い。",
+      "english": "The fish doesn't taste good.",
+      "source": "tatoeba",
+      "hiragana": "さかなはまずい。",
+      "romaji": "sakanahamazui."
     }
   },
   {
@@ -6758,9 +7084,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは忙しいです。",
-      "english": "This is busy.",
-      "source": "mock"
+      "japanese": "まだ忙しい？",
+      "english": "Are you still busy?",
+      "source": "tatoeba",
+      "hiragana": "まだいそがしい？",
+      "romaji": "madaisogashii?"
     }
   },
   {
@@ -6791,9 +7119,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは楽しいです。",
-      "english": "This is enjoyable.",
-      "source": "mock"
+      "japanese": "楽しい旅を。",
+      "english": "Enjoy your trip.",
+      "source": "tatoeba",
+      "hiragana": "たのしいたびを。",
+      "romaji": "tanoshiitabiwo."
     }
   },
   {
@@ -6824,9 +7154,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは面白いです。",
-      "english": "This is interesting.",
-      "source": "mock"
+      "japanese": "面白い。",
+      "english": "Interesting.",
+      "source": "tatoeba",
+      "hiragana": "おもしろい。",
+      "romaji": "omoshiroi."
     }
   },
   {
@@ -6854,9 +7186,11 @@
     "strokeOrderSvgs": [],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これはつまらないです。",
-      "english": "This is dull.",
-      "source": "mock"
+      "japanese": "つまらないの？",
+      "english": "Are you bored?",
+      "source": "tatoeba",
+      "hiragana": "つまらないの？",
+      "romaji": "tsumaranaino?"
     }
   },
   {
@@ -6885,9 +7219,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは近いです。",
-      "english": "This is near.",
-      "source": "mock"
+      "japanese": "４０近いはずだ。",
+      "english": "He must be nearly forty.",
+      "source": "tatoeba",
+      "hiragana": "４０ちかいはずだ。",
+      "romaji": "４０chikaihazuda."
     }
   },
   {
@@ -6918,9 +7254,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは遠いです。",
-      "english": "This is far.",
-      "source": "mock"
+      "japanese": "ここから遠いの？",
+      "english": "Is it far from here?",
+      "source": "tatoeba",
+      "hiragana": "ここからとおいの？",
+      "romaji": "kokokaratooino?"
     }
   },
   {
@@ -6953,9 +7291,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは速いです。",
-      "english": "This is fast.",
-      "source": "mock"
+      "japanese": "車は速いな。",
+      "english": "The car is fast.",
+      "source": "tatoeba",
+      "hiragana": "くるまははやいな。",
+      "romaji": "kurumahahayaina."
     }
   },
   {
@@ -6982,9 +7322,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは遅いです。",
-      "english": "This is slow.",
-      "source": "mock"
+      "japanese": "トムは遅い。",
+      "english": "Tom's late.",
+      "source": "tatoeba",
+      "hiragana": "トムはおそい。",
+      "romaji": "tomuhaosoi."
     }
   },
   {
@@ -7012,9 +7354,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは重いです。",
-      "english": "This is heavy.",
-      "source": "mock"
+      "japanese": "頭が重い。",
+      "english": "I feel heavy in the head.",
+      "source": "tatoeba",
+      "hiragana": "あたまがおもい。",
+      "romaji": "atamagaomoi."
     }
   },
   {
@@ -7042,9 +7386,11 @@
     ],
     "isNaAdjective": false,
     "exampleSentence": {
-      "japanese": "これは軽いです。",
-      "english": "This is light (i.e. not heavy).",
-      "source": "mock"
+      "japanese": "彼は口が軽い。",
+      "english": "He has a big mouth.",
+      "source": "tatoeba",
+      "hiragana": "かれはくちがかるい。",
+      "romaji": "karehakuchigakarui."
     }
   }
 ]

@@ -7,7 +7,8 @@ const state = {
   currentIndex: 0,
   isFlipped: false,
   progress: {},
-  streak: 0
+  streak: 0,
+  showKanji: true
 };
 
 // Persistence functions
@@ -105,6 +106,9 @@ function initSession(cardsArray) {
   document.getElementById('progress-bar-track').hidden = false;
 
   const card = document.getElementById('card');
+  card.style.animation = 'none';
+  void card.offsetWidth; // trigger reflow
+  card.style.animation = 'slideUp 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
   card.style.transition = 'none';
   card.style.transform = 'none';
   card.style.opacity = '1';
@@ -158,8 +162,11 @@ function render() {
     creditEl.innerHTML = '';
   }
 
-  front.querySelector('.kanji-word').textContent = current.kanji || current.hiragana;
-  front.querySelector('.hiragana-word').textContent = current.kanji ? current.hiragana : '';
+  const displayKanji = state.showKanji && current.kanji;
+  front.querySelector('.kanji-word').textContent = displayKanji ? current.kanji : current.hiragana;
+  front.querySelector('.hiragana-word').textContent = displayKanji ? current.hiragana : '';
+  const romajiFront = front.querySelector('.romaji-word-front');
+  if (romajiFront) romajiFront.textContent = current.romaji;
   
   const btnAudio = front.querySelector('.btn-audio');
   btnAudio.onclick = (e) => {
@@ -179,6 +186,11 @@ function render() {
   // Back Face
   const back = document.getElementById('card-back');
   
+  const japBack = back.querySelector('.japanese-word-back');
+  if (japBack) {
+    japBack.textContent = displayKanji ? current.kanji : current.hiragana;
+  }
+  
   back.querySelector('.romaji-word').textContent = current.romaji;
   back.querySelector('.katakana-word').textContent = current.katakana;
   back.querySelector('.meaning').textContent = current.englishMeanings.join(', ');
@@ -191,7 +203,7 @@ function render() {
   // Kanji VG
   const kanjiCont = back.querySelector('.kanji-vg-container');
   kanjiCont.innerHTML = '';
-  if (current.strokeOrderSvgs && current.strokeOrderSvgs.length > 0) {
+  if (displayKanji && current.strokeOrderSvgs && current.strokeOrderSvgs.length > 0) {
     current.strokeOrderSvgs.forEach(svgPath => {
       fetch(`public/${svgPath}`)
         .then(res => res.text())
@@ -233,7 +245,23 @@ function render() {
   const bSent = back.querySelector('.sentence-section');
   if (current.exampleSentence) {
     bSent.style.display = 'block';
-    bSent.querySelector('.sentence-japanese').textContent = current.exampleSentence.japanese;
+    
+    // Toggle kanji logic for the sentence
+    const sentJap = bSent.querySelector('.sentence-japanese');
+    sentJap.textContent = displayKanji ? 
+      current.exampleSentence.japanese : 
+      (current.exampleSentence.hiragana || current.exampleSentence.japanese);
+      
+    const sentRomaji = bSent.querySelector('.sentence-romaji');
+    if (sentRomaji) {
+      if (current.exampleSentence.romaji) {
+        sentRomaji.textContent = current.exampleSentence.romaji;
+        sentRomaji.style.display = 'block';
+      } else {
+        sentRomaji.style.display = 'none';
+      }
+    }
+    
     bSent.querySelector('.sentence-english').textContent = current.exampleSentence.english;
   } else {
     bSent.style.display = 'none';
@@ -260,6 +288,7 @@ function advanceDeck(verdict) {
   card.style.transition = 'none';
   card.style.transform = 'none';
   card.style.opacity = '1';
+  card.style.animation = 'none';
 
   const inner = document.getElementById('card-inner');
   inner.style.transition = 'none';
@@ -282,6 +311,7 @@ function judgeCard(verdict) {
   const exitX = verdict === 'know' ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
   const rot = verdict === 'know' ? 25 : -25;
   const card = document.getElementById('card');
+  card.style.animation = 'none';
   card.style.transition = 'transform 350ms ease, opacity 350ms ease';
   card.style.transform = `translateX(${exitX}px) rotate(${rot}deg)`;
   card.style.opacity = '0';
@@ -362,6 +392,7 @@ swipeCard.addEventListener('pointerdown', e => {
   isDragging = true;
   dragX = 0;
   swipeCard.setPointerCapture(e.pointerId);
+  swipeCard.style.animation = 'none';
   swipeCard.style.transition = 'none';
 });
 
@@ -415,6 +446,28 @@ document.addEventListener('keydown', e => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     loadProgress();
+    
+    const savedKanji = localStorage.getItem('flashcards_show_kanji');
+    if (savedKanji !== null) {
+      state.showKanji = savedKanji === 'true';
+    }
+    const homeToggle = document.getElementById('toggle-kanji');
+    const arenaToggle = document.getElementById('toggle-kanji-arena');
+    if (homeToggle) homeToggle.checked = state.showKanji;
+    if (arenaToggle) arenaToggle.checked = state.showKanji;
+
+    const syncToggle = (checked) => {
+      state.showKanji = checked;
+      if (homeToggle) homeToggle.checked = checked;
+      if (arenaToggle) arenaToggle.checked = checked;
+      localStorage.setItem('flashcards_show_kanji', checked);
+      if (!document.getElementById('card-arena').hidden) {
+        render();
+      }
+    };
+    if (homeToggle) homeToggle.addEventListener('change', e => syncToggle(e.target.checked));
+    if (arenaToggle) arenaToggle.addEventListener('change', e => syncToggle(e.target.checked));
+
     const res = await fetch('public/dataset.json');
     if (!res.ok) throw new Error('Network response was not ok');
     const cards = await res.json();
