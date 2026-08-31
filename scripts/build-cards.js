@@ -140,6 +140,163 @@ function conjugateVerb(base, verbType) {
   return conj;
 }
 
+function conjugateAdjective(base) {
+  // i-adjective conjugation (regular for all N5 i-adjectives, incl. いい-type read as よい here)
+  const stem = base.slice(0, -1);
+  return {
+    present: base,
+    presentPolite: base + "です",
+    past: stem + "かった",
+    pastPolite: stem + "かったです",
+    negative: stem + "くない",
+    negativePolite: stem + "くないです",
+    pastNegative: stem + "くなかった",
+    teForm: stem + "くて"
+  };
+}
+
+// Hand-curated morpheme breakdowns for compound/affixed words where the
+// pieces are meaningfully different from mechanical stem+ending splitting.
+const BREAKDOWN_BANK = {
+  "お母さん": [["お", "honorific prefix"], ["母", "mother"], ["さん", "polite title"]],
+  "お父さん": [["お", "honorific prefix"], ["父", "father"], ["さん", "polite title"]],
+  "男の子": [["男", "male"], ["の", "connector"], ["子", "child"]],
+  "女の子": [["女", "female"], ["の", "connector"], ["子", "child"]],
+  "朝ご飯": [["朝", "morning"], ["ご飯", "meal"]],
+  "昼ご飯": [["昼", "noon"], ["ご飯", "meal"]],
+  "晩ご飯": [["晩", "evening"], ["ご飯", "meal"]],
+  "警察官": [["警察", "police"], ["官", "officer"]],
+  "郵便局": [["郵便", "mail"], ["局", "bureau"]],
+  "映画館": [["映画", "movie"], ["館", "hall"]],
+  "図書館": [["図書", "books"], ["館", "hall"]],
+  "地下鉄": [["地下", "underground"], ["鉄", "rail"]],
+  "自転車": [["自", "self"], ["転", "turn"], ["車", "vehicle"]],
+  "飛行機": [["飛行", "flight"], ["機", "machine"]],
+  "外国": [["外", "outside"], ["国", "country"]],
+  "毎日": [["毎", "every"], ["日", "day"]],
+  "毎週": [["毎", "every"], ["週", "week"]],
+  "毎月": [["毎", "every"], ["月", "month"]],
+  "毎年": [["毎", "every"], ["年", "year"]],
+  "月曜日": [["月", "moon"], ["曜", "weekday"], ["日", "day"]],
+  "火曜日": [["火", "fire"], ["曜", "weekday"], ["日", "day"]],
+  "水曜日": [["水", "water"], ["曜", "weekday"], ["日", "day"]],
+  "木曜日": [["木", "tree"], ["曜", "weekday"], ["日", "day"]],
+  "金曜日": [["金", "gold"], ["曜", "weekday"], ["日", "day"]],
+  "土曜日": [["土", "earth"], ["曜", "weekday"], ["日", "day"]],
+  "日曜日": [["日", "sun"], ["曜", "weekday"], ["日", "day"]],
+  "お願いします": [["お", "honorific prefix"], ["願い", "request"], ["します", "do (polite)"]],
+  "お茶": [["お", "polite prefix"], ["茶", "tea"]],
+  "お菓子": [["お", "polite prefix"], ["菓子", "sweets"]],
+  "食堂": [["食", "eat"], ["堂", "hall"]],
+  "牛乳": [["牛", "cow"], ["乳", "milk"]]
+};
+
+function buildBreakdown(word, kanji, hiragana, partOfSpeech, verbType, isNaAdjective) {
+  if (BREAKDOWN_BANK[word]) {
+    return BREAKDOWN_BANK[word].map(([text, gloss]) => ({ text, gloss }));
+  }
+
+  const base = kanji || hiragana;
+
+  if (partOfSpeech === "verb") {
+    if (verbType === "ichidan") {
+      return [{ text: base.slice(0, -1), gloss: "stem" }, { text: "る", gloss: "dictionary-form ending" }];
+    }
+    if (verbType === "godan" && base !== "行く") {
+      return [{ text: base.slice(0, -1), gloss: "stem" }, { text: base.slice(-1), gloss: "dictionary-form ending" }];
+    }
+    return null; // irregular verbs (する, 来る, 行く) — not worth decomposing
+  }
+
+  if (partOfSpeech === "adjective" && !isNaAdjective && base.endsWith("い")) {
+    return [{ text: base.slice(0, -1), gloss: "stem" }, { text: "い", gloss: "i-adjective ending" }];
+  }
+
+  return null;
+}
+
+const VEHICLE_WORDS = new Set(["車", "電車", "自転車", "飛行機", "バス", "タクシー", "船", "地下鉄"]);
+const DRINK_WORDS = new Set(["水", "お茶", "コーヒー", "牛乳"]);
+const ANIMATE_ANIMAL_WORDS = new Set(["犬", "猫", "鳥", "牛", "馬", "豚", "動物"]);
+
+// Overrides for words where the generic per-theme particle template doesn't
+// fit naturally.
+const PARTICLE_OVERRIDES = {
+  "道": [
+    { particle: "を", phrase: "道を歩きます。", english: "I walk along the road." },
+    { particle: "に", phrase: "道に迷いました。", english: "I got lost on the way." }
+  ],
+  "雨": [
+    { particle: "が", phrase: "雨が降っています。", english: "It is raining." },
+    { particle: "を", phrase: "雨を避けます。", english: "I avoid the rain." }
+  ],
+  "雪": [
+    { particle: "が", phrase: "雪が降っています。", english: "It is snowing." },
+    { particle: "を", phrase: "雪を触ります。", english: "I touch the snow." }
+  ],
+  "風": [
+    { particle: "が", phrase: "風が強いです。", english: "The wind is strong." },
+    { particle: "を", phrase: "風を感じます。", english: "I feel the wind." }
+  ]
+};
+
+function cleanGloss(meaning) {
+  return meaning.split(/[,(]/)[0].trim();
+}
+
+function buildParticleUsage(word, theme, gloss) {
+  if (PARTICLE_OVERRIDES[word]) return PARTICLE_OVERRIDES[word];
+
+  if (theme === "Family & People") {
+    return [
+      { particle: "は", phrase: `${word}はとても優しいです。`, english: `The ${gloss} is very kind.` },
+      { particle: "と", phrase: `${word}と話しました。`, english: `I talked with the ${gloss}.` }
+    ];
+  }
+  if (theme === "Animals & Nature") {
+    const [adj, adjEn] = ANIMATE_ANIMAL_WORDS.has(word) ? ["とてもかわいいです", "very cute"] : ["とてもきれいです", "very beautiful"];
+    return [
+      { particle: "が", phrase: `${word}が${adj}。`, english: `The ${gloss} is ${adjEn}.` },
+      { particle: "を", phrase: `${word}をよく見ます。`, english: `I often see the ${gloss}.` }
+    ];
+  }
+  if (theme === "Food & Drink") {
+    const verb = DRINK_WORDS.has(word) ? "飲みます" : "食べます";
+    const verbEn = DRINK_WORDS.has(word) ? "drink" : "eat";
+    return [
+      { particle: "が", phrase: `${word}が好きです。`, english: `I like ${gloss}.` },
+      { particle: "を", phrase: `${word}を${verb}。`, english: `I ${verbEn} ${gloss}.` }
+    ];
+  }
+  if (theme === "Places & Transportation") {
+    if (VEHICLE_WORDS.has(word)) {
+      return [
+        { particle: "で", phrase: `${word}で行きます。`, english: `I go by ${gloss}.` },
+        { particle: "に", phrase: `${word}に乗ります。`, english: `I take the ${gloss}.` }
+      ];
+    }
+    return [
+      { particle: "に", phrase: `${word}に行きます。`, english: `I go to the ${gloss}.` },
+      { particle: "で", phrase: `${word}で友達に会います。`, english: `I meet my friend at the ${gloss}.` }
+    ];
+  }
+  return null;
+}
+
+// Space-segment a sentence at word boundaries (wakachigaki) using the
+// kuromoji tokenizer so learners can see where one word ends and the next
+// begins — plain Japanese text has no spaces natively.
+const NO_SPACE_BEFORE = new Set(['。', '、', '！', '？', '」', '・']);
+function wakachigaki(tokens, useReading) {
+  let out = '';
+  tokens.forEach((t, i) => {
+    const piece = useReading ? wanakana.toHiragana(t.reading || t.surface_form) : t.surface_form;
+    if (i > 0 && !NO_SPACE_BEFORE.has(piece)) out += ' ';
+    out += piece;
+  });
+  return out.trim();
+}
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 function writeDatasetSafely(cards) {
@@ -282,6 +439,17 @@ async function build() {
         card.conjugations = conjugateVerb(kanji || hiragana, verbType);
       } else if (partOfSpeech === "adjective") {
         card.isNaAdjective = isNaAdjective;
+        if (!isNaAdjective && (kanji || hiragana).endsWith("い")) {
+          card.conjugations = conjugateAdjective(kanji || hiragana);
+        }
+      }
+
+      const breakdown = buildBreakdown(word, kanji, hiragana, partOfSpeech, verbType, isNaAdjective);
+      if (breakdown) card.breakdown = breakdown;
+
+      if (partOfSpeech === "noun") {
+        const particleUsage = buildParticleUsage(kanji || hiragana, theme, cleanGloss(englishMeanings[0]));
+        if (particleUsage) card.particleUsage = particleUsage;
       }
 
       // Example sentence — hand-authored for quality, not scraped.
@@ -293,10 +461,16 @@ async function build() {
       try {
         sentenceObj.hiragana = await kuroshiro.convert(sentenceObj.japanese, { to: "hiragana" });
         sentenceObj.romaji = wanakana.toRomaji(sentenceObj.hiragana);
+
+        const tokens = await kuroshiro._analyzer.parse(sentenceObj.japanese);
+        sentenceObj.spacedJapanese = wakachigaki(tokens, false);
+        sentenceObj.spacedHiragana = wakachigaki(tokens, true);
       } catch (e) {
         console.error("Sentence conversion failed", e);
         sentenceObj.hiragana = sentenceObj.japanese;
         sentenceObj.romaji = sentenceObj.japanese;
+        sentenceObj.spacedJapanese = sentenceObj.japanese;
+        sentenceObj.spacedHiragana = sentenceObj.japanese;
       }
 
       card.exampleSentence = sentenceObj;
