@@ -264,6 +264,23 @@ button { font-family: var(--font-ui); cursor: pointer; border: none; background:
 .conj-label { font-size: 11px; color: var(--text-muted); text-transform: capitalize; font-weight: 600; }
 .conj-value { font-family: var(--font-jp); font-size: 14px; font-weight: 600; color: #E4E3EF; }
 
+/* ---------- Word breakdown ---------- */
+.breakdown-section { margin-bottom: var(--space-5); }
+.breakdown-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.breakdown-chip { display: flex; flex-direction: column; align-items: center; gap: 3px; background: rgba(79, 168, 255, 0.1); border: 1px solid rgba(79, 168, 255, 0.25); border-radius: var(--radius-sm); padding: 8px 12px; }
+.breakdown-text { font-family: var(--font-jp); font-size: 16px; font-weight: 700; color: var(--level-2); }
+.breakdown-gloss { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+.breakdown-plus { color: var(--text-faint); font-weight: 700; font-size: 14px; }
+
+/* ---------- Particle usage ---------- */
+.particle-section { margin-bottom: var(--space-5); }
+.particle-list { display: flex; flex-direction: column; gap: 10px; }
+.particle-row { display: flex; align-items: flex-start; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
+.particle-tag { flex-shrink: 0; font-family: var(--font-jp); font-size: 14px; font-weight: 700; color: var(--level-3); background: rgba(244, 183, 64, 0.12); border: 1px solid rgba(244, 183, 64, 0.3); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.particle-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.particle-phrase { font-family: var(--font-jp); font-size: 14px; font-weight: 600; color: var(--text); }
+.particle-english { font-size: 12px; }
+
 .sentence-section { margin-bottom: var(--space-4); }
 .sentence-card { background: var(--accent-soft); border: 1px solid rgba(255, 122, 89, 0.2); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); text-align: center; }
 .sentence-japanese { font-family: var(--font-jp); font-size: clamp(15px, 4.2vw, 17px); margin: 0 0 5px; font-weight: 600; color: var(--text); line-height: 1.5; }

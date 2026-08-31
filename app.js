@@ -228,11 +228,33 @@ function render() {
     setTimeout(updateScrollFade, 50);
   };
 
+  // Word breakdown (root + prefix/suffix)
+  const breakdownSec = back.querySelector('.breakdown-section');
+  breakdownSec.innerHTML = '';
+  if (current.breakdown && current.breakdown.length > 0) {
+    breakdownSec.innerHTML = '<div class="grammar-title">Word Breakdown</div>';
+    const row = document.createElement('div');
+    row.className = 'breakdown-row';
+    current.breakdown.forEach((part, i) => {
+      if (i > 0) {
+        const plus = document.createElement('span');
+        plus.className = 'breakdown-plus';
+        plus.textContent = '+';
+        row.appendChild(plus);
+      }
+      const chip = document.createElement('div');
+      chip.className = 'breakdown-chip';
+      chip.innerHTML = `<span class="breakdown-text">${part.text}</span><span class="breakdown-gloss">${part.gloss}</span>`;
+      row.appendChild(chip);
+    });
+    breakdownSec.appendChild(row);
+  }
+
   // Grammar (Conjugations)
   const grammarSec = back.querySelector('.grammar-section');
   grammarSec.innerHTML = '';
   if (current.conjugations) {
-    grammarSec.innerHTML = '<div class="grammar-title">Conjugations</div>';
+    grammarSec.innerHTML = '<div class="grammar-title">Tense &amp; Forms</div>';
     const grid = document.createElement('div');
     grid.className = 'conjugation-grid';
     const keys = ['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'];
@@ -245,6 +267,25 @@ function render() {
     grammarSec.appendChild(grid);
   }
 
+  // Particle usage
+  const particleSec = back.querySelector('.particle-section');
+  particleSec.innerHTML = '';
+  if (current.particleUsage && current.particleUsage.length > 0) {
+    particleSec.innerHTML = '<div class="grammar-title">Common Particles</div>';
+    const list = document.createElement('div');
+    list.className = 'particle-list';
+    current.particleUsage.forEach(p => {
+      list.innerHTML += `<div class="particle-row">
+                            <span class="particle-tag">${p.particle}</span>
+                            <div class="particle-text">
+                              <span class="particle-phrase">${p.phrase}</span>
+                              <span class="particle-english muted">${p.english}</span>
+                            </div>
+                          </div>`;
+    });
+    particleSec.appendChild(list);
+  }
+
   // Example Sentence
   const bSent = back.querySelector('.sentence-section');
   if (current.exampleSentence) {
@@ -252,8 +293,8 @@ function render() {
 
     const sentJap = bSent.querySelector('.sentence-japanese');
     sentJap.textContent = displayKanji ?
-      current.exampleSentence.japanese :
-      (current.exampleSentence.hiragana || current.exampleSentence.japanese);
+      (current.exampleSentence.spacedJapanese || current.exampleSentence.japanese) :
+      (current.exampleSentence.spacedHiragana || current.exampleSentence.hiragana || current.exampleSentence.japanese);
 
     const sentRomaji = bSent.querySelector('.sentence-romaji');
     if (sentRomaji) {

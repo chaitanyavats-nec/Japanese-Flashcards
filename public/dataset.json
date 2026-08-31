@@ -26,7 +26,9 @@
       "english": "One apple, please.",
       "source": "curated",
       "hiragana": "リンゴをひとつください。",
-      "romaji": "ringowohitotsukudasai."
+      "romaji": "ringowohitotsukudasai.",
+      "spacedJapanese": "リンゴ を 一つ ください。",
+      "spacedHiragana": "りんご を ひとつ ください。"
     }
   },
   {
@@ -56,7 +58,9 @@
       "english": "There are two cats.",
       "source": "curated",
       "hiragana": "ねこがにひきいます。",
-      "romaji": "nekoganihikiimasu."
+      "romaji": "nekoganihikiimasu.",
+      "spacedJapanese": "猫 が 二 匹 い ます。",
+      "spacedHiragana": "ねこ が に ひき い ます。"
     }
   },
   {
@@ -86,7 +90,9 @@
       "english": "I bought three eggs.",
       "source": "curated",
       "hiragana": "たまごをみっつかいました。",
-      "romaji": "tamagowomittsukaimashita."
+      "romaji": "tamagowomittsukaimashita.",
+      "spacedJapanese": "卵 を 三つ 買い まし た。",
+      "spacedHiragana": "たまご を みっつ かい まし た。"
     }
   },
   {
@@ -116,7 +122,9 @@
       "english": "It's four o'clock now.",
       "source": "curated",
       "hiragana": "いま、よんじです。",
-      "romaji": "ima,yonjidesu."
+      "romaji": "ima,yonjidesu.",
+      "spacedJapanese": "今、 四 時 です。",
+      "spacedHiragana": "いま、 よん じ です。"
     }
   },
   {
@@ -146,7 +154,9 @@
       "english": "There are five students in the class.",
       "source": "curated",
       "hiragana": "クラスにがくせいがごにんいます。",
-      "romaji": "kurasunigakuseigagonin'imasu."
+      "romaji": "kurasunigakuseigagonin'imasu.",
+      "spacedJapanese": "クラス に 学生 が 五 人 い ます。",
+      "spacedHiragana": "くらす に がくせい が ご にん い ます。"
     }
   },
   {
@@ -176,7 +186,9 @@
       "english": "I will go to Japan in June.",
       "source": "curated",
       "hiragana": "ろくがつににっぽんへいきます。",
-      "romaji": "rokugatsuninipponheikimasu."
+      "romaji": "rokugatsuninipponheikimasu.",
+      "spacedJapanese": "六月 に 日本 へ 行き ます。",
+      "spacedHiragana": "ろくがつ に にっぽん へ いき ます。"
     }
   },
   {
@@ -205,7 +217,9 @@
       "english": "A week has seven days.",
       "source": "curated",
       "hiragana": "いちしゅうかんはななにちです。",
-      "romaji": "ichishuukanhanananichidesu."
+      "romaji": "ichishuukanhanananichidesu.",
+      "spacedJapanese": "一 週間 は 七 日 です。",
+      "spacedHiragana": "いち しゅうかん は なな にち です。"
     }
   },
   {
@@ -235,7 +249,9 @@
       "english": "I wake up at eight o'clock.",
       "source": "curated",
       "hiragana": "はちじにおきます。",
-      "romaji": "hachijiniokimasu."
+      "romaji": "hachijiniokimasu.",
+      "spacedJapanese": "八 時 に 起き ます。",
+      "spacedHiragana": "はち じ に おき ます。"
     }
   },
   {
@@ -265,7 +281,9 @@
       "english": "I go to bed at nine o'clock.",
       "source": "curated",
       "hiragana": "きゅうじにねます。",
-      "romaji": "kyuujininemasu."
+      "romaji": "kyuujininemasu.",
+      "spacedJapanese": "九 時 に 寝 ます。",
+      "spacedHiragana": "きゅう じ に ね ます。"
     }
   },
   {
@@ -295,7 +313,9 @@
       "english": "There are ten students in this class.",
       "source": "curated",
       "hiragana": "このクラスにがくせいがじゅうにんいます。",
-      "romaji": "konokurasunigakuseigajuunin'imasu."
+      "romaji": "konokurasunigakuseigajuunin'imasu.",
+      "spacedJapanese": "この クラス に 学生 が 十 人 い ます。",
+      "spacedHiragana": "この くらす に がくせい が じゅう にん い ます。"
     }
   },
   {
@@ -325,7 +345,9 @@
       "english": "I bought an apple for 100 yen.",
       "source": "curated",
       "hiragana": "りんごをひゃくえんでかいました。",
-      "romaji": "ringowohyakuendekaimashita."
+      "romaji": "ringowohyakuendekaimashita.",
+      "spacedJapanese": "りんご を 百 円 で 買い まし た。",
+      "spacedHiragana": "りんご を ひゃく えん で かい まし た。"
     }
   },
   {
@@ -355,7 +377,9 @@
       "english": "This bag is 1000 yen.",
       "source": "curated",
       "hiragana": "このかばんはせんえんです。",
-      "romaji": "konokabanhasen'endesu."
+      "romaji": "konokabanhasen'endesu.",
+      "spacedJapanese": "この かばん は 千 円 です。",
+      "spacedHiragana": "この かばん は せん えん です。"
     }
   },
   {
@@ -384,7 +408,9 @@
       "english": "What is this?",
       "source": "curated",
       "hiragana": "これはなにですか。",
-      "romaji": "korehananidesuka."
+      "romaji": "korehananidesuka.",
+      "spacedJapanese": "これ は 何 です か。",
+      "spacedHiragana": "これ は なに です か。"
     }
   },
   {
@@ -413,7 +439,9 @@
       "english": "Who is that?",
       "source": "curated",
       "hiragana": "あれはだれですか。",
-      "romaji": "arehadaredesuka."
+      "romaji": "arehadaredesuka.",
+      "spacedJapanese": "あれ は 誰 です か。",
+      "spacedHiragana": "あれ は だれ です か。"
     }
   },
   {
@@ -441,7 +469,9 @@
       "english": "Where is the bathroom?",
       "source": "curated",
       "hiragana": "トイレはどこですか。",
-      "romaji": "toirehadokodesuka."
+      "romaji": "toirehadokodesuka.",
+      "spacedJapanese": "トイレ は どこ です か。",
+      "spacedHiragana": "といれ は どこ です か。"
     }
   },
   {
@@ -470,7 +500,9 @@
       "english": "When is your birthday?",
       "source": "curated",
       "hiragana": "たんじょうびはいつですか。",
-      "romaji": "tanjoubihaitsudesuka."
+      "romaji": "tanjoubihaitsudesuka.",
+      "spacedJapanese": "誕生 日 は い つ です か。",
+      "spacedHiragana": "たんじょう び は い つ です か。"
     }
   },
   {
@@ -499,7 +531,9 @@
       "english": "How is the weather?",
       "source": "curated",
       "hiragana": "てんきはどうですか。",
-      "romaji": "tenkihadoudesuka."
+      "romaji": "tenkihadoudesuka.",
+      "spacedJapanese": "天気 は どう です か。",
+      "spacedHiragana": "てんき は どう です か。"
     }
   },
   {
@@ -528,7 +562,9 @@
       "english": "Why were you late?",
       "source": "curated",
       "hiragana": "なぜおくれましたか。",
-      "romaji": "nazeokuremashitaka."
+      "romaji": "nazeokuremashitaka.",
+      "spacedJapanese": "なぜ 遅れ まし た か。",
+      "spacedHiragana": "なぜ おくれ まし た か。"
     }
   },
   {
@@ -558,7 +594,9 @@
       "english": "I am a student.",
       "source": "curated",
       "hiragana": "わたしはがくせいです。",
-      "romaji": "watashihagakuseidesu."
+      "romaji": "watashihagakuseidesu.",
+      "spacedJapanese": "私 は 学生 です。",
+      "spacedHiragana": "わたし は がくせい です。"
     }
   },
   {
@@ -585,7 +623,9 @@
       "english": "What is your name?",
       "source": "curated",
       "hiragana": "あなたのなまえはなにですか。",
-      "romaji": "anatanonamaehananidesuka."
+      "romaji": "anatanonamaehananidesuka.",
+      "spacedJapanese": "あなた の 名前 は 何 です か。",
+      "spacedHiragana": "あなた の なまえ は なに です か。"
     }
   },
   {
@@ -615,7 +655,9 @@
       "english": "He is a teacher.",
       "source": "curated",
       "hiragana": "かれはせんせいです。",
-      "romaji": "karehasenseidesu."
+      "romaji": "karehasenseidesu.",
+      "spacedJapanese": "彼 は 先生 です。",
+      "spacedHiragana": "かれ は せんせい です。"
     }
   },
   {
@@ -646,7 +688,9 @@
       "english": "She is a doctor.",
       "source": "curated",
       "hiragana": "かのじょはいしゃです。",
-      "romaji": "kanojohaishadesu."
+      "romaji": "kanojohaishadesu.",
+      "spacedJapanese": "彼女 は 医者 です。",
+      "spacedHiragana": "かのじょ は いしゃ です。"
     }
   },
   {
@@ -675,7 +719,9 @@
       "english": "Hello, how are you?",
       "source": "curated",
       "hiragana": "こんにちは、げんきですか。",
-      "romaji": "konnichiha,genkidesuka."
+      "romaji": "konnichiha,genkidesuka.",
+      "spacedJapanese": "こんにちは、 元気 です か。",
+      "spacedHiragana": "こんにちは、 げんき です か。"
     }
   },
   {
@@ -702,7 +748,9 @@
       "english": "Good morning, did you sleep well?",
       "source": "curated",
       "hiragana": "おはようございます、よくねむれましたか。",
-      "romaji": "ohayougozaimasu,yokunemuremashitaka."
+      "romaji": "ohayougozaimasu,yokunemuremashitaka.",
+      "spacedJapanese": "おはよう ござい ます、 よく 眠れ まし た か。",
+      "spacedHiragana": "おはよう ござい ます、 よく ねむれ まし た か。"
     }
   },
   {
@@ -729,7 +777,9 @@
       "english": "Good evening, how was your day?",
       "source": "curated",
       "hiragana": "こんばんは、きょうはどうでしたか。",
-      "romaji": "konbanha,kyouhadoudeshitaka."
+      "romaji": "konbanha,kyouhadoudeshitaka.",
+      "spacedJapanese": "こんばんは、 今日 は どう でし た か。",
+      "spacedHiragana": "こんばんは、 きょう は どう でし た か。"
     }
   },
   {
@@ -757,7 +807,9 @@
       "english": "Thank you for helping me.",
       "source": "curated",
       "hiragana": "てつだってくれてありがとう。",
-      "romaji": "tetsudattekuretearigatou."
+      "romaji": "tetsudattekuretearigatou.",
+      "spacedJapanese": "手伝っ て くれ て ありがとう。",
+      "spacedHiragana": "てつだっ て くれ て ありがとう。"
     }
   },
   {
@@ -787,7 +839,9 @@
       "english": "Excuse me, what time is it now?",
       "source": "curated",
       "hiragana": "すみません、いまなんじですか。",
-      "romaji": "sumimasen,imananjidesuka."
+      "romaji": "sumimasen,imananjidesuka.",
+      "spacedJapanese": "すみません、 今 何 時 です か。",
+      "spacedHiragana": "すみません、 いま なん じ です か。"
     }
   },
   {
@@ -817,7 +871,9 @@
       "english": "See you tomorrow, goodbye.",
       "source": "curated",
       "hiragana": "またあした、さようなら。",
-      "romaji": "mataashita,sayounara."
+      "romaji": "mataashita,sayounara.",
+      "spacedJapanese": "また 明日、 さようなら。",
+      "spacedHiragana": "また あした、 さようなら。"
     }
   },
   {
@@ -845,7 +901,9 @@
       "english": "Yes, I understand.",
       "source": "curated",
       "hiragana": "はい、わかりました。",
-      "romaji": "hai,wakarimashita."
+      "romaji": "hai,wakarimashita.",
+      "spacedJapanese": "はい、 分かり まし た。",
+      "spacedHiragana": "はい、 わかり まし た。"
     }
   },
   {
@@ -872,7 +930,9 @@
       "english": "No, that's not right.",
       "source": "curated",
       "hiragana": "いいえ、それはちがいます。",
-      "romaji": "iie,sorehachigaimasu."
+      "romaji": "iie,sorehachigaimasu.",
+      "spacedJapanese": "いいえ、 それ は 違い ます。",
+      "spacedHiragana": "いいえ、 それ は ちがい ます。"
     }
   },
   {
@@ -896,12 +956,28 @@
     "strokeOrderSvgs": [
       "kanjivg/09858.svg"
     ],
+    "breakdown": [
+      {
+        "text": "お",
+        "gloss": "honorific prefix"
+      },
+      {
+        "text": "願い",
+        "gloss": "request"
+      },
+      {
+        "text": "します",
+        "gloss": "do (polite)"
+      }
+    ],
     "exampleSentence": {
       "japanese": "水をお願いします。",
       "english": "Water, please.",
       "source": "curated",
       "hiragana": "みずをおねがいします。",
-      "romaji": "mizuwoonegaishimasu."
+      "romaji": "mizuwoonegaishimasu.",
+      "spacedJapanese": "水 を お願い し ます。",
+      "spacedHiragana": "みず を おねがい し ます。"
     }
   },
   {
@@ -943,7 +1019,9 @@
       "english": "I do my homework every day.",
       "source": "curated",
       "hiragana": "まいにち、しゅくだいをします。",
-      "romaji": "mainichi,shukudaiwoshimasu."
+      "romaji": "mainichi,shukudaiwoshimasu.",
+      "spacedJapanese": "毎日、 宿題 を し ます。",
+      "spacedHiragana": "まいにち、 しゅくだい を し ます。"
     }
   },
   {
@@ -988,7 +1066,9 @@
       "english": "I will go to school tomorrow.",
       "source": "curated",
       "hiragana": "あした、がっこうにいきます。",
-      "romaji": "ashita,gakkouniikimasu."
+      "romaji": "ashita,gakkouniikimasu.",
+      "spacedJapanese": "明日、 学校 に 行き ます。",
+      "spacedHiragana": "あした、 がっこう に いき ます。"
     }
   },
   {
@@ -1032,7 +1112,9 @@
       "english": "My friend is coming to my house.",
       "source": "curated",
       "hiragana": "ともだちがいえにきます。",
-      "romaji": "tomodachigaienikimasu."
+      "romaji": "tomodachigaienikimasu.",
+      "spacedJapanese": "友達 が 家 に 来 ます。",
+      "spacedHiragana": "ともだち が いえ に き ます。"
     }
   },
   {
@@ -1069,12 +1151,24 @@
       "potential": "食べられる",
       "volitional": "食べよう"
     },
+    "breakdown": [
+      {
+        "text": "食べ",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "朝ご飯にパンを食べます。",
       "english": "I eat bread for breakfast.",
       "source": "curated",
       "hiragana": "あさごはんにパンをたべます。",
-      "romaji": "asagohannipanwotabemasu."
+      "romaji": "asagohannipanwotabemasu.",
+      "spacedJapanese": "朝 ご飯 に パン を 食べ ます。",
+      "spacedHiragana": "あさ ごはん に ぱん を たべ ます。"
     }
   },
   {
@@ -1113,12 +1207,24 @@
       "potential": "飲める",
       "volitional": "飲もう"
     },
+    "breakdown": [
+      {
+        "text": "飲",
+        "gloss": "stem"
+      },
+      {
+        "text": "む",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎朝、コーヒーを飲みます。",
       "english": "I drink coffee every morning.",
       "source": "curated",
       "hiragana": "まいあさ、コーヒーをのみます。",
-      "romaji": "maiasa,koohiiwonomimasu."
+      "romaji": "maiasa,koohiiwonomimasu.",
+      "spacedJapanese": "毎朝、 コーヒー を 飲み ます。",
+      "spacedHiragana": "まいあさ、 こうひい を のみ ます。"
     }
   },
   {
@@ -1159,12 +1265,24 @@
       "potential": "見られる",
       "volitional": "見よう"
     },
+    "breakdown": [
+      {
+        "text": "見",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "夜、テレビを見ます。",
       "english": "I watch TV at night.",
       "source": "curated",
       "hiragana": "よる、テレビをみます。",
-      "romaji": "yoru,terebiwomimasu."
+      "romaji": "yoru,terebiwomimasu.",
+      "spacedJapanese": "夜、 テレビ を 見 ます。",
+      "spacedHiragana": "よる、 てれび を み ます。"
     }
   },
   {
@@ -1204,12 +1322,24 @@
       "potential": "話せる",
       "volitional": "話そう"
     },
+    "breakdown": [
+      {
+        "text": "話",
+        "gloss": "stem"
+      },
+      {
+        "text": "す",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "友達と日本語で話します。",
       "english": "I talk with my friend in Japanese.",
       "source": "curated",
       "hiragana": "ともだちとにほんごではなします。",
-      "romaji": "tomodachitonihongodehanashimasu."
+      "romaji": "tomodachitonihongodehanashimasu.",
+      "spacedJapanese": "友達 と 日本語 で 話し ます。",
+      "spacedHiragana": "ともだち と にほんご で はなし ます。"
     }
   },
   {
@@ -1246,12 +1376,24 @@
       "potential": "聞ける",
       "volitional": "聞こう"
     },
+    "breakdown": [
+      {
+        "text": "聞",
+        "gloss": "stem"
+      },
+      {
+        "text": "く",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "音楽を聞くのが好きです。",
       "english": "I like listening to music.",
       "source": "curated",
       "hiragana": "おんがくをきくのがすきです。",
-      "romaji": "ongakuwokikunogasukidesu."
+      "romaji": "ongakuwokikunogasukidesu.",
+      "spacedJapanese": "音楽 を 聞く の が 好き です。",
+      "spacedHiragana": "おんがく を きく の が すき です。"
     }
   },
   {
@@ -1278,12 +1420,40 @@
     "strokeOrderSvgs": [
       "kanjivg/06bcd.svg"
     ],
+    "breakdown": [
+      {
+        "text": "お",
+        "gloss": "honorific prefix"
+      },
+      {
+        "text": "母",
+        "gloss": "mother"
+      },
+      {
+        "text": "さん",
+        "gloss": "polite title"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "お母さんはとても優しいです。",
+        "english": "The mother is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "お母さんと話しました。",
+        "english": "I talked with the mother."
+      }
+    ],
     "exampleSentence": {
       "japanese": "私のお母さんは料理が上手です。",
       "english": "My mother is good at cooking.",
       "source": "curated",
       "hiragana": "わたしのおかあさんはりょうりがじょうずです。",
-      "romaji": "watashinookaasanharyourigajouzudesu."
+      "romaji": "watashinookaasanharyourigajouzudesu.",
+      "spacedJapanese": "私 の お母さん は 料理 が 上手 です。",
+      "spacedHiragana": "わたし の おかあさん は りょうり が じょうず です。"
     }
   },
   {
@@ -1313,12 +1483,40 @@
     "strokeOrderSvgs": [
       "kanjivg/07236.svg"
     ],
+    "breakdown": [
+      {
+        "text": "お",
+        "gloss": "honorific prefix"
+      },
+      {
+        "text": "父",
+        "gloss": "father"
+      },
+      {
+        "text": "さん",
+        "gloss": "polite title"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "お父さんはとても優しいです。",
+        "english": "The father is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "お父さんと話しました。",
+        "english": "I talked with the father."
+      }
+    ],
     "exampleSentence": {
       "japanese": "お父さんは会社で働いています。",
       "english": "My father works at a company.",
       "source": "curated",
       "hiragana": "おとうさんはかいしゃではたらいています。",
-      "romaji": "otousanhakaishadehataraiteimasu."
+      "romaji": "otousanhakaishadehataraiteimasu.",
+      "spacedJapanese": "お父さん は 会社 で 働い て い ます。",
+      "spacedHiragana": "おとうさん は かいしゃ で はたらい て い ます。"
     }
   },
   {
@@ -1343,12 +1541,26 @@
     "strokeOrderSvgs": [
       "kanjivg/07537.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "男はとても優しいです。",
+        "english": "The man is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "男と話しました。",
+        "english": "I talked with the man."
+      }
+    ],
     "exampleSentence": {
       "japanese": "あの男は誰ですか。",
       "english": "Who is that man?",
       "source": "curated",
       "hiragana": "あのおとこはだれですか。",
-      "romaji": "anootokohadaredesuka."
+      "romaji": "anootokohadaredesuka.",
+      "spacedJapanese": "あの 男 は 誰 です か。",
+      "spacedHiragana": "あの おとこ は だれ です か。"
     }
   },
   {
@@ -1373,12 +1585,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05973.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "女はとても優しいです。",
+        "english": "The woman is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "女と話しました。",
+        "english": "I talked with the woman."
+      }
+    ],
     "exampleSentence": {
       "japanese": "この女の人は先生です。",
       "english": "This woman is a teacher.",
       "source": "curated",
       "hiragana": "このおんなのひとはせんせいです。",
-      "romaji": "konoonnanohitohasenseidesu."
+      "romaji": "konoonnanohitohasenseidesu.",
+      "spacedJapanese": "この 女 の 人 は 先生 です。",
+      "spacedHiragana": "この おんな の ひと は せんせい です。"
     }
   },
   {
@@ -1404,12 +1630,26 @@
       "kanjivg/05b50.svg",
       "kanjivg/04f9b.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "子供はとても優しいです。",
+        "english": "The child is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "子供と話しました。",
+        "english": "I talked with the child."
+      }
+    ],
     "exampleSentence": {
       "japanese": "公園で子供が遊んでいます。",
       "english": "Children are playing in the park.",
       "source": "curated",
       "hiragana": "こうえんでこどもがあそんでいます。",
-      "romaji": "kouendekodomogaasondeimasu."
+      "romaji": "kouendekodomogaasondeimasu.",
+      "spacedJapanese": "公園 で 子供 が 遊ん で い ます。",
+      "spacedHiragana": "こうえん で こども が あそん で い ます。"
     }
   },
   {
@@ -1435,12 +1675,26 @@
     "strokeOrderSvgs": [
       "kanjivg/04eba.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "人はとても優しいです。",
+        "english": "The person is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "人と話しました。",
+        "english": "I talked with the person."
+      }
+    ],
     "exampleSentence": {
       "japanese": "この町にはたくさんの人がいます。",
       "english": "There are many people in this town.",
       "source": "curated",
       "hiragana": "このまちにはたくさんのひとがいます。",
-      "romaji": "konomachinihatakusannohitogaimasu."
+      "romaji": "konomachinihatakusannohitogaimasu.",
+      "spacedJapanese": "この 町 に は たくさん の 人 が い ます。",
+      "spacedHiragana": "この まち に は たくさん の ひと が い ます。"
     }
   },
   {
@@ -1466,12 +1720,26 @@
       "kanjivg/053cb.svg",
       "kanjivg/09054.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "友達はとても優しいです。",
+        "english": "The friend is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "友達と話しました。",
+        "english": "I talked with the friend."
+      }
+    ],
     "exampleSentence": {
       "japanese": "友達と映画を見ました。",
       "english": "I watched a movie with my friend.",
       "source": "curated",
       "hiragana": "ともだちとえいがをみました。",
-      "romaji": "tomodachitoeigawomimashita."
+      "romaji": "tomodachitoeigawomimashita.",
+      "spacedJapanese": "友達 と 映画 を 見 まし た。",
+      "spacedHiragana": "ともだち と えいが を み まし た。"
     }
   },
   {
@@ -1508,12 +1776,24 @@
       "potential": "寝られる",
       "volitional": "寝よう"
     },
+    "breakdown": [
+      {
+        "text": "寝",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎晩十時に寝ます。",
       "english": "I go to sleep at ten every night.",
       "source": "curated",
       "hiragana": "まいばんじゅうじにねます。",
-      "romaji": "maibanjuujininemasu."
+      "romaji": "maibanjuujininemasu.",
+      "spacedJapanese": "毎晩 十 時 に 寝 ます。",
+      "spacedHiragana": "まいばん じゅう じ に ね ます。"
     }
   },
   {
@@ -1552,12 +1832,24 @@
       "potential": "起きられる",
       "volitional": "起きよう"
     },
+    "breakdown": [
+      {
+        "text": "起き",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "朝六時に起きます。",
       "english": "I wake up at six in the morning.",
       "source": "curated",
       "hiragana": "あさろくじにおきます。",
-      "romaji": "asarokujiniokimasu."
+      "romaji": "asarokujiniokimasu.",
+      "spacedJapanese": "朝 六 時 に 起き ます。",
+      "spacedHiragana": "あさ ろく じ に おき ます。"
     }
   },
   {
@@ -1594,12 +1886,24 @@
       "potential": "読める",
       "volitional": "読もう"
     },
+    "breakdown": [
+      {
+        "text": "読",
+        "gloss": "stem"
+      },
+      {
+        "text": "む",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "図書館で本を読みます。",
       "english": "I read a book at the library.",
       "source": "curated",
       "hiragana": "としょかんでほんをよみます。",
-      "romaji": "toshokandehonwoyomimasu."
+      "romaji": "toshokandehonwoyomimasu.",
+      "spacedJapanese": "図書館 で 本 を 読み ます。",
+      "spacedHiragana": "としょかん で ほん を よみ ます。"
     }
   },
   {
@@ -1638,12 +1942,24 @@
       "potential": "書ける",
       "volitional": "書こう"
     },
+    "breakdown": [
+      {
+        "text": "書",
+        "gloss": "stem"
+      },
+      {
+        "text": "く",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "手紙を書いています。",
       "english": "I am writing a letter.",
       "source": "curated",
       "hiragana": "てがみをかいています。",
-      "romaji": "tegamiwokaiteimasu."
+      "romaji": "tegamiwokaiteimasu.",
+      "spacedJapanese": "手紙 を 書い て い ます。",
+      "spacedHiragana": "てがみ を かい て い ます。"
     }
   },
   {
@@ -1681,12 +1997,24 @@
       "potential": "買える",
       "volitional": "買おう"
     },
+    "breakdown": [
+      {
+        "text": "買",
+        "gloss": "stem"
+      },
+      {
+        "text": "う",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "スーパーで果物を買います。",
       "english": "I buy fruit at the supermarket.",
       "source": "curated",
       "hiragana": "スーパーでくだものをかいます。",
-      "romaji": "suupaadekudamonowokaimasu."
+      "romaji": "suupaadekudamonowokaimasu.",
+      "spacedJapanese": "スーパー で 果物 を 買い ます。",
+      "spacedHiragana": "すうぱあ で くだもの を かい ます。"
     }
   },
   {
@@ -1725,12 +2053,24 @@
       "potential": "会える",
       "volitional": "会おう"
     },
+    "breakdown": [
+      {
+        "text": "会",
+        "gloss": "stem"
+      },
+      {
+        "text": "う",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "明日、友達に会います。",
       "english": "I will meet my friend tomorrow.",
       "source": "curated",
       "hiragana": "あした、ともだちにあいます。",
-      "romaji": "ashita,tomodachiniaimasu."
+      "romaji": "ashita,tomodachiniaimasu.",
+      "spacedJapanese": "明日、 友達 に 会い ます。",
+      "spacedHiragana": "あした、 ともだち に あい ます。"
     }
   },
   {
@@ -1767,12 +2107,24 @@
       "potential": "待てる",
       "volitional": "待とう"
     },
+    "breakdown": [
+      {
+        "text": "待",
+        "gloss": "stem"
+      },
+      {
+        "text": "つ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "駅で友達を待っています。",
       "english": "I am waiting for my friend at the station.",
       "source": "curated",
       "hiragana": "えきでともだちをまっています。",
-      "romaji": "ekidetomodachiwomatteimasu."
+      "romaji": "ekidetomodachiwomatteimasu.",
+      "spacedJapanese": "駅 で 友達 を 待っ て い ます。",
+      "spacedHiragana": "えき で ともだち を まっ て い ます。"
     }
   },
   {
@@ -1813,12 +2165,24 @@
       "potential": "立てる",
       "volitional": "立とう"
     },
+    "breakdown": [
+      {
+        "text": "立",
+        "gloss": "stem"
+      },
+      {
+        "text": "つ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "バスの中でずっと立っていました。",
       "english": "I was standing the whole time on the bus.",
       "source": "curated",
       "hiragana": "バスのなかでずっとたっていました。",
-      "romaji": "basunonakadezuttotatteimashita."
+      "romaji": "basunonakadezuttotatteimashita.",
+      "spacedJapanese": "バス の 中 で ずっと 立っ て い まし た。",
+      "spacedHiragana": "ばす の なか で ずっと たっ て い まし た。"
     }
   },
   {
@@ -1858,12 +2222,24 @@
       "potential": "座れる",
       "volitional": "座ろう"
     },
+    "breakdown": [
+      {
+        "text": "座",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "どうぞ、こちらに座ってください。",
       "english": "Please, sit here.",
       "source": "curated",
       "hiragana": "どうぞ、こちらにすわってください。",
-      "romaji": "douzo,kochiranisuwattekudasai."
+      "romaji": "douzo,kochiranisuwattekudasai.",
+      "spacedJapanese": "どうぞ、 こちら に 座っ て ください。",
+      "spacedHiragana": "どうぞ、 こちら に すわっ て ください。"
     }
   },
   {
@@ -1905,12 +2281,24 @@
       "potential": "分かれる",
       "volitional": "分かろう"
     },
+    "breakdown": [
+      {
+        "text": "分か",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この問題が分かりません。",
       "english": "I don't understand this problem.",
       "source": "curated",
       "hiragana": "このもんだいがわかりません。",
-      "romaji": "konomondaigawakarimasen."
+      "romaji": "konomondaigawakarimasen.",
+      "spacedJapanese": "この 問題 が 分かり ませ ん。",
+      "spacedHiragana": "この もんだい が わかり ませ ん。"
     }
   },
   {
@@ -1950,12 +2338,24 @@
       "potential": "帰れる",
       "volitional": "帰ろう"
     },
+    "breakdown": [
+      {
+        "text": "帰",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "六時に家に帰ります。",
       "english": "I will go home at six o'clock.",
       "source": "curated",
       "hiragana": "ろくじにいえにかえります。",
-      "romaji": "rokujiniienikaerimasu."
+      "romaji": "rokujiniienikaerimasu.",
+      "spacedJapanese": "六 時 に 家 に 帰り ます。",
+      "spacedHiragana": "ろく じ に いえ に かえり ます。"
     }
   },
   {
@@ -1980,12 +2380,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05144.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "兄はとても優しいです。",
+        "english": "The older brother is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "兄と話しました。",
+        "english": "I talked with the older brother."
+      }
+    ],
     "exampleSentence": {
       "japanese": "兄はサッカーが上手です。",
       "english": "My older brother is good at soccer.",
       "source": "curated",
       "hiragana": "あにはサッカーがじょうずです。",
-      "romaji": "anihasakkaagajouzudesu."
+      "romaji": "anihasakkaagajouzudesu.",
+      "spacedJapanese": "兄 は サッカー が 上手 です。",
+      "spacedHiragana": "あに は さっかあ が じょうず です。"
     }
   },
   {
@@ -2011,12 +2425,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05f1f.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "弟はとても優しいです。",
+        "english": "The younger brother is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "弟と話しました。",
+        "english": "I talked with the younger brother."
+      }
+    ],
     "exampleSentence": {
       "japanese": "弟はまだ小学生です。",
       "english": "My younger brother is still in elementary school.",
       "source": "curated",
       "hiragana": "おとうとはまだしょうがくせいです。",
-      "romaji": "otoutohamadashougakuseidesu."
+      "romaji": "otoutohamadashougakuseidesu.",
+      "spacedJapanese": "弟 は まだ 小学生 です。",
+      "spacedHiragana": "おとうと は まだ しょうがくせい です。"
     }
   },
   {
@@ -2041,12 +2469,26 @@
     "strokeOrderSvgs": [
       "kanjivg/059c9.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "姉はとても優しいです。",
+        "english": "The older sister is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "姉と話しました。",
+        "english": "I talked with the older sister."
+      }
+    ],
     "exampleSentence": {
       "japanese": "姉は東京で働いています。",
       "english": "My older sister works in Tokyo.",
       "source": "curated",
       "hiragana": "あねはとうきょうではたらいています。",
-      "romaji": "anehatoukyoudehataraiteimasu."
+      "romaji": "anehatoukyoudehataraiteimasu.",
+      "spacedJapanese": "姉 は 東京 で 働い て い ます。",
+      "spacedHiragana": "あね は とうきょう で はたらい て い ます。"
     }
   },
   {
@@ -2070,12 +2512,26 @@
     "strokeOrderSvgs": [
       "kanjivg/059b9.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "妹はとても優しいです。",
+        "english": "The younger sister is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "妹と話しました。",
+        "english": "I talked with the younger sister."
+      }
+    ],
     "exampleSentence": {
       "japanese": "妹はピアノを習っています。",
       "english": "My younger sister is learning piano.",
       "source": "curated",
       "hiragana": "いもうとはピアノをならっています。",
-      "romaji": "imoutohapianowonaratteimasu."
+      "romaji": "imoutohapianowonaratteimasu.",
+      "spacedJapanese": "妹 は ピアノ を 習っ て い ます。",
+      "spacedHiragana": "いもうと は ぴあの を ならっ て い ます。"
     }
   },
   {
@@ -2100,12 +2556,26 @@
       "kanjivg/05bb6.svg",
       "kanjivg/065cf.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "家族はとても優しいです。",
+        "english": "The family is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "家族と話しました。",
+        "english": "I talked with the family."
+      }
+    ],
     "exampleSentence": {
       "japanese": "私の家族は五人です。",
       "english": "There are five people in my family.",
       "source": "curated",
       "hiragana": "わたしのかぞくはごにんです。",
-      "romaji": "watashinokazokuhagonindesu."
+      "romaji": "watashinokazokuhagonindesu.",
+      "spacedJapanese": "私 の 家族 は 五 人 です。",
+      "spacedHiragana": "わたし の かぞく は ご にん です。"
     }
   },
   {
@@ -2131,12 +2601,26 @@
       "kanjivg/04e21.svg",
       "kanjivg/089aa.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "両親はとても優しいです。",
+        "english": "The parents is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "両親と話しました。",
+        "english": "I talked with the parents."
+      }
+    ],
     "exampleSentence": {
       "japanese": "両親は大阪に住んでいます。",
       "english": "My parents live in Osaka.",
       "source": "curated",
       "hiragana": "りょうしんはおおさかにすんでいます。",
-      "romaji": "ryoushinhaoosakanisundeimasu."
+      "romaji": "ryoushinhaoosakanisundeimasu.",
+      "spacedJapanese": "両親 は 大阪 に 住ん で い ます。",
+      "spacedHiragana": "りょうしん は おおさか に すん で い ます。"
     }
   },
   {
@@ -2161,12 +2645,26 @@
       "kanjivg/07956.svg",
       "kanjivg/07236.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "祖父はとても優しいです。",
+        "english": "The grandfather is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "祖父と話しました。",
+        "english": "I talked with the grandfather."
+      }
+    ],
     "exampleSentence": {
       "japanese": "祖父は毎朝散歩します。",
       "english": "My grandfather takes a walk every morning.",
       "source": "curated",
       "hiragana": "そふはまいあささんぽします。",
-      "romaji": "sofuhamaiasasanposhimasu."
+      "romaji": "sofuhamaiasasanposhimasu.",
+      "spacedJapanese": "祖父 は 毎朝 散歩 し ます。",
+      "spacedHiragana": "そふ は まいあさ さんぽ し ます。"
     }
   },
   {
@@ -2191,12 +2689,26 @@
       "kanjivg/07956.svg",
       "kanjivg/06bcd.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "祖母はとても優しいです。",
+        "english": "The grandmother is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "祖母と話しました。",
+        "english": "I talked with the grandmother."
+      }
+    ],
     "exampleSentence": {
       "japanese": "祖母はお菓子を作るのが得意です。",
       "english": "My grandmother is good at making sweets.",
       "source": "curated",
       "hiragana": "そぼはおかしをつくるのがとくいです。",
-      "romaji": "sobohaokashiwotsukurunogatokuidesu."
+      "romaji": "sobohaokashiwotsukurunogatokuidesu.",
+      "spacedJapanese": "祖母 は お菓子 を 作る の が 得意 です。",
+      "spacedHiragana": "そぼ は おかし を つくる の が とくい です。"
     }
   },
   {
@@ -2223,12 +2735,28 @@
       "kanjivg/07537.svg",
       "kanjivg/05b50.svg"
     ],
+    "breakdown": [
+      {
+        "text": "男",
+        "gloss": "male"
+      },
+      {
+        "text": "の",
+        "gloss": "connector"
+      },
+      {
+        "text": "子",
+        "gloss": "child"
+      }
+    ],
     "exampleSentence": {
       "japanese": "あの男の子は元気ですね。",
       "english": "That boy is energetic, isn't he.",
       "source": "curated",
       "hiragana": "あのおとこのこはげんきですね。",
-      "romaji": "anootokonokohagenkidesune."
+      "romaji": "anootokonokohagenkidesune.",
+      "spacedJapanese": "あの 男の子 は 元気 です ね。",
+      "spacedHiragana": "あの おとこのこ は げんき です ね。"
     }
   },
   {
@@ -2255,12 +2783,28 @@
       "kanjivg/05973.svg",
       "kanjivg/05b50.svg"
     ],
+    "breakdown": [
+      {
+        "text": "女",
+        "gloss": "female"
+      },
+      {
+        "text": "の",
+        "gloss": "connector"
+      },
+      {
+        "text": "子",
+        "gloss": "child"
+      }
+    ],
     "exampleSentence": {
       "japanese": "あの女の子はかわいいです。",
       "english": "That girl is cute.",
       "source": "curated",
       "hiragana": "あのおんなのこはかわいいです。",
-      "romaji": "anoonnanokohakawaiidesu."
+      "romaji": "anoonnanokohakawaiidesu.",
+      "spacedJapanese": "あの 女の子 は かわいい です。",
+      "spacedHiragana": "あの おんなのこ は かわいい です。"
     }
   },
   {
@@ -2292,7 +2836,9 @@
       "english": "Two adult tickets, please.",
       "source": "curated",
       "hiragana": "このチケットはおとなにまいください。",
-      "romaji": "konochikettohaotonanimaikudasai."
+      "romaji": "konochikettohaotonanimaikudasai.",
+      "spacedJapanese": "この チケット は 大人 二 枚 ください。",
+      "spacedHiragana": "この ちけっと は おとな に まい ください。"
     }
   },
   {
@@ -2319,12 +2865,26 @@
       "kanjivg/05148.svg",
       "kanjivg/0751f.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "先生はとても優しいです。",
+        "english": "The teacher is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "先生と話しました。",
+        "english": "I talked with the teacher."
+      }
+    ],
     "exampleSentence": {
       "japanese": "先生に質問しました。",
       "english": "I asked the teacher a question.",
       "source": "curated",
       "hiragana": "せんせいにしつもんしました。",
-      "romaji": "senseinishitsumonshimashita."
+      "romaji": "senseinishitsumonshimashita.",
+      "spacedJapanese": "先生 に 質問 し まし た。",
+      "spacedHiragana": "せんせい に しつもん し まし た。"
     }
   },
   {
@@ -2349,12 +2909,26 @@
       "kanjivg/05b66.svg",
       "kanjivg/0751f.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "学生はとても優しいです。",
+        "english": "The student is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "学生と話しました。",
+        "english": "I talked with the student."
+      }
+    ],
     "exampleSentence": {
       "japanese": "私は大学の学生です。",
       "english": "I am a university student.",
       "source": "curated",
       "hiragana": "わたしはだいがくのがくせいです。",
-      "romaji": "watashihadaigakunogakuseidesu."
+      "romaji": "watashihadaigakunogakuseidesu.",
+      "spacedJapanese": "私 は 大学 の 学生 です。",
+      "spacedHiragana": "わたし は だいがく の がくせい です。"
     }
   },
   {
@@ -2380,12 +2954,26 @@
       "kanjivg/0533b.svg",
       "kanjivg/08005.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "医者はとても優しいです。",
+        "english": "The doctor is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "医者と話しました。",
+        "english": "I talked with the doctor."
+      }
+    ],
     "exampleSentence": {
       "japanese": "医者に相談しました。",
       "english": "I consulted a doctor.",
       "source": "curated",
       "hiragana": "いしゃにそうだんしました。",
-      "romaji": "ishanisoudanshimashita."
+      "romaji": "ishanisoudanshimashita.",
+      "spacedJapanese": "医者 に 相談 し まし た。",
+      "spacedHiragana": "いしゃ に そうだん し まし た。"
     }
   },
   {
@@ -2413,12 +3001,36 @@
       "kanjivg/05bdf.svg",
       "kanjivg/05b98.svg"
     ],
+    "breakdown": [
+      {
+        "text": "警察",
+        "gloss": "police"
+      },
+      {
+        "text": "官",
+        "gloss": "officer"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "は",
+        "phrase": "警察官はとても優しいです。",
+        "english": "The police officer is very kind."
+      },
+      {
+        "particle": "と",
+        "phrase": "警察官と話しました。",
+        "english": "I talked with the police officer."
+      }
+    ],
     "exampleSentence": {
       "japanese": "警察官に道を聞きました。",
       "english": "I asked a police officer for directions.",
       "source": "curated",
       "hiragana": "けいさつかんにみちをききました。",
-      "romaji": "keisatsukannimichiwokikimashita."
+      "romaji": "keisatsukannimichiwokikimashita.",
+      "spacedJapanese": "警察官 に 道 を 聞き まし た。",
+      "spacedHiragana": "けいさつかん に みち を きき まし た。"
     }
   },
   {
@@ -2449,7 +3061,9 @@
       "english": "Today is nice weather.",
       "source": "curated",
       "hiragana": "きょうはいいてんきです。",
-      "romaji": "kyouhaiitenkidesu."
+      "romaji": "kyouhaiitenkidesu.",
+      "spacedJapanese": "今日 は いい 天気 です。",
+      "spacedHiragana": "きょう は いい てんき です。"
     }
   },
   {
@@ -2479,7 +3093,9 @@
       "english": "Tomorrow is a day off.",
       "source": "curated",
       "hiragana": "あしたはやすみです。",
-      "romaji": "ashitahayasumidesu."
+      "romaji": "ashitahayasumidesu.",
+      "spacedJapanese": "明日 は 休み です。",
+      "spacedHiragana": "あした は やすみ です。"
     }
   },
   {
@@ -2512,7 +3128,9 @@
       "english": "What are you doing now?",
       "source": "curated",
       "hiragana": "いま、なにをしていますか。",
-      "romaji": "ima,naniwoshiteimasuka."
+      "romaji": "ima,naniwoshiteimasuka.",
+      "spacedJapanese": "今、 何 を し て い ます か。",
+      "spacedHiragana": "いま、 なに を し て い ます か。"
     }
   },
   {
@@ -2542,7 +3160,9 @@
       "english": "There's no time. Let's hurry.",
       "source": "curated",
       "hiragana": "じかんがありません。いそぎましょう。",
-      "romaji": "jikangaarimasen.isogimashou."
+      "romaji": "jikangaarimasen.isogimashou.",
+      "spacedJapanese": "時間 が あり ませ ん。 急ぎ ましょ う。",
+      "spacedHiragana": "じかん が あり ませ ん。 いそぎ ましょ う。"
     }
   },
   {
@@ -2574,7 +3194,9 @@
       "english": "This clock is very accurate.",
       "source": "curated",
       "hiragana": "このとけいはとてもせいかくです。",
-      "romaji": "konotokeihatotemoseikakudesu."
+      "romaji": "konotokeihatotemoseikakudesu.",
+      "spacedJapanese": "この 時計 は とても 正確 です。",
+      "spacedHiragana": "この とけい は とても せいかく です。"
     }
   },
   {
@@ -2603,7 +3225,9 @@
       "english": "Mornings are quiet.",
       "source": "curated",
       "hiragana": "あさはしずかです。",
-      "romaji": "asahashizukadesu."
+      "romaji": "asahashizukadesu.",
+      "spacedJapanese": "朝 は 静か です。",
+      "spacedHiragana": "あさ は しずか です。"
     }
   },
   {
@@ -2633,7 +3257,9 @@
       "english": "I ate ramen at noon.",
       "source": "curated",
       "hiragana": "ひるにラーメンをたべました。",
-      "romaji": "hiruniraamenwotabemashita."
+      "romaji": "hiruniraamenwotabemashita.",
+      "spacedJapanese": "昼 に ラーメン を 食べ まし た。",
+      "spacedHiragana": "ひる に らあめん を たべ まし た。"
     }
   },
   {
@@ -2663,7 +3289,9 @@
       "english": "The stars are beautiful at night.",
       "source": "curated",
       "hiragana": "よる、ほしがきれいです。",
-      "romaji": "yoru,hoshigakireidesu."
+      "romaji": "yoru,hoshigakireidesu.",
+      "spacedJapanese": "夜、 星 が きれい です。",
+      "spacedHiragana": "よる、 ほし が きれい です。"
     }
   },
   {
@@ -2687,12 +3315,26 @@
     "strokeOrderSvgs": [
       "kanjivg/06c34.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "水が好きです。",
+        "english": "I like water."
+      },
+      {
+        "particle": "を",
+        "phrase": "水を飲みます。",
+        "english": "I drink water."
+      }
+    ],
     "exampleSentence": {
       "japanese": "水を一杯ください。",
       "english": "Please give me a glass of water.",
       "source": "curated",
       "hiragana": "みずをいっぱいください。",
-      "romaji": "mizuwoippaikudasai."
+      "romaji": "mizuwoippaikudasai.",
+      "spacedJapanese": "水 を 一杯 ください。",
+      "spacedHiragana": "みず を いっぱい ください。"
     }
   },
   {
@@ -2716,12 +3358,36 @@
     "strokeOrderSvgs": [
       "kanjivg/08336.svg"
     ],
+    "breakdown": [
+      {
+        "text": "お",
+        "gloss": "polite prefix"
+      },
+      {
+        "text": "茶",
+        "gloss": "tea"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "お茶が好きです。",
+        "english": "I like tea."
+      },
+      {
+        "particle": "を",
+        "phrase": "お茶を飲みます。",
+        "english": "I drink tea."
+      }
+    ],
     "exampleSentence": {
       "japanese": "食後にお茶を飲みます。",
       "english": "I drink tea after meals.",
       "source": "curated",
       "hiragana": "しょくごにおちゃをのみます。",
-      "romaji": "shokugoniochawonomimasu."
+      "romaji": "shokugoniochawonomimasu.",
+      "spacedJapanese": "食後 に お茶 を 飲み ます。",
+      "spacedHiragana": "しょくご に おちゃ を のみ ます。"
     }
   },
   {
@@ -2743,12 +3409,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "コーヒーが好きです。",
+        "english": "I like coffee."
+      },
+      {
+        "particle": "を",
+        "phrase": "コーヒーを飲みます。",
+        "english": "I drink coffee."
+      }
+    ],
     "exampleSentence": {
       "japanese": "朝はいつもコーヒーを飲みます。",
       "english": "I always drink coffee in the morning.",
       "source": "curated",
       "hiragana": "あさはいつもコーヒーをのみます。",
-      "romaji": "asahaitsumokoohiiwonomimasu."
+      "romaji": "asahaitsumokoohiiwonomimasu.",
+      "spacedJapanese": "朝 は いつも コーヒー を 飲み ます。",
+      "spacedHiragana": "あさ は いつも こうひい を のみ ます。"
     }
   },
   {
@@ -2773,12 +3453,36 @@
       "kanjivg/0725b.svg",
       "kanjivg/04e73.svg"
     ],
+    "breakdown": [
+      {
+        "text": "牛",
+        "gloss": "cow"
+      },
+      {
+        "text": "乳",
+        "gloss": "milk"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "牛乳が好きです。",
+        "english": "I like ."
+      },
+      {
+        "particle": "を",
+        "phrase": "牛乳を飲みます。",
+        "english": "I drink ."
+      }
+    ],
     "exampleSentence": {
       "japanese": "子供は牛乳が好きです。",
       "english": "Children like milk.",
       "source": "curated",
       "hiragana": "こどもはぎゅうにゅうがすきです。",
-      "romaji": "kodomohagyuunyuugasukidesu."
+      "romaji": "kodomohagyuunyuugasukidesu.",
+      "spacedJapanese": "子供 は 牛乳 が 好き です。",
+      "spacedHiragana": "こども は ぎゅうにゅう が すき です。"
     }
   },
   {
@@ -2802,12 +3506,26 @@
     "strokeOrderSvgs": [
       "kanjivg/098ef.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "ご飯が好きです。",
+        "english": "I like cooked rice."
+      },
+      {
+        "particle": "を",
+        "phrase": "ご飯を食べます。",
+        "english": "I eat cooked rice."
+      }
+    ],
     "exampleSentence": {
       "japanese": "もうご飯を食べましたか。",
       "english": "Have you eaten yet?",
       "source": "curated",
       "hiragana": "もうごはんをたべましたか。",
-      "romaji": "mougohanwotabemashitaka."
+      "romaji": "mougohanwotabemashitaka.",
+      "spacedJapanese": "もう ご飯 を 食べ まし た か。",
+      "spacedHiragana": "もう ごはん を たべ まし た か。"
     }
   },
   {
@@ -2830,12 +3548,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "パンが好きです。",
+        "english": "I like bread."
+      },
+      {
+        "particle": "を",
+        "phrase": "パンを食べます。",
+        "english": "I eat bread."
+      }
+    ],
     "exampleSentence": {
       "japanese": "このパンはとてもおいしいです。",
       "english": "This bread is very delicious.",
       "source": "curated",
       "hiragana": "このパンはとてもおいしいです。",
-      "romaji": "konopanhatotemooishiidesu."
+      "romaji": "konopanhatotemooishiidesu.",
+      "spacedJapanese": "この パン は とても おいしい です。",
+      "spacedHiragana": "この ぱん は とても おいしい です。"
     }
   },
   {
@@ -2859,12 +3591,26 @@
     "strokeOrderSvgs": [
       "kanjivg/08089.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "肉が好きです。",
+        "english": "I like flesh."
+      },
+      {
+        "particle": "を",
+        "phrase": "肉を食べます。",
+        "english": "I eat flesh."
+      }
+    ],
     "exampleSentence": {
       "japanese": "肉と魚、どちらが好きですか。",
       "english": "Which do you like more, meat or fish?",
       "source": "curated",
       "hiragana": "にくとさかな、どちらがすきですか。",
-      "romaji": "nikutosakana,dochiragasukidesuka."
+      "romaji": "nikutosakana,dochiragasukidesuka.",
+      "spacedJapanese": "肉 と 魚、 どちら が 好き です か。",
+      "spacedHiragana": "にく と さかな、 どちら が すき です か。"
     }
   },
   {
@@ -2888,12 +3634,26 @@
     "strokeOrderSvgs": [
       "kanjivg/09b5a.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "魚が好きです。",
+        "english": "I like fish."
+      },
+      {
+        "particle": "を",
+        "phrase": "魚を食べます。",
+        "english": "I eat fish."
+      }
+    ],
     "exampleSentence": {
       "japanese": "魚は健康にいいです。",
       "english": "Fish is good for your health.",
       "source": "curated",
       "hiragana": "さかなはけんこうにいいです。",
-      "romaji": "sakanahakenkouniiidesu."
+      "romaji": "sakanahakenkouniiidesu.",
+      "spacedJapanese": "魚 は 健康 に いい です。",
+      "spacedHiragana": "さかな は けんこう に いい です。"
     }
   },
   {
@@ -2920,12 +3680,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05375.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "卵が好きです。",
+        "english": "I like eggs."
+      },
+      {
+        "particle": "を",
+        "phrase": "卵を食べます。",
+        "english": "I eat eggs."
+      }
+    ],
     "exampleSentence": {
       "japanese": "朝ご飯に卵を食べます。",
       "english": "I eat eggs for breakfast.",
       "source": "curated",
       "hiragana": "あさごはんにたまごをたべます。",
-      "romaji": "asagohannitamagowotabemasu."
+      "romaji": "asagohannitamagowotabemasu.",
+      "spacedJapanese": "朝 ご飯 に 卵 を 食べ ます。",
+      "spacedHiragana": "あさ ごはん に たまご を たべ ます。"
     }
   },
   {
@@ -2950,12 +3724,26 @@
       "kanjivg/091ce.svg",
       "kanjivg/083dc.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "野菜が好きです。",
+        "english": "I like vegetable."
+      },
+      {
+        "particle": "を",
+        "phrase": "野菜を食べます。",
+        "english": "I eat vegetable."
+      }
+    ],
     "exampleSentence": {
       "japanese": "野菜をたくさん食べましょう。",
       "english": "Let's eat plenty of vegetables.",
       "source": "curated",
       "hiragana": "やさいをたくさんたべましょう。",
-      "romaji": "yasaiwotakusantabemashou."
+      "romaji": "yasaiwotakusantabemashou.",
+      "spacedJapanese": "野菜 を たくさん 食べ ましょ う。",
+      "spacedHiragana": "やさい を たくさん たべ ましょ う。"
     }
   },
   {
@@ -2980,12 +3768,26 @@
       "kanjivg/0679c.svg",
       "kanjivg/07269.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "果物が好きです。",
+        "english": "I like fruit."
+      },
+      {
+        "particle": "を",
+        "phrase": "果物を食べます。",
+        "english": "I eat fruit."
+      }
+    ],
     "exampleSentence": {
       "japanese": "好きな果物は何ですか。",
       "english": "What's your favorite fruit?",
       "source": "curated",
       "hiragana": "すきなくだものはなにですか。",
-      "romaji": "sukinakudamonohananidesuka."
+      "romaji": "sukinakudamonohananidesuka.",
+      "spacedJapanese": "好き な 果物 は 何 です か。",
+      "spacedHiragana": "すき な くだもの は なに です か。"
     }
   },
   {
@@ -3022,12 +3824,24 @@
       "potential": "泳げる",
       "volitional": "泳ごう"
     },
+    "breakdown": [
+      {
+        "text": "泳",
+        "gloss": "stem"
+      },
+      {
+        "text": "ぐ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "夏は海で泳ぎます。",
       "english": "In summer, I swim in the sea.",
       "source": "curated",
       "hiragana": "なつはうみでおよぎます。",
-      "romaji": "natsuhaumideoyogimasu."
+      "romaji": "natsuhaumideoyogimasu.",
+      "spacedJapanese": "夏 は 海 で 泳ぎ ます。",
+      "spacedHiragana": "なつ は うみ で およぎ ます。"
     }
   },
   {
@@ -3066,12 +3880,24 @@
       "potential": "遊べる",
       "volitional": "遊ぼう"
     },
+    "breakdown": [
+      {
+        "text": "遊",
+        "gloss": "stem"
+      },
+      {
+        "text": "ぶ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "子供たちは公園で遊びます。",
       "english": "The children play in the park.",
       "source": "curated",
       "hiragana": "こどもたちはこうえんであそびます。",
-      "romaji": "kodomotachihakouendeasobimasu."
+      "romaji": "kodomotachihakouendeasobimasu.",
+      "spacedJapanese": "子供 たち は 公園 で 遊び ます。",
+      "spacedHiragana": "こども たち は こうえん で あそび ます。"
     }
   },
   {
@@ -3109,12 +3935,24 @@
       "potential": "死ねる",
       "volitional": "死のう"
     },
+    "breakdown": [
+      {
+        "text": "死",
+        "gloss": "stem"
+      },
+      {
+        "text": "ぬ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "魚は水がないと死んでしまいます。",
       "english": "Fish will die without water.",
       "source": "curated",
       "hiragana": "さかなはみずがないとしんでしまいます。",
-      "romaji": "sakanahamizuganaitoshindeshimaimasu."
+      "romaji": "sakanahamizuganaitoshindeshimaimasu.",
+      "spacedJapanese": "魚 は 水 が ない と 死ん で しまい ます。",
+      "spacedHiragana": "さかな は みず が ない と しん で しまい ます。"
     }
   },
   {
@@ -3153,12 +3991,24 @@
       "potential": "呼べる",
       "volitional": "呼ぼう"
     },
+    "breakdown": [
+      {
+        "text": "呼",
+        "gloss": "stem"
+      },
+      {
+        "text": "ぶ",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "タクシーを呼びましょう。",
       "english": "Let's call a taxi.",
       "source": "curated",
       "hiragana": "タクシーをよびましょう。",
-      "romaji": "takushiiwoyobimashou."
+      "romaji": "takushiiwoyobimashou.",
+      "spacedJapanese": "タクシー を 呼び ましょ う。",
+      "spacedHiragana": "たくしい を よび ましょ う。"
     }
   },
   {
@@ -3199,12 +4049,24 @@
       "potential": "乗れる",
       "volitional": "乗ろう"
     },
+    "breakdown": [
+      {
+        "text": "乗",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎日、電車に乗ります。",
       "english": "I ride the train every day.",
       "source": "curated",
       "hiragana": "まいにち、でんしゃにのります。",
-      "romaji": "mainichi,denshaninorimasu."
+      "romaji": "mainichi,denshaninorimasu.",
+      "spacedJapanese": "毎日、 電車 に 乗り ます。",
+      "spacedHiragana": "まいにち、 でんしゃ に のり ます。"
     }
   },
   {
@@ -3243,12 +4105,24 @@
       "potential": "降りられる",
       "volitional": "降りよう"
     },
+    "breakdown": [
+      {
+        "text": "降り",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "次の駅で降ります。",
       "english": "I will get off at the next station.",
       "source": "curated",
       "hiragana": "つぎのえきでおります。",
-      "romaji": "tsuginoekideorimasu."
+      "romaji": "tsuginoekideorimasu.",
+      "spacedJapanese": "次 の 駅 で 降り ます。",
+      "spacedHiragana": "つぎ の えき で おり ます。"
     }
   },
   {
@@ -3287,12 +4161,24 @@
       "potential": "開けられる",
       "volitional": "開けよう"
     },
+    "breakdown": [
+      {
+        "text": "開け",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "窓を開けてもいいですか。",
       "english": "May I open the window?",
       "source": "curated",
       "hiragana": "まどをあけてもいいですか。",
-      "romaji": "madowoaketemoiidesuka."
+      "romaji": "madowoaketemoiidesuka.",
+      "spacedJapanese": "窓 を 開け て も いい です か。",
+      "spacedHiragana": "まど を あけ て も いい です か。"
     }
   },
   {
@@ -3330,12 +4216,24 @@
       "potential": "閉められる",
       "volitional": "閉めよう"
     },
+    "breakdown": [
+      {
+        "text": "閉め",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "ドアを閉めてください。",
       "english": "Please close the door.",
       "source": "curated",
       "hiragana": "ドアをしめてください。",
-      "romaji": "doawoshimetekudasai."
+      "romaji": "doawoshimetekudasai.",
+      "spacedJapanese": "ドア を 閉め て ください。",
+      "spacedHiragana": "どあ を しめ て ください。"
     }
   },
   {
@@ -3373,12 +4271,24 @@
       "potential": "教えられる",
       "volitional": "教えよう"
     },
+    "breakdown": [
+      {
+        "text": "教え",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "先生は日本語を教えています。",
       "english": "The teacher teaches Japanese.",
       "source": "curated",
       "hiragana": "せんせいはにほんごをおしえています。",
-      "romaji": "senseihanihongowooshieteimasu."
+      "romaji": "senseihanihongowooshieteimasu.",
+      "spacedJapanese": "先生 は 日本語 を 教え て い ます。",
+      "spacedHiragana": "せんせい は にほんご を おしえ て い ます。"
     }
   },
   {
@@ -3420,12 +4330,24 @@
       "potential": "覚えられる",
       "volitional": "覚えよう"
     },
+    "breakdown": [
+      {
+        "text": "覚え",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "新しい単語を覚えます。",
       "english": "I memorize new words.",
       "source": "curated",
       "hiragana": "あたらしいたんごをおぼえます。",
-      "romaji": "atarashiitangowooboemasu."
+      "romaji": "atarashiitangowooboemasu.",
+      "spacedJapanese": "新しい 単語 を 覚え ます。",
+      "spacedHiragana": "あたらしい たんご を おぼえ ます。"
     }
   },
   {
@@ -3466,12 +4388,24 @@
       "potential": "忘れられる",
       "volitional": "忘れよう"
     },
+    "breakdown": [
+      {
+        "text": "忘れ",
+        "gloss": "stem"
+      },
+      {
+        "text": "る",
+        "gloss": "dictionary-form ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "傘を忘れないでください。",
       "english": "Please don't forget your umbrella.",
       "source": "curated",
       "hiragana": "かさをわすれないでください。",
-      "romaji": "kasawowasurenaidekudasai."
+      "romaji": "kasawowasurenaidekudasai.",
+      "spacedJapanese": "傘 を 忘れ ない で ください。",
+      "spacedHiragana": "かさ を わすれ ない で ください。"
     }
   },
   {
@@ -3496,12 +4430,26 @@
     "strokeOrderSvgs": [
       "kanjivg/072ac.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "犬がとてもかわいいです。",
+        "english": "The dog is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "犬をよく見ます。",
+        "english": "I often see the dog."
+      }
+    ],
     "exampleSentence": {
       "japanese": "公園で犬と散歩しました。",
       "english": "I took a walk with my dog in the park.",
       "source": "curated",
       "hiragana": "こうえんでいぬとさんぽしました。",
-      "romaji": "kouendeinutosanposhimashita."
+      "romaji": "kouendeinutosanposhimashita.",
+      "spacedJapanese": "公園 で 犬 と 散歩 し まし た。",
+      "spacedHiragana": "こうえん で いぬ と さんぽ し まし た。"
     }
   },
   {
@@ -3526,12 +4474,26 @@
     "strokeOrderSvgs": [
       "kanjivg/0732b.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "猫がとてもかわいいです。",
+        "english": "The cat is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "猫をよく見ます。",
+        "english": "I often see the cat."
+      }
+    ],
     "exampleSentence": {
       "japanese": "うちの猫はよく寝ます。",
       "english": "My cat sleeps a lot.",
       "source": "curated",
       "hiragana": "うちのねこはよくねます。",
-      "romaji": "uchinonekohayokunemasu."
+      "romaji": "uchinonekohayokunemasu.",
+      "spacedJapanese": "うち の 猫 は よく 寝 ます。",
+      "spacedHiragana": "うち の ねこ は よく ね ます。"
     }
   },
   {
@@ -3555,12 +4517,26 @@
     "strokeOrderSvgs": [
       "kanjivg/09ce5.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "鳥がとてもかわいいです。",
+        "english": "The bird is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "鳥をよく見ます。",
+        "english": "I often see the bird."
+      }
+    ],
     "exampleSentence": {
       "japanese": "木の上に鳥がいます。",
       "english": "There is a bird on top of the tree.",
       "source": "curated",
       "hiragana": "きのうえにとりがいます。",
-      "romaji": "kinouenitorigaimasu."
+      "romaji": "kinouenitorigaimasu.",
+      "spacedJapanese": "木 の 上 に 鳥 が い ます。",
+      "spacedHiragana": "き の うえ に とり が い ます。"
     }
   },
   {
@@ -3588,12 +4564,26 @@
     "strokeOrderSvgs": [
       "kanjivg/0725b.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "牛がとてもかわいいです。",
+        "english": "The cattle is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "牛をよく見ます。",
+        "english": "I often see the cattle."
+      }
+    ],
     "exampleSentence": {
       "japanese": "牧場にたくさんの牛がいます。",
       "english": "There are many cows on the farm.",
       "source": "curated",
       "hiragana": "ぼくじょうにたくさんのうしがいます。",
-      "romaji": "bokujounitakusannoushigaimasu."
+      "romaji": "bokujounitakusannoushigaimasu.",
+      "spacedJapanese": "牧場 に たくさん の 牛 が い ます。",
+      "spacedHiragana": "ぼくじょう に たくさん の うし が い ます。"
     }
   },
   {
@@ -3617,12 +4607,26 @@
     "strokeOrderSvgs": [
       "kanjivg/099ac.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "馬がとてもかわいいです。",
+        "english": "The horse is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "馬をよく見ます。",
+        "english": "I often see the horse."
+      }
+    ],
     "exampleSentence": {
       "japanese": "馬はとても速く走ります。",
       "english": "Horses run very fast.",
       "source": "curated",
       "hiragana": "うまはとてもはやくはしります。",
-      "romaji": "umahatotemohayakuhashirimasu."
+      "romaji": "umahatotemohayakuhashirimasu.",
+      "spacedJapanese": "馬 は とても 速く 走り ます。",
+      "spacedHiragana": "うま は とても はやく はしり ます。"
     }
   },
   {
@@ -3646,12 +4650,26 @@
     "strokeOrderSvgs": [
       "kanjivg/08c5a.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "豚がとてもかわいいです。",
+        "english": "The pig is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "豚をよく見ます。",
+        "english": "I often see the pig."
+      }
+    ],
     "exampleSentence": {
       "japanese": "豚肉は日本料理でよく使われます。",
       "english": "Pork is often used in Japanese cooking.",
       "source": "curated",
       "hiragana": "ぶたにくはにっぽんりょうりでよくつかわれます。",
-      "romaji": "butanikuhanipponryourideyokutsukawaremasu."
+      "romaji": "butanikuhanipponryourideyokutsukawaremasu.",
+      "spacedJapanese": "豚肉 は 日本 料理 で よく 使わ れ ます。",
+      "spacedHiragana": "ぶたにく は にっぽん りょうり で よく つかわ れ ます。"
     }
   },
   {
@@ -3676,12 +4694,26 @@
       "kanjivg/052d5.svg",
       "kanjivg/07269.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "動物がとてもかわいいです。",
+        "english": "The animal is very cute."
+      },
+      {
+        "particle": "を",
+        "phrase": "動物をよく見ます。",
+        "english": "I often see the animal."
+      }
+    ],
     "exampleSentence": {
       "japanese": "動物園で色々な動物を見ました。",
       "english": "I saw various animals at the zoo.",
       "source": "curated",
       "hiragana": "どうぶつえんでいろいろなどうぶつをみました。",
-      "romaji": "doubutsuendeiroironadoubutsuwomimashita."
+      "romaji": "doubutsuendeiroironadoubutsuwomimashita.",
+      "spacedJapanese": "動物 園 で 色々 な 動物 を 見 まし た。",
+      "spacedHiragana": "どうぶつ えん で いろいろ な どうぶつ を み まし た。"
     }
   },
   {
@@ -3707,12 +4739,26 @@
     "strokeOrderSvgs": [
       "kanjivg/06728.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "木がとてもきれいです。",
+        "english": "The tree is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "木をよく見ます。",
+        "english": "I often see the tree."
+      }
+    ],
     "exampleSentence": {
       "japanese": "庭に大きい木があります。",
       "english": "There is a big tree in the garden.",
       "source": "curated",
       "hiragana": "にわにおおきいきがあります。",
-      "romaji": "niwaniookiikigaarimasu."
+      "romaji": "niwaniookiikigaarimasu.",
+      "spacedJapanese": "庭 に 大きい 木 が あり ます。",
+      "spacedHiragana": "にわ に おおきい き が あり ます。"
     }
   },
   {
@@ -3739,12 +4785,26 @@
     "strokeOrderSvgs": [
       "kanjivg/082b1.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "花がとてもきれいです。",
+        "english": "The flower is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "花をよく見ます。",
+        "english": "I often see the flower."
+      }
+    ],
     "exampleSentence": {
       "japanese": "春にきれいな花が咲きます。",
       "english": "Beautiful flowers bloom in spring.",
       "source": "curated",
       "hiragana": "はるにきれいなはながさきます。",
-      "romaji": "harunikireinahanagasakimasu."
+      "romaji": "harunikireinahanagasakimasu.",
+      "spacedJapanese": "春 に きれい な 花 が 咲き ます。",
+      "spacedHiragana": "はる に きれい な はな が さき ます。"
     }
   },
   {
@@ -3769,12 +4829,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05c71.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "山がとてもきれいです。",
+        "english": "The mountain is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "山をよく見ます。",
+        "english": "I often see the mountain."
+      }
+    ],
     "exampleSentence": {
       "japanese": "週末に山に登ります。",
       "english": "I will climb a mountain this weekend.",
       "source": "curated",
       "hiragana": "しゅうまつにやまにのぼります。",
-      "romaji": "shuumatsuniyamaninoborimasu."
+      "romaji": "shuumatsuniyamaninoborimasu.",
+      "spacedJapanese": "週末 に 山 に 登り ます。",
+      "spacedHiragana": "しゅうまつ に やま に のぼり ます。"
     }
   },
   {
@@ -3799,12 +4873,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05ddd.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "川がとてもきれいです。",
+        "english": "The river is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "川をよく見ます。",
+        "english": "I often see the river."
+      }
+    ],
     "exampleSentence": {
       "japanese": "この川はとてもきれいです。",
       "english": "This river is very clean.",
       "source": "curated",
       "hiragana": "このかわはとてもきれいです。",
-      "romaji": "konokawahatotemokireidesu."
+      "romaji": "konokawahatotemokireidesu.",
+      "spacedJapanese": "この 川 は とても きれい です。",
+      "spacedHiragana": "この かわ は とても きれい です。"
     }
   },
   {
@@ -3830,12 +4918,26 @@
     "strokeOrderSvgs": [
       "kanjivg/07a7a.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "空がとてもきれいです。",
+        "english": "The sky is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "空をよく見ます。",
+        "english": "I often see the sky."
+      }
+    ],
     "exampleSentence": {
       "japanese": "今日は空が青いです。",
       "english": "The sky is blue today.",
       "source": "curated",
       "hiragana": "きょうはそらがあおいです。",
-      "romaji": "kyouhasoragaaoidesu."
+      "romaji": "kyouhasoragaaoidesu.",
+      "spacedJapanese": "今日 は 空 が 青い です。",
+      "spacedHiragana": "きょう は そら が あおい です。"
     }
   },
   {
@@ -3861,12 +4963,26 @@
     "strokeOrderSvgs": [
       "kanjivg/06d77.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "海がとてもきれいです。",
+        "english": "The sea is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "海をよく見ます。",
+        "english": "I often see the sea."
+      }
+    ],
     "exampleSentence": {
       "japanese": "夏に海へ行きたいです。",
       "english": "I want to go to the sea in summer.",
       "source": "curated",
       "hiragana": "なつにうみへいきたいです。",
-      "romaji": "natsuniumiheikitaidesu."
+      "romaji": "natsuniumiheikitaidesu.",
+      "spacedJapanese": "夏 に 海 へ 行き たい です。",
+      "spacedHiragana": "なつ に うみ へ いき たい です。"
     }
   },
   {
@@ -3891,12 +5007,26 @@
       "kanjivg/0592a.svg",
       "kanjivg/0967d.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "太陽がとてもきれいです。",
+        "english": "The Sun is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "太陽をよく見ます。",
+        "english": "I often see the Sun."
+      }
+    ],
     "exampleSentence": {
       "japanese": "太陽が東から昇ります。",
       "english": "The sun rises in the east.",
       "source": "curated",
       "hiragana": "たいようがひがしからのぼります。",
-      "romaji": "taiyougahigashikaranoborimasu."
+      "romaji": "taiyougahigashikaranoborimasu.",
+      "spacedJapanese": "太陽 が 東 から 昇り ます。",
+      "spacedHiragana": "たいよう が ひがし から のぼり ます。"
     }
   },
   {
@@ -3922,12 +5052,26 @@
     "strokeOrderSvgs": [
       "kanjivg/0661f.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "星がとてもきれいです。",
+        "english": "The star is very beautiful."
+      },
+      {
+        "particle": "を",
+        "phrase": "星をよく見ます。",
+        "english": "I often see the star."
+      }
+    ],
     "exampleSentence": {
       "japanese": "夜空にたくさんの星が見えます。",
       "english": "You can see many stars in the night sky.",
       "source": "curated",
       "hiragana": "よぞらにたくさんのほしがみえます。",
-      "romaji": "yozoranitakusannohoshigamiemasu."
+      "romaji": "yozoranitakusannohoshigamiemasu.",
+      "spacedJapanese": "夜空 に たくさん の 星 が 見え ます。",
+      "spacedHiragana": "よぞら に たくさん の ほし が みえ ます。"
     }
   },
   {
@@ -3951,12 +5095,26 @@
     "strokeOrderSvgs": [
       "kanjivg/096e8.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "雨が降っています。",
+        "english": "It is raining."
+      },
+      {
+        "particle": "を",
+        "phrase": "雨を避けます。",
+        "english": "I avoid the rain."
+      }
+    ],
     "exampleSentence": {
       "japanese": "明日は雨が降るでしょう。",
       "english": "It will probably rain tomorrow.",
       "source": "curated",
       "hiragana": "あしたはあめがふるでしょう。",
-      "romaji": "ashitahaamegafurudeshou."
+      "romaji": "ashitahaamegafurudeshou.",
+      "spacedJapanese": "明日 は 雨 が 降る でしょ う。",
+      "spacedHiragana": "あした は あめ が ふる でしょ う。"
     }
   },
   {
@@ -3981,12 +5139,26 @@
     "strokeOrderSvgs": [
       "kanjivg/096ea.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "雪が降っています。",
+        "english": "It is snowing."
+      },
+      {
+        "particle": "を",
+        "phrase": "雪を触ります。",
+        "english": "I touch the snow."
+      }
+    ],
     "exampleSentence": {
       "japanese": "冬に雪がたくさん降ります。",
       "english": "A lot of snow falls in winter.",
       "source": "curated",
       "hiragana": "ふゆにゆきがたくさんおります。",
-      "romaji": "fuyuniyukigatakusan'orimasu."
+      "romaji": "fuyuniyukigatakusan'orimasu.",
+      "spacedJapanese": "冬 に 雪 が たくさん 降り ます。",
+      "spacedHiragana": "ふゆ に ゆき が たくさん おり ます。"
     }
   },
   {
@@ -4013,12 +5185,26 @@
     "strokeOrderSvgs": [
       "kanjivg/098a8.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "風が強いです。",
+        "english": "The wind is strong."
+      },
+      {
+        "particle": "を",
+        "phrase": "風を感じます。",
+        "english": "I feel the wind."
+      }
+    ],
     "exampleSentence": {
       "japanese": "今日は風が強いです。",
       "english": "The wind is strong today.",
       "source": "curated",
       "hiragana": "きょうはかぜがつよいです。",
-      "romaji": "kyouhakazegatsuyoidesu."
+      "romaji": "kyouhakazegatsuyoidesu.",
+      "spacedJapanese": "今日 は 風 が 強い です。",
+      "spacedHiragana": "きょう は かぜ が つよい です。"
     }
   },
   {
@@ -4045,12 +5231,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05bb6.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "家に行きます。",
+        "english": "I go to the house."
+      },
+      {
+        "particle": "で",
+        "phrase": "家で友達に会います。",
+        "english": "I meet my friend at the house."
+      }
+    ],
     "exampleSentence": {
       "japanese": "今日は家でゆっくりします。",
       "english": "I will relax at home today.",
       "source": "curated",
       "hiragana": "きょうはいえでゆっくりします。",
-      "romaji": "kyouhaiedeyukkurishimasu."
+      "romaji": "kyouhaiedeyukkurishimasu.",
+      "spacedJapanese": "今日 は 家 で ゆっくり し ます。",
+      "spacedHiragana": "きょう は いえ で ゆっくり し ます。"
     }
   },
   {
@@ -4075,12 +5275,26 @@
       "kanjivg/05b66.svg",
       "kanjivg/06821.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "学校に行きます。",
+        "english": "I go to the school."
+      },
+      {
+        "particle": "で",
+        "phrase": "学校で友達に会います。",
+        "english": "I meet my friend at the school."
+      }
+    ],
     "exampleSentence": {
       "japanese": "学校まで歩いて行きます。",
       "english": "I walk to school.",
       "source": "curated",
       "hiragana": "がっこうまであるいていきます。",
-      "romaji": "gakkoumadearuiteikimasu."
+      "romaji": "gakkoumadearuiteikimasu.",
+      "spacedJapanese": "学校 まで 歩い て 行き ます。",
+      "spacedHiragana": "がっこう まで あるい て いき ます。"
     }
   },
   {
@@ -4107,12 +5321,26 @@
       "kanjivg/04f1a.svg",
       "kanjivg/0793e.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "会社に行きます。",
+        "english": "I go to the company."
+      },
+      {
+        "particle": "で",
+        "phrase": "会社で友達に会います。",
+        "english": "I meet my friend at the company."
+      }
+    ],
     "exampleSentence": {
       "japanese": "父は毎日会社に行きます。",
       "english": "My father goes to the company every day.",
       "source": "curated",
       "hiragana": "ちちはまいにちかいしゃにいきます。",
-      "romaji": "chichihamainichikaishaniikimasu."
+      "romaji": "chichihamainichikaishaniikimasu.",
+      "spacedJapanese": "父 は 毎日 会社 に 行き ます。",
+      "spacedHiragana": "ちち は まいにち かいしゃ に いき ます。"
     }
   },
   {
@@ -4141,12 +5369,26 @@
       "kanjivg/075c5.svg",
       "kanjivg/09662.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "病院に行きます。",
+        "english": "I go to the hospital."
+      },
+      {
+        "particle": "で",
+        "phrase": "病院で友達に会います。",
+        "english": "I meet my friend at the hospital."
+      }
+    ],
     "exampleSentence": {
       "japanese": "病院で薬をもらいました。",
       "english": "I got medicine at the hospital.",
       "source": "curated",
       "hiragana": "びょういんでくすりをもらいました。",
-      "romaji": "byouindekusuriwomoraimashita."
+      "romaji": "byouindekusuriwomoraimashita.",
+      "spacedJapanese": "病院 で 薬 を もらい まし た。",
+      "spacedHiragana": "びょういん で くすり を もらい まし た。"
     }
   },
   {
@@ -4172,12 +5414,26 @@
       "kanjivg/09280.svg",
       "kanjivg/0884c.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "銀行に行きます。",
+        "english": "I go to the bank."
+      },
+      {
+        "particle": "で",
+        "phrase": "銀行で友達に会います。",
+        "english": "I meet my friend at the bank."
+      }
+    ],
     "exampleSentence": {
       "japanese": "銀行でお金をおろします。",
       "english": "I withdraw money at the bank.",
       "source": "curated",
       "hiragana": "ぎんこうでおかねをおろします。",
-      "romaji": "ginkoudeokanewooroshimasu."
+      "romaji": "ginkoudeokanewooroshimasu.",
+      "spacedJapanese": "銀行 で お金 を おろし ます。",
+      "spacedHiragana": "ぎんこう で おかね を おろし ます。"
     }
   },
   {
@@ -4203,12 +5459,36 @@
       "kanjivg/04fbf.svg",
       "kanjivg/05c40.svg"
     ],
+    "breakdown": [
+      {
+        "text": "郵便",
+        "gloss": "mail"
+      },
+      {
+        "text": "局",
+        "gloss": "bureau"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "郵便局に行きます。",
+        "english": "I go to the post office."
+      },
+      {
+        "particle": "で",
+        "phrase": "郵便局で友達に会います。",
+        "english": "I meet my friend at the post office."
+      }
+    ],
     "exampleSentence": {
       "japanese": "郵便局で切手を買いました。",
       "english": "I bought stamps at the post office.",
       "source": "curated",
       "hiragana": "ゆうびんきょくできってをかいました。",
-      "romaji": "yuubinkyokudekittewokaimashita."
+      "romaji": "yuubinkyokudekittewokaimashita.",
+      "spacedJapanese": "郵便 局 で 切手 を 買い まし た。",
+      "spacedHiragana": "ゆうびん きょく で きって を かい まし た。"
     }
   },
   {
@@ -4235,12 +5515,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05e97.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "店に行きます。",
+        "english": "I go to the store."
+      },
+      {
+        "particle": "で",
+        "phrase": "店で友達に会います。",
+        "english": "I meet my friend at the store."
+      }
+    ],
     "exampleSentence": {
       "japanese": "あの店は安くていいです。",
       "english": "That shop is cheap and good.",
       "source": "curated",
       "hiragana": "あのみせはやすくていいです。",
-      "romaji": "anomisehayasukuteiidesu."
+      "romaji": "anomisehayasukuteiidesu.",
+      "spacedJapanese": "あの 店 は 安く て いい です。",
+      "spacedHiragana": "あの みせ は やすく て いい です。"
     }
   },
   {
@@ -4265,12 +5559,26 @@
     "strokeOrderSvgs": [
       "kanjivg/099c5.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "駅に行きます。",
+        "english": "I go to the railway station."
+      },
+      {
+        "particle": "で",
+        "phrase": "駅で友達に会います。",
+        "english": "I meet my friend at the railway station."
+      }
+    ],
     "exampleSentence": {
       "japanese": "駅の前で待っています。",
       "english": "I am waiting in front of the station.",
       "source": "curated",
       "hiragana": "えきのまえでまっています。",
-      "romaji": "ekinomaedematteimasu."
+      "romaji": "ekinomaedematteimasu.",
+      "spacedJapanese": "駅 の 前 で 待っ て い ます。",
+      "spacedHiragana": "えき の まえ で まっ て い ます。"
     }
   },
   {
@@ -4298,12 +5606,26 @@
     "strokeOrderSvgs": [
       "kanjivg/09053.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "を",
+        "phrase": "道を歩きます。",
+        "english": "I walk along the road."
+      },
+      {
+        "particle": "に",
+        "phrase": "道に迷いました。",
+        "english": "I got lost on the way."
+      }
+    ],
     "exampleSentence": {
       "japanese": "この道をまっすぐ行ってください。",
       "english": "Please go straight on this road.",
       "source": "curated",
       "hiragana": "このみちをまっすぐいってください。",
-      "romaji": "konomichiwomassuguittekudasai."
+      "romaji": "konomichiwomassuguittekudasai.",
+      "spacedJapanese": "この 道 を まっすぐ 行っ て ください。",
+      "spacedHiragana": "この みち を まっすぐ いっ て ください。"
     }
   },
   {
@@ -4328,12 +5650,26 @@
       "kanjivg/0516c.svg",
       "kanjivg/05712.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "公園に行きます。",
+        "english": "I go to the ."
+      },
+      {
+        "particle": "で",
+        "phrase": "公園で友達に会います。",
+        "english": "I meet my friend at the ."
+      }
+    ],
     "exampleSentence": {
       "japanese": "公園で花見をしました。",
       "english": "We had flower viewing in the park.",
       "source": "curated",
       "hiragana": "こうえんではなみをしました。",
-      "romaji": "kouendehanamiwoshimashita."
+      "romaji": "kouendehanamiwoshimashita.",
+      "spacedJapanese": "公園 で 花見 を し まし た。",
+      "spacedHiragana": "こうえん で はなみ を し まし た。"
     }
   },
   {
@@ -4361,12 +5697,36 @@
       "kanjivg/0753b.svg",
       "kanjivg/09928.svg"
     ],
+    "breakdown": [
+      {
+        "text": "映画",
+        "gloss": "movie"
+      },
+      {
+        "text": "館",
+        "gloss": "hall"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "映画館に行きます。",
+        "english": "I go to the movie theatre."
+      },
+      {
+        "particle": "で",
+        "phrase": "映画館で友達に会います。",
+        "english": "I meet my friend at the movie theatre."
+      }
+    ],
     "exampleSentence": {
       "japanese": "週末に映画館へ行きます。",
       "english": "I will go to the movie theater this weekend.",
       "source": "curated",
       "hiragana": "しゅうまつにえいがかんへいきます。",
-      "romaji": "shuumatsunieigakanheikimasu."
+      "romaji": "shuumatsunieigakanheikimasu.",
+      "spacedJapanese": "週末 に 映画 館 へ 行き ます。",
+      "spacedHiragana": "しゅうまつ に えいが かん へ いき ます。"
     }
   },
   {
@@ -4392,12 +5752,36 @@
       "kanjivg/066f8.svg",
       "kanjivg/09928.svg"
     ],
+    "breakdown": [
+      {
+        "text": "図書",
+        "gloss": "books"
+      },
+      {
+        "text": "館",
+        "gloss": "hall"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "図書館に行きます。",
+        "english": "I go to the library."
+      },
+      {
+        "particle": "で",
+        "phrase": "図書館で友達に会います。",
+        "english": "I meet my friend at the library."
+      }
+    ],
     "exampleSentence": {
       "japanese": "図書館で静かに勉強します。",
       "english": "I study quietly at the library.",
       "source": "curated",
       "hiragana": "としょかんでしずかにべんきょうします。",
-      "romaji": "toshokandeshizukanibenkyoushimasu."
+      "romaji": "toshokandeshizukanibenkyoushimasu.",
+      "spacedJapanese": "図書館 で 静か に 勉強 し ます。",
+      "spacedHiragana": "としょかん で しずか に べんきょう し ます。"
     }
   },
   {
@@ -4424,12 +5808,26 @@
     "strokeOrderSvgs": [
       "kanjivg/0753a.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "町に行きます。",
+        "english": "I go to the town."
+      },
+      {
+        "particle": "で",
+        "phrase": "町で友達に会います。",
+        "english": "I meet my friend at the town."
+      }
+    ],
     "exampleSentence": {
       "japanese": "この町は小さいですが有名です。",
       "english": "This town is small but famous.",
       "source": "curated",
       "hiragana": "このまちはちいさいですがゆうめいです。",
-      "romaji": "konomachihachiisaidesugayuumeidesu."
+      "romaji": "konomachihachiisaidesugayuumeidesu.",
+      "spacedJapanese": "この 町 は 小さい です が 有名 です。",
+      "spacedHiragana": "この まち は ちいさい です が ゆうめい です。"
     }
   },
   {
@@ -4454,12 +5852,26 @@
     "strokeOrderSvgs": [
       "kanjivg/056fd.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "国に行きます。",
+        "english": "I go to the country."
+      },
+      {
+        "particle": "で",
+        "phrase": "国で友達に会います。",
+        "english": "I meet my friend at the country."
+      }
+    ],
     "exampleSentence": {
       "japanese": "あなたの国はどこですか。",
       "english": "Which country are you from?",
       "source": "curated",
       "hiragana": "あなたのくにはどこですか。",
-      "romaji": "anatanokunihadokodesuka."
+      "romaji": "anatanokunihadokodesuka.",
+      "spacedJapanese": "あなた の 国 は どこ です か。",
+      "spacedHiragana": "あなた の くに は どこ です か。"
     }
   },
   {
@@ -4484,12 +5896,36 @@
       "kanjivg/05916.svg",
       "kanjivg/056fd.svg"
     ],
+    "breakdown": [
+      {
+        "text": "外",
+        "gloss": "outside"
+      },
+      {
+        "text": "国",
+        "gloss": "country"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "に",
+        "phrase": "外国に行きます。",
+        "english": "I go to the foreign country."
+      },
+      {
+        "particle": "で",
+        "phrase": "外国で友達に会います。",
+        "english": "I meet my friend at the foreign country."
+      }
+    ],
     "exampleSentence": {
       "japanese": "外国で働きたいです。",
       "english": "I want to work abroad.",
       "source": "curated",
       "hiragana": "がいこくではたらきたいです。",
-      "romaji": "gaikokudehatarakitaidesu."
+      "romaji": "gaikokudehatarakitaidesu.",
+      "spacedJapanese": "外国 で 働き たい です。",
+      "spacedHiragana": "がいこく で はたらき たい です。"
     }
   },
   {
@@ -4515,12 +5951,26 @@
     "strokeOrderSvgs": [
       "kanjivg/08eca.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "車で行きます。",
+        "english": "I go by car."
+      },
+      {
+        "particle": "に",
+        "phrase": "車に乗ります。",
+        "english": "I take the car."
+      }
+    ],
     "exampleSentence": {
       "japanese": "車で会社に行きます。",
       "english": "I go to the company by car.",
       "source": "curated",
       "hiragana": "くるまでかいしゃにいきます。",
-      "romaji": "kurumadekaishaniikimasu."
+      "romaji": "kurumadekaishaniikimasu.",
+      "spacedJapanese": "車 で 会社 に 行き ます。",
+      "spacedHiragana": "くるま で かいしゃ に いき ます。"
     }
   },
   {
@@ -4546,12 +5996,26 @@
       "kanjivg/096fb.svg",
       "kanjivg/08eca.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "電車で行きます。",
+        "english": "I go by train."
+      },
+      {
+        "particle": "に",
+        "phrase": "電車に乗ります。",
+        "english": "I take the train."
+      }
+    ],
     "exampleSentence": {
       "japanese": "電車で学校に通っています。",
       "english": "I commute to school by train.",
       "source": "curated",
       "hiragana": "でんしゃでがっこうにかよっています。",
-      "romaji": "denshadegakkounikayotteimasu."
+      "romaji": "denshadegakkounikayotteimasu.",
+      "spacedJapanese": "電車 で 学校 に 通っ て い ます。",
+      "spacedHiragana": "でんしゃ で がっこう に かよっ て い ます。"
     }
   },
   {
@@ -4578,12 +6042,40 @@
       "kanjivg/08ee2.svg",
       "kanjivg/08eca.svg"
     ],
+    "breakdown": [
+      {
+        "text": "自",
+        "gloss": "self"
+      },
+      {
+        "text": "転",
+        "gloss": "turn"
+      },
+      {
+        "text": "車",
+        "gloss": "vehicle"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "自転車で行きます。",
+        "english": "I go by bicycle."
+      },
+      {
+        "particle": "に",
+        "phrase": "自転車に乗ります。",
+        "english": "I take the bicycle."
+      }
+    ],
     "exampleSentence": {
       "japanese": "自転車で駅まで行きます。",
       "english": "I go to the station by bicycle.",
       "source": "curated",
       "hiragana": "じてんしゃでえきまでいきます。",
-      "romaji": "jitenshadeekimadeikimasu."
+      "romaji": "jitenshadeekimadeikimasu.",
+      "spacedJapanese": "自転車 で 駅 まで 行き ます。",
+      "spacedHiragana": "じてんしゃ で えき まで いき ます。"
     }
   },
   {
@@ -4612,12 +6104,36 @@
       "kanjivg/0884c.svg",
       "kanjivg/06a5f.svg"
     ],
+    "breakdown": [
+      {
+        "text": "飛行",
+        "gloss": "flight"
+      },
+      {
+        "text": "機",
+        "gloss": "machine"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "飛行機で行きます。",
+        "english": "I go by airplane."
+      },
+      {
+        "particle": "に",
+        "phrase": "飛行機に乗ります。",
+        "english": "I take the airplane."
+      }
+    ],
     "exampleSentence": {
       "japanese": "飛行機で日本へ行きます。",
       "english": "I will go to Japan by airplane.",
       "source": "curated",
       "hiragana": "ひこうきでにっぽんへいきます。",
-      "romaji": "hikoukidenipponheikimasu."
+      "romaji": "hikoukidenipponheikimasu.",
+      "spacedJapanese": "飛行機 で 日本 へ 行き ます。",
+      "spacedHiragana": "ひこうき で にっぽん へ いき ます。"
     }
   },
   {
@@ -4639,12 +6155,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "バスで行きます。",
+        "english": "I go by bus."
+      },
+      {
+        "particle": "に",
+        "phrase": "バスに乗ります。",
+        "english": "I take the bus."
+      }
+    ],
     "exampleSentence": {
       "japanese": "バスに乗って会社に行きます。",
       "english": "I go to work by bus.",
       "source": "curated",
       "hiragana": "バスにのってかいしゃにいきます。",
-      "romaji": "basuninottekaishaniikimasu."
+      "romaji": "basuninottekaishaniikimasu.",
+      "spacedJapanese": "バス に 乗っ て 会社 に 行き ます。",
+      "spacedHiragana": "ばす に のっ て かいしゃ に いき ます。"
     }
   },
   {
@@ -4666,12 +6196,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "タクシーで行きます。",
+        "english": "I go by taxi."
+      },
+      {
+        "particle": "に",
+        "phrase": "タクシーに乗ります。",
+        "english": "I take the taxi."
+      }
+    ],
     "exampleSentence": {
       "japanese": "雨の日はタクシーを使います。",
       "english": "I use a taxi on rainy days.",
       "source": "curated",
       "hiragana": "あめのひはタクシーをつかいます。",
-      "romaji": "amenohihatakushiiwotsukaimasu."
+      "romaji": "amenohihatakushiiwotsukaimasu.",
+      "spacedJapanese": "雨 の 日 は タクシー を 使い ます。",
+      "spacedHiragana": "あめ の ひ は たくしい を つかい ます。"
     }
   },
   {
@@ -4699,12 +6243,26 @@
     "strokeOrderSvgs": [
       "kanjivg/08239.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "船で行きます。",
+        "english": "I go by ship."
+      },
+      {
+        "particle": "に",
+        "phrase": "船に乗ります。",
+        "english": "I take the ship."
+      }
+    ],
     "exampleSentence": {
       "japanese": "船で島へ行きました。",
       "english": "I went to the island by boat.",
       "source": "curated",
       "hiragana": "ふねでしまへいきました。",
-      "romaji": "funedeshimaheikimashita."
+      "romaji": "funedeshimaheikimashita.",
+      "spacedJapanese": "船 で 島 へ 行き まし た。",
+      "spacedHiragana": "ふね で しま へ いき まし た。"
     }
   },
   {
@@ -4732,12 +6290,36 @@
       "kanjivg/04e0b.svg",
       "kanjivg/09244.svg"
     ],
+    "breakdown": [
+      {
+        "text": "地下",
+        "gloss": "underground"
+      },
+      {
+        "text": "鉄",
+        "gloss": "rail"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "で",
+        "phrase": "地下鉄で行きます。",
+        "english": "I go by subway."
+      },
+      {
+        "particle": "に",
+        "phrase": "地下鉄に乗ります。",
+        "english": "I take the subway."
+      }
+    ],
     "exampleSentence": {
       "japanese": "地下鉄はとても便利です。",
       "english": "The subway is very convenient.",
       "source": "curated",
       "hiragana": "ちかてつはとてもべんりです。",
-      "romaji": "chikatetsuhatotemobenridesu."
+      "romaji": "chikatetsuhatotemobenridesu.",
+      "spacedJapanese": "地下鉄 は とても 便利 です。",
+      "spacedHiragana": "ちかてつ は とても べんり です。"
     }
   },
   {
@@ -4767,7 +6349,9 @@
       "english": "It rained yesterday.",
       "source": "curated",
       "hiragana": "きのうはあめでした。",
-      "romaji": "kinouhaamedeshita."
+      "romaji": "kinouhaamedeshita.",
+      "spacedJapanese": "昨日 は 雨 でし た。",
+      "spacedHiragana": "きのう は あめ でし た。"
     }
   },
   {
@@ -4793,12 +6377,24 @@
       "kanjivg/06bce.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "毎",
+        "gloss": "every"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎日、日本語を勉強します。",
       "english": "I study Japanese every day.",
       "source": "curated",
       "hiragana": "まいにち、にほんごをべんきょうします。",
-      "romaji": "mainichi,nihongowobenkyoushimasu."
+      "romaji": "mainichi,nihongowobenkyoushimasu.",
+      "spacedJapanese": "毎日、 日本語 を 勉強 し ます。",
+      "spacedHiragana": "まいにち、 にほんご を べんきょう し ます。"
     }
   },
   {
@@ -4823,12 +6419,24 @@
       "kanjivg/06bce.svg",
       "kanjivg/09031.svg"
     ],
+    "breakdown": [
+      {
+        "text": "毎",
+        "gloss": "every"
+      },
+      {
+        "text": "週",
+        "gloss": "week"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎週、映画を見に行きます。",
       "english": "I go to watch a movie every week.",
       "source": "curated",
       "hiragana": "まいしゅう、えいがをみにいきます。",
-      "romaji": "maishuu,eigawominiikimasu."
+      "romaji": "maishuu,eigawominiikimasu.",
+      "spacedJapanese": "毎週、 映画 を 見 に 行き ます。",
+      "spacedHiragana": "まいしゅう、 えいが を み に いき ます。"
     }
   },
   {
@@ -4855,12 +6463,24 @@
       "kanjivg/06bce.svg",
       "kanjivg/06708.svg"
     ],
+    "breakdown": [
+      {
+        "text": "毎",
+        "gloss": "every"
+      },
+      {
+        "text": "月",
+        "gloss": "month"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎月、本を三冊読みます。",
       "english": "I read three books every month.",
       "source": "curated",
       "hiragana": "まいつき、ほんをさんさつよみます。",
-      "romaji": "maitsuki,honwosansatsuyomimasu."
+      "romaji": "maitsuki,honwosansatsuyomimasu.",
+      "spacedJapanese": "毎月、 本 を 三 冊 読み ます。",
+      "spacedHiragana": "まいつき、 ほん を さん さつ よみ ます。"
     }
   },
   {
@@ -4887,12 +6507,24 @@
       "kanjivg/06bce.svg",
       "kanjivg/05e74.svg"
     ],
+    "breakdown": [
+      {
+        "text": "毎",
+        "gloss": "every"
+      },
+      {
+        "text": "年",
+        "gloss": "year"
+      }
+    ],
     "exampleSentence": {
       "japanese": "毎年、夏に旅行します。",
       "english": "I travel every summer.",
       "source": "curated",
       "hiragana": "まいとし、なつにりょこうします。",
-      "romaji": "maitoshi,natsuniryokoushimasu."
+      "romaji": "maitoshi,natsuniryokoushimasu.",
+      "spacedJapanese": "毎年、 夏 に 旅行 し ます。",
+      "spacedHiragana": "まいとし、 なつ に りょこう し ます。"
     }
   },
   {
@@ -4918,12 +6550,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "月",
+        "gloss": "moon"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "月曜日から仕事が始まります。",
       "english": "Work starts on Monday.",
       "source": "curated",
       "hiragana": "げつようびからしごとがはじまります。",
-      "romaji": "getsuyoubikarashigotogahajimarimasu."
+      "romaji": "getsuyoubikarashigotogahajimarimasu.",
+      "spacedJapanese": "月曜日 から 仕事 が 始まり ます。",
+      "spacedHiragana": "げつようび から しごと が はじまり ます。"
     }
   },
   {
@@ -4949,12 +6597,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "火",
+        "gloss": "fire"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "火曜日にテストがあります。",
       "english": "There is a test on Tuesday.",
       "source": "curated",
       "hiragana": "かようびにテストがあります。",
-      "romaji": "kayoubinitesutogaarimasu."
+      "romaji": "kayoubinitesutogaarimasu.",
+      "spacedJapanese": "火曜日 に テスト が あり ます。",
+      "spacedHiragana": "かようび に てすと が あり ます。"
     }
   },
   {
@@ -4980,12 +6644,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "水",
+        "gloss": "water"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "水曜日は休みです。",
       "english": "Wednesday is a day off.",
       "source": "curated",
       "hiragana": "すいようびはやすみです。",
-      "romaji": "suiyoubihayasumidesu."
+      "romaji": "suiyoubihayasumidesu.",
+      "spacedJapanese": "水曜日 は 休み です。",
+      "spacedHiragana": "すいようび は やすみ です。"
     }
   },
   {
@@ -5011,12 +6691,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "木",
+        "gloss": "tree"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "木曜日に友達に会います。",
       "english": "I will meet my friend on Thursday.",
       "source": "curated",
       "hiragana": "もくようびにともだちにあいます。",
-      "romaji": "mokuyoubinitomodachiniaimasu."
+      "romaji": "mokuyoubinitomodachiniaimasu.",
+      "spacedJapanese": "木曜日 に 友達 に 会い ます。",
+      "spacedHiragana": "もくようび に ともだち に あい ます。"
     }
   },
   {
@@ -5042,12 +6738,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "金",
+        "gloss": "gold"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "金曜日の夜はいつも楽しいです。",
       "english": "Friday nights are always fun.",
       "source": "curated",
       "hiragana": "きんようびのよるはいつもたのしいです。",
-      "romaji": "kin'youbinoyoruhaitsumotanoshiidesu."
+      "romaji": "kin'youbinoyoruhaitsumotanoshiidesu.",
+      "spacedJapanese": "金曜日 の 夜 は いつも 楽しい です。",
+      "spacedHiragana": "きんようび の よる は いつも たのしい です。"
     }
   },
   {
@@ -5073,12 +6785,28 @@
       "kanjivg/066dc.svg",
       "kanjivg/065e5.svg"
     ],
+    "breakdown": [
+      {
+        "text": "土",
+        "gloss": "earth"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "土曜日に買い物に行きます。",
       "english": "I go shopping on Saturday.",
       "source": "curated",
       "hiragana": "どようびにかいものにいきます。",
-      "romaji": "doyoubinikaimononiikimasu."
+      "romaji": "doyoubinikaimononiikimasu.",
+      "spacedJapanese": "土曜日 に 買い物 に 行き ます。",
+      "spacedHiragana": "どようび に かいもの に いき ます。"
     }
   },
   {
@@ -5103,12 +6831,28 @@
       "kanjivg/065e5.svg",
       "kanjivg/066dc.svg"
     ],
+    "breakdown": [
+      {
+        "text": "日",
+        "gloss": "sun"
+      },
+      {
+        "text": "曜",
+        "gloss": "weekday"
+      },
+      {
+        "text": "日",
+        "gloss": "day"
+      }
+    ],
     "exampleSentence": {
       "japanese": "日曜日は家族と過ごします。",
       "english": "I spend Sunday with my family.",
       "source": "curated",
       "hiragana": "にちようびはかぞくとすごします。",
-      "romaji": "nichiyoubihakazokutosugoshimasu."
+      "romaji": "nichiyoubihakazokutosugoshimasu.",
+      "spacedJapanese": "日曜日 は 家族 と 過ごし ます。",
+      "spacedHiragana": "にちようび は かぞく と すごし ます。"
     }
   },
   {
@@ -5137,7 +6881,9 @@
       "english": "I will go on a trip next week.",
       "source": "curated",
       "hiragana": "らいしゅう、りょこうにいきます。",
-      "romaji": "raishuu,ryokouniikimasu."
+      "romaji": "raishuu,ryokouniikimasu.",
+      "spacedJapanese": "来週、 旅行 に 行き ます。",
+      "spacedHiragana": "らいしゅう、 りょこう に いき ます。"
     }
   },
   {
@@ -5166,7 +6912,9 @@
       "english": "My birthday is next month.",
       "source": "curated",
       "hiragana": "らいげつ、たんじょうびです。",
-      "romaji": "raigetsu,tanjoubidesu."
+      "romaji": "raigetsu,tanjoubidesu.",
+      "spacedJapanese": "来月、 誕生 日 です。",
+      "spacedHiragana": "らいげつ、 たんじょう び です。"
     }
   },
   {
@@ -5195,7 +6943,9 @@
       "english": "This year is busy.",
       "source": "curated",
       "hiragana": "ことしはいそがしいです。",
-      "romaji": "kotoshihaisogashiidesu."
+      "romaji": "kotoshihaisogashiidesu.",
+      "spacedJapanese": "今年 は 忙しい です。",
+      "spacedHiragana": "ことし は いそがしい です。"
     }
   },
   {
@@ -5225,7 +6975,9 @@
       "english": "The cherry blossoms are beautiful in spring.",
       "source": "curated",
       "hiragana": "はるはさくらがきれいです。",
-      "romaji": "haruhasakuragakireidesu."
+      "romaji": "haruhasakuragakireidesu.",
+      "spacedJapanese": "春 は 桜 が きれい です。",
+      "spacedHiragana": "はる は さくら が きれい です。"
     }
   },
   {
@@ -5254,7 +7006,9 @@
       "english": "Summer is very hot.",
       "source": "curated",
       "hiragana": "なつはとてもあついです。",
-      "romaji": "natsuhatotemoatsuidesu."
+      "romaji": "natsuhatotemoatsuidesu.",
+      "spacedJapanese": "夏 は とても 暑い です。",
+      "spacedHiragana": "なつ は とても あつい です。"
     }
   },
   {
@@ -5284,7 +7038,9 @@
       "english": "Food is delicious in autumn.",
       "source": "curated",
       "hiragana": "あきはたべものがおいしいです。",
-      "romaji": "akihatabemonogaoishiidesu."
+      "romaji": "akihatabemonogaoishiidesu.",
+      "spacedJapanese": "秋 は 食べ物 が おいしい です。",
+      "spacedHiragana": "あき は たべもの が おいしい です。"
     }
   },
   {
@@ -5313,7 +7069,9 @@
       "english": "It snows in winter.",
       "source": "curated",
       "hiragana": "ふゆはゆきがおります。",
-      "romaji": "fuyuhayukigaorimasu."
+      "romaji": "fuyuhayukigaorimasu.",
+      "spacedJapanese": "冬 は 雪 が 降り ます。",
+      "spacedHiragana": "ふゆ は ゆき が おり ます。"
     }
   },
   {
@@ -5335,12 +7093,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "りんごが好きです。",
+        "english": "I like apple."
+      },
+      {
+        "particle": "を",
+        "phrase": "りんごを食べます。",
+        "english": "I eat apple."
+      }
+    ],
     "exampleSentence": {
       "japanese": "りんごを一つ食べました。",
       "english": "I ate an apple.",
       "source": "curated",
       "hiragana": "りんごをひとつたべました。",
-      "romaji": "ringowohitotsutabemashita."
+      "romaji": "ringowohitotsutabemashita.",
+      "spacedJapanese": "りんご を 一つ 食べ まし た。",
+      "spacedHiragana": "りんご を ひとつ たべ まし た。"
     }
   },
   {
@@ -5366,12 +7138,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "みかんが好きです。",
+        "english": "I like mandarin."
+      },
+      {
+        "particle": "を",
+        "phrase": "みかんを食べます。",
+        "english": "I eat mandarin."
+      }
+    ],
     "exampleSentence": {
       "japanese": "冬にみかんをよく食べます。",
       "english": "I often eat mandarin oranges in winter.",
       "source": "curated",
       "hiragana": "ふゆにみかんをよくたべます。",
-      "romaji": "fuyunimikanwoyokutabemasu."
+      "romaji": "fuyunimikanwoyokutabemasu.",
+      "spacedJapanese": "冬 に みかん を よく 食べ ます。",
+      "spacedHiragana": "ふゆ に みかん を よく たべ ます。"
     }
   },
   {
@@ -5399,12 +7185,36 @@
       "kanjivg/083d3.svg",
       "kanjivg/05b50.svg"
     ],
+    "breakdown": [
+      {
+        "text": "お",
+        "gloss": "polite prefix"
+      },
+      {
+        "text": "菓子",
+        "gloss": "sweets"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "お菓子が好きです。",
+        "english": "I like confections."
+      },
+      {
+        "particle": "を",
+        "phrase": "お菓子を食べます。",
+        "english": "I eat confections."
+      }
+    ],
     "exampleSentence": {
       "japanese": "お菓子を食べすぎないでください。",
       "english": "Please don't eat too many sweets.",
       "source": "curated",
       "hiragana": "おかしをたべすぎないでください。",
-      "romaji": "okashiwotabesuginaidekudasai."
+      "romaji": "okashiwotabesuginaidekudasai.",
+      "spacedJapanese": "お菓子 を 食べ すぎ ない で ください。",
+      "spacedHiragana": "おかし を たべ すぎ ない で ください。"
     }
   },
   {
@@ -5431,12 +7241,26 @@
     "strokeOrderSvgs": [
       "kanjivg/05869.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "塩が好きです。",
+        "english": "I like salt."
+      },
+      {
+        "particle": "を",
+        "phrase": "塩を食べます。",
+        "english": "I eat salt."
+      }
+    ],
     "exampleSentence": {
       "japanese": "スープに塩を入れます。",
       "english": "I add salt to the soup.",
       "source": "curated",
       "hiragana": "スープにしおをいれます。",
-      "romaji": "suupunishiowoiremasu."
+      "romaji": "suupunishiowoiremasu.",
+      "spacedJapanese": "スープ に 塩 を 入れ ます。",
+      "spacedHiragana": "すうぷ に しお を いれ ます。"
     }
   },
   {
@@ -5461,12 +7285,26 @@
       "kanjivg/07802.svg",
       "kanjivg/07cd6.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "砂糖が好きです。",
+        "english": "I like sugar."
+      },
+      {
+        "particle": "を",
+        "phrase": "砂糖を食べます。",
+        "english": "I eat sugar."
+      }
+    ],
     "exampleSentence": {
       "japanese": "コーヒーに砂糖を入れますか。",
       "english": "Do you put sugar in your coffee?",
       "source": "curated",
       "hiragana": "コーヒーにさとうをいれますか。",
-      "romaji": "koohiinisatouwoiremasuka."
+      "romaji": "koohiinisatouwoiremasuka.",
+      "spacedJapanese": "コーヒー に 砂糖 を 入れ ます か。",
+      "spacedHiragana": "こうひい に さとう を いれ ます か。"
     }
   },
   {
@@ -5493,12 +7331,26 @@
       "kanjivg/091a4.svg",
       "kanjivg/06cb9.svg"
     ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "醤油が好きです。",
+        "english": "I like soy sauce."
+      },
+      {
+        "particle": "を",
+        "phrase": "醤油を食べます。",
+        "english": "I eat soy sauce."
+      }
+    ],
     "exampleSentence": {
       "japanese": "お寿司に醤油をつけます。",
       "english": "I dip sushi in soy sauce.",
       "source": "curated",
       "hiragana": "おすしにしょうゆをつけます。",
-      "romaji": "osushinishouyuwotsukemasu."
+      "romaji": "osushinishouyuwotsukemasu.",
+      "spacedJapanese": "お 寿司 に 醤油 を つけ ます。",
+      "spacedHiragana": "お すし に しょうゆ を つけ ます。"
     }
   },
   {
@@ -5523,12 +7375,36 @@
       "kanjivg/0671d.svg",
       "kanjivg/098ef.svg"
     ],
+    "breakdown": [
+      {
+        "text": "朝",
+        "gloss": "morning"
+      },
+      {
+        "text": "ご飯",
+        "gloss": "meal"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "朝ご飯が好きです。",
+        "english": "I like breakfast."
+      },
+      {
+        "particle": "を",
+        "phrase": "朝ご飯を食べます。",
+        "english": "I eat breakfast."
+      }
+    ],
     "exampleSentence": {
       "japanese": "朝ご飯を食べる時間がありません。",
       "english": "I don't have time to eat breakfast.",
       "source": "curated",
       "hiragana": "あさごはんをたべるじかんがありません。",
-      "romaji": "asagohanwotaberujikangaarimasen."
+      "romaji": "asagohanwotaberujikangaarimasen.",
+      "spacedJapanese": "朝 ご飯 を 食べる 時間 が あり ませ ん。",
+      "spacedHiragana": "あさ ごはん を たべる じかん が あり ませ ん。"
     }
   },
   {
@@ -5554,12 +7430,36 @@
       "kanjivg/0663c.svg",
       "kanjivg/098ef.svg"
     ],
+    "breakdown": [
+      {
+        "text": "昼",
+        "gloss": "noon"
+      },
+      {
+        "text": "ご飯",
+        "gloss": "meal"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "昼ご飯が好きです。",
+        "english": "I like lunch."
+      },
+      {
+        "particle": "を",
+        "phrase": "昼ご飯を食べます。",
+        "english": "I eat lunch."
+      }
+    ],
     "exampleSentence": {
       "japanese": "友達と昼ご飯を食べました。",
       "english": "I ate lunch with my friend.",
       "source": "curated",
       "hiragana": "ともだちとひるごはんをたべました。",
-      "romaji": "tomodachitohirugohanwotabemashita."
+      "romaji": "tomodachitohirugohanwotabemashita.",
+      "spacedJapanese": "友達 と 昼 ご飯 を 食べ まし た。",
+      "spacedHiragana": "ともだち と ひる ごはん を たべ まし た。"
     }
   },
   {
@@ -5585,12 +7485,36 @@
       "kanjivg/06669.svg",
       "kanjivg/098ef.svg"
     ],
+    "breakdown": [
+      {
+        "text": "晩",
+        "gloss": "evening"
+      },
+      {
+        "text": "ご飯",
+        "gloss": "meal"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "晩ご飯が好きです。",
+        "english": "I like dinner."
+      },
+      {
+        "particle": "を",
+        "phrase": "晩ご飯を食べます。",
+        "english": "I eat dinner."
+      }
+    ],
     "exampleSentence": {
       "japanese": "今日の晩ご飯は何ですか。",
       "english": "What's for dinner today?",
       "source": "curated",
       "hiragana": "きょうのばんごはんはなにですか。",
-      "romaji": "kyounobangohanhananidesuka."
+      "romaji": "kyounobangohanhananidesuka.",
+      "spacedJapanese": "今日 の 晩 ご飯 は 何 です か。",
+      "spacedHiragana": "きょう の ばん ごはん は なに です か。"
     }
   },
   {
@@ -5619,12 +7543,36 @@
       "kanjivg/098df.svg",
       "kanjivg/05802.svg"
     ],
+    "breakdown": [
+      {
+        "text": "食",
+        "gloss": "eat"
+      },
+      {
+        "text": "堂",
+        "gloss": "hall"
+      }
+    ],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "食堂が好きです。",
+        "english": "I like dining room."
+      },
+      {
+        "particle": "を",
+        "phrase": "食堂を食べます。",
+        "english": "I eat dining room."
+      }
+    ],
     "exampleSentence": {
       "japanese": "学校の食堂でご飯を食べます。",
       "english": "I eat at the school cafeteria.",
       "source": "curated",
       "hiragana": "がっこうのしょくどうでごはんをたべます。",
-      "romaji": "gakkounoshokudoudegohanwotabemasu."
+      "romaji": "gakkounoshokudoudegohanwotabemasu.",
+      "spacedJapanese": "学校 の 食堂 で ご飯 を 食べ ます。",
+      "spacedHiragana": "がっこう の しょくどう で ごはん を たべ ます。"
     }
   },
   {
@@ -5646,12 +7594,26 @@
       "lang": "ja-JP"
     },
     "strokeOrderSvgs": [],
+    "particleUsage": [
+      {
+        "particle": "が",
+        "phrase": "レストランが好きです。",
+        "english": "I like restaurant."
+      },
+      {
+        "particle": "を",
+        "phrase": "レストランを食べます。",
+        "english": "I eat restaurant."
+      }
+    ],
     "exampleSentence": {
       "japanese": "誕生日にレストランへ行きました。",
       "english": "We went to a restaurant for my birthday.",
       "source": "curated",
       "hiragana": "たんじょうびにレストランへいきました。",
-      "romaji": "tanjoubiniresutoranheikimashita."
+      "romaji": "tanjoubiniresutoranheikimashita.",
+      "spacedJapanese": "誕生 日 に レストラン へ 行き まし た。",
+      "spacedHiragana": "たんじょう び に れすとらん へ いき まし た。"
     }
   },
   {
@@ -5678,12 +7640,34 @@
       "kanjivg/05927.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "大きい",
+      "presentPolite": "大きいです",
+      "past": "大きかった",
+      "pastPolite": "大きかったです",
+      "negative": "大きくない",
+      "negativePolite": "大きくないです",
+      "pastNegative": "大きくなかった",
+      "teForm": "大きくて"
+    },
+    "breakdown": [
+      {
+        "text": "大き",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この家はとても大きいです。",
       "english": "This house is very big.",
       "source": "curated",
       "hiragana": "このいえはとてもおおきいです。",
-      "romaji": "konoiehatotemoookiidesu."
+      "romaji": "konoiehatotemoookiidesu.",
+      "spacedJapanese": "この 家 は とても 大きい です。",
+      "spacedHiragana": "この いえ は とても おおきい です。"
     }
   },
   {
@@ -5710,12 +7694,34 @@
       "kanjivg/05c0f.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "小さい",
+      "presentPolite": "小さいです",
+      "past": "小さかった",
+      "pastPolite": "小さかったです",
+      "negative": "小さくない",
+      "negativePolite": "小さくないです",
+      "pastNegative": "小さくなかった",
+      "teForm": "小さくて"
+    },
+    "breakdown": [
+      {
+        "text": "小さ",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "私の部屋は小さいです。",
       "english": "My room is small.",
       "source": "curated",
       "hiragana": "わたしのへやはちいさいです。",
-      "romaji": "watashinoheyahachiisaidesu."
+      "romaji": "watashinoheyahachiisaidesu.",
+      "spacedJapanese": "私 の 部屋 は 小さい です。",
+      "spacedHiragana": "わたし の へや は ちいさい です。"
     }
   },
   {
@@ -5746,12 +7752,34 @@
       "kanjivg/065b0.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "新しい",
+      "presentPolite": "新しいです",
+      "past": "新しかった",
+      "pastPolite": "新しかったです",
+      "negative": "新しくない",
+      "negativePolite": "新しくないです",
+      "pastNegative": "新しくなかった",
+      "teForm": "新しくて"
+    },
+    "breakdown": [
+      {
+        "text": "新し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "新しい靴を買いました。",
       "english": "I bought new shoes.",
       "source": "curated",
       "hiragana": "あたらしいくつをかいました。",
-      "romaji": "atarashiikutsuwokaimashita."
+      "romaji": "atarashiikutsuwokaimashita.",
+      "spacedJapanese": "新しい 靴 を 買い まし た。",
+      "spacedHiragana": "あたらしい くつ を かい まし た。"
     }
   },
   {
@@ -5781,12 +7809,34 @@
       "kanjivg/053e4.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "古い",
+      "presentPolite": "古いです",
+      "past": "古かった",
+      "pastPolite": "古かったです",
+      "negative": "古くない",
+      "negativePolite": "古くないです",
+      "pastNegative": "古くなかった",
+      "teForm": "古くて"
+    },
+    "breakdown": [
+      {
+        "text": "古",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この本はとても古いです。",
       "english": "This book is very old.",
       "source": "curated",
       "hiragana": "このほんはとてもふるいです。",
-      "romaji": "konohonhatotemofuruidesu."
+      "romaji": "konohonhatotemofuruidesu.",
+      "spacedJapanese": "この 本 は とても 古い です。",
+      "spacedHiragana": "この ほん は とても ふるい です。"
     }
   },
   {
@@ -5816,12 +7866,34 @@
       "kanjivg/0826f.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "良い",
+      "presentPolite": "良いです",
+      "past": "良かった",
+      "pastPolite": "良かったです",
+      "negative": "良くない",
+      "negativePolite": "良くないです",
+      "pastNegative": "良くなかった",
+      "teForm": "良くて"
+    },
+    "breakdown": [
+      {
+        "text": "良",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "天気がとても良いです。",
       "english": "The weather is very good.",
       "source": "curated",
       "hiragana": "てんきがとてもよいです。",
-      "romaji": "tenkigatotemoyoidesu."
+      "romaji": "tenkigatotemoyoidesu.",
+      "spacedJapanese": "天気 が とても 良い です。",
+      "spacedHiragana": "てんき が とても よい です。"
     }
   },
   {
@@ -5848,12 +7920,34 @@
       "kanjivg/060aa.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "悪い",
+      "presentPolite": "悪いです",
+      "past": "悪かった",
+      "pastPolite": "悪かったです",
+      "negative": "悪くない",
+      "negativePolite": "悪くないです",
+      "pastNegative": "悪くなかった",
+      "teForm": "悪くて"
+    },
+    "breakdown": [
+      {
+        "text": "悪",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "気分が悪いです。",
       "english": "I feel unwell.",
       "source": "curated",
       "hiragana": "きぶんがわるいです。",
-      "romaji": "kibungawaruidesu."
+      "romaji": "kibungawaruidesu.",
+      "spacedJapanese": "気分 が 悪い です。",
+      "spacedHiragana": "きぶん が わるい です。"
     }
   },
   {
@@ -5881,12 +7975,34 @@
       "kanjivg/06691.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "暑い",
+      "presentPolite": "暑いです",
+      "past": "暑かった",
+      "pastPolite": "暑かったです",
+      "negative": "暑くない",
+      "negativePolite": "暑くないです",
+      "pastNegative": "暑くなかった",
+      "teForm": "暑くて"
+    },
+    "breakdown": [
+      {
+        "text": "暑",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "今日はとても暑いです。",
       "english": "It is very hot today.",
       "source": "curated",
       "hiragana": "きょうはとてもあついです。",
-      "romaji": "kyouhatotemoatsuidesu."
+      "romaji": "kyouhatotemoatsuidesu.",
+      "spacedJapanese": "今日 は とても 暑い です。",
+      "spacedHiragana": "きょう は とても あつい です。"
     }
   },
   {
@@ -5911,12 +8027,34 @@
       "kanjivg/05bd2.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "寒い",
+      "presentPolite": "寒いです",
+      "past": "寒かった",
+      "pastPolite": "寒かったです",
+      "negative": "寒くない",
+      "negativePolite": "寒くないです",
+      "pastNegative": "寒くなかった",
+      "teForm": "寒くて"
+    },
+    "breakdown": [
+      {
+        "text": "寒",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "冬は寒いです。",
       "english": "Winter is cold.",
       "source": "curated",
       "hiragana": "ふゆはさむいです。",
-      "romaji": "fuyuhasamuidesu."
+      "romaji": "fuyuhasamuidesu.",
+      "spacedJapanese": "冬 は 寒い です。",
+      "spacedHiragana": "ふゆ は さむい です。"
     }
   },
   {
@@ -5941,12 +8079,34 @@
       "kanjivg/071b1.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "熱い",
+      "presentPolite": "熱いです",
+      "past": "熱かった",
+      "pastPolite": "熱かったです",
+      "negative": "熱くない",
+      "negativePolite": "熱くないです",
+      "pastNegative": "熱くなかった",
+      "teForm": "熱くて"
+    },
+    "breakdown": [
+      {
+        "text": "熱",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このコーヒーはとても熱いです。",
       "english": "This coffee is very hot.",
       "source": "curated",
       "hiragana": "このコーヒーはとてもあついです。",
-      "romaji": "konokoohiihatotemoatsuidesu."
+      "romaji": "konokoohiihatotemoatsuidesu.",
+      "spacedJapanese": "この コーヒー は とても 熱い です。",
+      "spacedHiragana": "この こうひい は とても あつい です。"
     }
   },
   {
@@ -5974,12 +8134,34 @@
       "kanjivg/051b7.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "冷たい",
+      "presentPolite": "冷たいです",
+      "past": "冷たかった",
+      "pastPolite": "冷たかったです",
+      "negative": "冷たくない",
+      "negativePolite": "冷たくないです",
+      "pastNegative": "冷たくなかった",
+      "teForm": "冷たくて"
+    },
+    "breakdown": [
+      {
+        "text": "冷た",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "冷たい水が飲みたいです。",
       "english": "I want to drink cold water.",
       "source": "curated",
       "hiragana": "つめたいみずがのみたいです。",
-      "romaji": "tsumetaimizuganomitaidesu."
+      "romaji": "tsumetaimizuganomitaidesu.",
+      "spacedJapanese": "冷たい 水 が 飲み たい です。",
+      "spacedHiragana": "つめたい みず が のみ たい です。"
     }
   },
   {
@@ -6005,12 +8187,34 @@
       "kanjivg/09ad8.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "高い",
+      "presentPolite": "高いです",
+      "past": "高かった",
+      "pastPolite": "高かったです",
+      "negative": "高くない",
+      "negativePolite": "高くないです",
+      "pastNegative": "高くなかった",
+      "teForm": "高くて"
+    },
+    "breakdown": [
+      {
+        "text": "高",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このかばんは高いです。",
       "english": "This bag is expensive.",
       "source": "curated",
       "hiragana": "このかばんはたかいです。",
-      "romaji": "konokabanhatakaidesu."
+      "romaji": "konokabanhatakaidesu.",
+      "spacedJapanese": "この かばん は 高い です。",
+      "spacedHiragana": "この かばん は たかい です。"
     }
   },
   {
@@ -6036,12 +8240,34 @@
       "kanjivg/05b89.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "安い",
+      "presentPolite": "安いです",
+      "past": "安かった",
+      "pastPolite": "安かったです",
+      "negative": "安くない",
+      "negativePolite": "安くないです",
+      "pastNegative": "安くなかった",
+      "teForm": "安くて"
+    },
+    "breakdown": [
+      {
+        "text": "安",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この店は安くて便利です。",
       "english": "This shop is cheap and convenient.",
       "source": "curated",
       "hiragana": "このみせはやすくてべんりです。",
-      "romaji": "konomisehayasukutebenridesu."
+      "romaji": "konomisehayasukutebenridesu.",
+      "spacedJapanese": "この 店 は 安く て 便利 です。",
+      "spacedHiragana": "この みせ は やすく て べんり です。"
     }
   },
   {
@@ -6066,12 +8292,34 @@
       "kanjivg/04f4e.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "低い",
+      "presentPolite": "低いです",
+      "past": "低かった",
+      "pastPolite": "低かったです",
+      "negative": "低くない",
+      "negativePolite": "低くないです",
+      "pastNegative": "低くなかった",
+      "teForm": "低くて"
+    },
+    "breakdown": [
+      {
+        "text": "低",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "あの山は低いです。",
       "english": "That mountain is low.",
       "source": "curated",
       "hiragana": "あのやまはひくいです。",
-      "romaji": "anoyamahahikuidesu."
+      "romaji": "anoyamahahikuidesu.",
+      "spacedJapanese": "あの 山 は 低い です。",
+      "spacedHiragana": "あの やま は ひくい です。"
     }
   },
   {
@@ -6098,12 +8346,34 @@
       "kanjivg/05e83.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "広い",
+      "presentPolite": "広いです",
+      "past": "広かった",
+      "pastPolite": "広かったです",
+      "negative": "広くない",
+      "negativePolite": "広くないです",
+      "pastNegative": "広くなかった",
+      "teForm": "広くて"
+    },
+    "breakdown": [
+      {
+        "text": "広",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この公園はとても広いです。",
       "english": "This park is very spacious.",
       "source": "curated",
       "hiragana": "このこうえんはとてもひろいです。",
-      "romaji": "konokouenhatotemohiroidesu."
+      "romaji": "konokouenhatotemohiroidesu.",
+      "spacedJapanese": "この 公園 は とても 広い です。",
+      "spacedHiragana": "この こうえん は とても ひろい です。"
     }
   },
   {
@@ -6131,12 +8401,34 @@
       "kanjivg/072ed.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "狭い",
+      "presentPolite": "狭いです",
+      "past": "狭かった",
+      "pastPolite": "狭かったです",
+      "negative": "狭くない",
+      "negativePolite": "狭くないです",
+      "pastNegative": "狭くなかった",
+      "teForm": "狭くて"
+    },
+    "breakdown": [
+      {
+        "text": "狭",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "私の部屋は狭いです。",
       "english": "My room is narrow.",
       "source": "curated",
       "hiragana": "わたしのへやはせまいです。",
-      "romaji": "watashinoheyahasemaidesu."
+      "romaji": "watashinoheyahasemaidesu.",
+      "spacedJapanese": "私 の 部屋 は 狭い です。",
+      "spacedHiragana": "わたし の へや は せまい です。"
     }
   },
   {
@@ -6165,12 +8457,34 @@
       "kanjivg/096e3.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "難しい",
+      "presentPolite": "難しいです",
+      "past": "難しかった",
+      "pastPolite": "難しかったです",
+      "negative": "難しくない",
+      "negativePolite": "難しくないです",
+      "pastNegative": "難しくなかった",
+      "teForm": "難しくて"
+    },
+    "breakdown": [
+      {
+        "text": "難し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この問題は難しいです。",
       "english": "This problem is difficult.",
       "source": "curated",
       "hiragana": "このもんだいはむずかしいです。",
-      "romaji": "konomondaihamuzukashiidesu."
+      "romaji": "konomondaihamuzukashiidesu.",
+      "spacedJapanese": "この 問題 は 難しい です。",
+      "spacedHiragana": "この もんだい は むずかしい です。"
     }
   },
   {
@@ -6197,12 +8511,34 @@
       "kanjivg/06613.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "易しい",
+      "presentPolite": "易しいです",
+      "past": "易しかった",
+      "pastPolite": "易しかったです",
+      "negative": "易しくない",
+      "negativePolite": "易しくないです",
+      "pastNegative": "易しくなかった",
+      "teForm": "易しくて"
+    },
+    "breakdown": [
+      {
+        "text": "易し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このテストは易しいです。",
       "english": "This test is easy.",
       "source": "curated",
       "hiragana": "このテストはやさしいです。",
-      "romaji": "konotesutohayasashiidesu."
+      "romaji": "konotesutohayasashiidesu.",
+      "spacedJapanese": "この テスト は 易しい です。",
+      "spacedHiragana": "この てすと は やさしい です。"
     }
   },
   {
@@ -6231,12 +8567,34 @@
       "kanjivg/05473.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "美味しい",
+      "presentPolite": "美味しいです",
+      "past": "美味しかった",
+      "pastPolite": "美味しかったです",
+      "negative": "美味しくない",
+      "negativePolite": "美味しくないです",
+      "pastNegative": "美味しくなかった",
+      "teForm": "美味しくて"
+    },
+    "breakdown": [
+      {
+        "text": "美味し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このラーメンはとても美味しいです。",
       "english": "This ramen is very delicious.",
       "source": "curated",
       "hiragana": "このラーメンはとてもおいしいです。",
-      "romaji": "konoraamenhatotemooishiidesu."
+      "romaji": "konoraamenhatotemooishiidesu.",
+      "spacedJapanese": "この ラーメン は とても 美味しい です。",
+      "spacedHiragana": "この らあめん は とても おいしい です。"
     }
   },
   {
@@ -6265,12 +8623,34 @@
     },
     "strokeOrderSvgs": [],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "まずい",
+      "presentPolite": "まずいです",
+      "past": "まずかった",
+      "pastPolite": "まずかったです",
+      "negative": "まずくない",
+      "negativePolite": "まずくないです",
+      "pastNegative": "まずくなかった",
+      "teForm": "まずくて"
+    },
+    "breakdown": [
+      {
+        "text": "まず",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このスープはまずいです。",
       "english": "This soup tastes bad.",
       "source": "curated",
       "hiragana": "このスープはまずいです。",
-      "romaji": "konosuupuhamazuidesu."
+      "romaji": "konosuupuhamazuidesu.",
+      "spacedJapanese": "この スープ は まずい です。",
+      "spacedHiragana": "この すうぷ は まずい です。"
     }
   },
   {
@@ -6297,12 +8677,34 @@
       "kanjivg/05fd9.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "忙しい",
+      "presentPolite": "忙しいです",
+      "past": "忙しかった",
+      "pastPolite": "忙しかったです",
+      "negative": "忙しくない",
+      "negativePolite": "忙しくないです",
+      "pastNegative": "忙しくなかった",
+      "teForm": "忙しくて"
+    },
+    "breakdown": [
+      {
+        "text": "忙し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "今週はとても忙しいです。",
       "english": "I am very busy this week.",
       "source": "curated",
       "hiragana": "こんしゅうはとてもいそがしいです。",
-      "romaji": "konshuuhatotemoisogashiidesu."
+      "romaji": "konshuuhatotemoisogashiidesu.",
+      "spacedJapanese": "今週 は とても 忙しい です。",
+      "spacedHiragana": "こんしゅう は とても いそがしい です。"
     }
   },
   {
@@ -6331,12 +8733,34 @@
       "kanjivg/0697d.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "楽しい",
+      "presentPolite": "楽しいです",
+      "past": "楽しかった",
+      "pastPolite": "楽しかったです",
+      "negative": "楽しくない",
+      "negativePolite": "楽しくないです",
+      "pastNegative": "楽しくなかった",
+      "teForm": "楽しくて"
+    },
+    "breakdown": [
+      {
+        "text": "楽し",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "旅行はとても楽しかったです。",
       "english": "The trip was very fun.",
       "source": "curated",
       "hiragana": "りょこうはとてもたのしかったです。",
-      "romaji": "ryokouhatotemotanoshikattadesu."
+      "romaji": "ryokouhatotemotanoshikattadesu.",
+      "spacedJapanese": "旅行 は とても 楽しかっ た です。",
+      "spacedHiragana": "りょこう は とても たのしかっ た です。"
     }
   },
   {
@@ -6365,12 +8789,34 @@
       "kanjivg/0767d.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "面白い",
+      "presentPolite": "面白いです",
+      "past": "面白かった",
+      "pastPolite": "面白かったです",
+      "negative": "面白くない",
+      "negativePolite": "面白くないです",
+      "pastNegative": "面白くなかった",
+      "teForm": "面白くて"
+    },
+    "breakdown": [
+      {
+        "text": "面白",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この映画は面白いです。",
       "english": "This movie is interesting.",
       "source": "curated",
       "hiragana": "このえいがはおもしろいです。",
-      "romaji": "konoeigahaomoshiroidesu."
+      "romaji": "konoeigahaomoshiroidesu.",
+      "spacedJapanese": "この 映画 は 面白い です。",
+      "spacedHiragana": "この えいが は おもしろい です。"
     }
   },
   {
@@ -6396,12 +8842,34 @@
     },
     "strokeOrderSvgs": [],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "つまらない",
+      "presentPolite": "つまらないです",
+      "past": "つまらなかった",
+      "pastPolite": "つまらなかったです",
+      "negative": "つまらなくない",
+      "negativePolite": "つまらなくないです",
+      "pastNegative": "つまらなくなかった",
+      "teForm": "つまらなくて"
+    },
+    "breakdown": [
+      {
+        "text": "つまらな",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "この授業はつまらないです。",
       "english": "This class is boring.",
       "source": "curated",
       "hiragana": "このじゅぎょうはつまらないです。",
-      "romaji": "konojugyouhatsumaranaidesu."
+      "romaji": "konojugyouhatsumaranaidesu.",
+      "spacedJapanese": "この 授業 は つまらない です。",
+      "spacedHiragana": "この じゅぎょう は つまらない です。"
     }
   },
   {
@@ -6428,12 +8896,34 @@
       "kanjivg/08fd1.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "近い",
+      "presentPolite": "近いです",
+      "past": "近かった",
+      "pastPolite": "近かったです",
+      "negative": "近くない",
+      "negativePolite": "近くないです",
+      "pastNegative": "近くなかった",
+      "teForm": "近くて"
+    },
+    "breakdown": [
+      {
+        "text": "近",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "学校は駅から近いです。",
       "english": "The school is close to the station.",
       "source": "curated",
       "hiragana": "がっこうはえきからちかいです。",
-      "romaji": "gakkouhaekikarachikaidesu."
+      "romaji": "gakkouhaekikarachikaidesu.",
+      "spacedJapanese": "学校 は 駅 から 近い です。",
+      "spacedHiragana": "がっこう は えき から ちかい です。"
     }
   },
   {
@@ -6462,12 +8952,34 @@
       "kanjivg/09060.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "遠い",
+      "presentPolite": "遠いです",
+      "past": "遠かった",
+      "pastPolite": "遠かったです",
+      "negative": "遠くない",
+      "negativePolite": "遠くないです",
+      "pastNegative": "遠くなかった",
+      "teForm": "遠くて"
+    },
+    "breakdown": [
+      {
+        "text": "遠",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "家から会社まで遠いです。",
       "english": "It's far from home to the company.",
       "source": "curated",
       "hiragana": "いえからかいしゃまでとおいです。",
-      "romaji": "iekarakaishamadetooidesu."
+      "romaji": "iekarakaishamadetooidesu.",
+      "spacedJapanese": "家 から 会社 まで 遠い です。",
+      "spacedHiragana": "いえ から かいしゃ まで とおい です。"
     }
   },
   {
@@ -6498,12 +9010,34 @@
       "kanjivg/0901f.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "速い",
+      "presentPolite": "速いです",
+      "past": "速かった",
+      "pastPolite": "速かったです",
+      "negative": "速くない",
+      "negativePolite": "速くないです",
+      "pastNegative": "速くなかった",
+      "teForm": "速くて"
+    },
+    "breakdown": [
+      {
+        "text": "速",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "新幹線はとても速いです。",
       "english": "The shinkansen is very fast.",
       "source": "curated",
       "hiragana": "しんかんせんはとてもはやいです。",
-      "romaji": "shinkansenhatotemohayaidesu."
+      "romaji": "shinkansenhatotemohayaidesu.",
+      "spacedJapanese": "新幹線 は とても 速い です。",
+      "spacedHiragana": "しんかんせん は とても はやい です。"
     }
   },
   {
@@ -6528,12 +9062,34 @@
       "kanjivg/09045.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "遅い",
+      "presentPolite": "遅いです",
+      "past": "遅かった",
+      "pastPolite": "遅かったです",
+      "negative": "遅くない",
+      "negativePolite": "遅くないです",
+      "pastNegative": "遅くなかった",
+      "teForm": "遅くて"
+    },
+    "breakdown": [
+      {
+        "text": "遅",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "バスが遅いです。",
       "english": "The bus is late.",
       "source": "curated",
       "hiragana": "バスがおそいです。",
-      "romaji": "basugaosoidesu."
+      "romaji": "basugaosoidesu.",
+      "spacedJapanese": "バス が 遅い です。",
+      "spacedHiragana": "ばす が おそい です。"
     }
   },
   {
@@ -6559,12 +9115,34 @@
       "kanjivg/091cd.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "重い",
+      "presentPolite": "重いです",
+      "past": "重かった",
+      "pastPolite": "重かったです",
+      "negative": "重くない",
+      "negativePolite": "重くないです",
+      "pastNegative": "重くなかった",
+      "teForm": "重くて"
+    },
+    "breakdown": [
+      {
+        "text": "重",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このかばんは重いです。",
       "english": "This bag is heavy.",
       "source": "curated",
       "hiragana": "このかばんはおもいです。",
-      "romaji": "konokabanhaomoidesu."
+      "romaji": "konokabanhaomoidesu.",
+      "spacedJapanese": "この かばん は 重い です。",
+      "spacedHiragana": "この かばん は おもい です。"
     }
   },
   {
@@ -6590,12 +9168,34 @@
       "kanjivg/08efd.svg"
     ],
     "isNaAdjective": false,
+    "conjugations": {
+      "present": "軽い",
+      "presentPolite": "軽いです",
+      "past": "軽かった",
+      "pastPolite": "軽かったです",
+      "negative": "軽くない",
+      "negativePolite": "軽くないです",
+      "pastNegative": "軽くなかった",
+      "teForm": "軽くて"
+    },
+    "breakdown": [
+      {
+        "text": "軽",
+        "gloss": "stem"
+      },
+      {
+        "text": "い",
+        "gloss": "i-adjective ending"
+      }
+    ],
     "exampleSentence": {
       "japanese": "このノートパソコンは軽いです。",
       "english": "This laptop is light.",
       "source": "curated",
       "hiragana": "このノートパソコンはかるいです。",
-      "romaji": "kononootopasokonhakaruidesu."
+      "romaji": "kononootopasokonhakaruidesu.",
+      "spacedJapanese": "この ノート パソコン は 軽い です。",
+      "spacedHiragana": "この のうと ぱそこん は かるい です。"
     }
   }
 ]
