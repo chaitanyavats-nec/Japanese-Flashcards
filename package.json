@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npx serve .",
     "start": "npx serve .",
+    "build": "node scripts/build-cards.js",
     "build:cards": "node scripts/build-cards.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
