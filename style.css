@@ -103,12 +103,43 @@ button { font-family: var(--font-ui); cursor: pointer; border: none; background:
 .setting-toggle:hover { background: rgba(255,255,255,0.08); color: var(--text); }
 .setting-toggle input { margin: 0; cursor: pointer; accent-color: var(--accent); }
 
+.home-view-toggle {
+  display: flex;
+  gap: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: var(--space-4);
+  width: fit-content;
+}
+.home-view-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.home-view-toggle button:hover { color: var(--text); }
+.home-view-toggle button.active { background: var(--accent); color: #1a0e08; }
+
 .collections-grid {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding-bottom: 32px;
+  padding-bottom: 16px;
   position: relative;
+}
+
+.corpus-credit {
+  text-align: center;
+  font-size: 11px;
+  padding-bottom: 24px;
 }
 
 .collection-card {
