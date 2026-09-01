@@ -4,23 +4,15 @@ const fetch = require('node-fetch');
 const Kuroshiro = require('kuroshiro').default;
 const KuromojiAnalyzer = require('kuroshiro-analyzer-kuromoji');
 const wanakana = require('wanakana');
-const sentenceBank = require('./sentence-bank');
-
-// Jisho's word-only (kana) search sometimes matches an unrelated homophone
-// as its top result (e.g. "どう" -> 銅 "copper" instead of "how"). Force the
-// intended sense for words known to collide this way.
-const MEANING_OVERRIDES = {
-  "どう": { englishMeanings: ["how", "in what way", "how about"], partOfSpeech: "adverb" },
-  "はい": { englishMeanings: ["yes", "that is correct"], partOfSpeech: "interjection" },
-  "こんにちは": { partOfSpeech: "expression" },
-  "おはようございます": { partOfSpeech: "expression" },
-  "こんばんは": { partOfSpeech: "expression" },
-  "ありがとう": { partOfSpeech: "expression" },
-  "さようなら": { partOfSpeech: "expression" }
-};
+const jmdict = require('./lib/jmdict');
+const tanaka = require('./lib/tanaka');
 
 const PUBLIC_DIR = path.join(__dirname, '../public');
 const KANJIVG_DIR = path.join(PUBLIC_DIR, 'kanjivg');
+const JMDICT_PATH = path.join(__dirname, '../data/jmdict-eng-common.json');
+const TANAKA_PATH = path.join(__dirname, '../data/examples.utf');
+const WORDLIST_PATH = path.join(__dirname, '../wordlist.json');
+const PACKS_PATH = path.join(__dirname, '../packs.json');
 
 [PUBLIC_DIR, KANJIVG_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -280,6 +272,12 @@ function buildParticleUsage(word, theme, gloss) {
       { particle: "で", phrase: `${word}で友達に会います。`, english: `I meet my friend at the ${gloss}.` }
     ];
   }
+  // No template for this theme (e.g. the algorithmically expanded "Common
+  // Nouns", which spans everything from concrete objects to abstract and
+  // person nouns with no single natural template) — omit the section rather
+  // than force a generic "X が好きです" that reads wrong for many of them
+  // ("I like illness", "I like son"). The example sentence already carries
+  // the primary usage demonstration.
   return null;
 }
 
@@ -297,8 +295,6 @@ function wakachigaki(tokens, useReading) {
   return out.trim();
 }
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
 function writeDatasetSafely(cards) {
   const outputPath = path.join(PUBLIC_DIR, 'dataset.json');
   const tmpPath = outputPath + '.tmp';
@@ -314,99 +310,96 @@ function writeDatasetSafely(cards) {
   }
 }
 
+// Maps a word's theme to a browsable pack id — only for the hand-curated
+// thematic tags; the algorithmic "Common Verbs"/"Common Nouns" themes are
+// intentionally left unmapped since they're already covered by the
+// POS-derived top-verbs/top-nouns/top-adjectives packs below.
+const THEME_TO_PACK = {
+  "Numbers": "numbers",
+  "Question Words": "question-words",
+  "Pronouns": "pronouns",
+  "Greetings": "greetings",
+  "Family & People": "family-people",
+  "Time & Days": "time-days",
+  "Food & Drink": "food-drink",
+  "Animals & Nature": "animals",
+  "Places & Transportation": "places-transport"
+};
+const POS_TO_PACK = { verb: "top-verbs", noun: "top-nouns", adjective: "top-adjectives" };
+
+function computePacks(partOfSpeech, theme, explicitPacks) {
+  if (explicitPacks && explicitPacks.length > 0) return explicitPacks;
+  const packs = [];
+  const posPack = POS_TO_PACK[partOfSpeech];
+  if (posPack) packs.push(posPack);
+  const themePack = THEME_TO_PACK[theme];
+  if (themePack) packs.push(themePack);
+  return packs;
+}
+
 async function build() {
-  const wordlistPath = path.join(__dirname, '../wordlist.json');
-  const tiers = JSON.parse(fs.readFileSync(wordlistPath, 'utf8'));
+  const tiers = JSON.parse(fs.readFileSync(WORDLIST_PATH, 'utf8'));
+  const packsRegistry = JSON.parse(fs.readFileSync(PACKS_PATH, 'utf8'));
+
+  console.log('Loading local JMdict + Tanaka Corpus...');
+  const dict = jmdict.loadIndex(JMDICT_PATH);
+  const corpus = tanaka.loadCorpus(TANAKA_PATH);
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
+
+  // Cumulative known-vocabulary set per tier (words in earlier tiers only) —
+  // used to pick example sentences a learner at that tier could realistically
+  // understand.
+  const tierNames = Object.keys(tiers);
+  const knownByTierIndex = [];
+  let running = new Set();
+  for (const tierName of tierNames) {
+    knownByTierIndex.push(new Set(running));
+    for (const entry of tiers[tierName]) running.add(entry.word);
+  }
 
   const generatedCards = [];
   let globalIndex = 0;
   let tierNumber = 0;
 
-  for (const [tierName, entries] of Object.entries(tiers)) {
+  for (const tierName of tierNames) {
+    const entries = tiers[tierName];
+    const knownSet = knownByTierIndex[tierNumber];
     tierNumber++;
-    for (const entry of entries) {
-      const word = entry.word;
-      const theme = entry.theme;
+
+    for (const wlEntry of entries) {
+      const word = wlEntry.word;
+      const theme = wlEntry.theme;
       globalIndex++;
       console.log(`Processing [${tierName} / ${theme}]: ${word}`);
 
-      let jishoEntry = null;
-      for (let attempt = 1; attempt <= 4 && !jishoEntry; attempt++) {
-        try {
-          const res = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(word)}`, {
-            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const jishoData = await res.json();
-          jishoEntry = jishoData.data && jishoData.data[0];
-          if (!jishoEntry) break; // request succeeded, just no results — don't retry
-        } catch (e) {
-          console.warn(`  Jisho fetch attempt ${attempt} failed for ${word}: ${e.message}`);
-          if (attempt < 4) await sleep(1500 * attempt);
-        }
-      }
-
-      if (!jishoEntry) {
-        console.warn(`No data found for ${word}`);
+      const dictEntry = jmdict.lookup(dict, word);
+      if (!dictEntry) {
+        console.warn(`No JMdict entry found for ${word}`);
         continue;
       }
 
       const id = String(globalIndex).padStart(4, '0');
 
-      // Determine forms
       const isKanji = /[一-龯]/.test(word);
       let kanji = null;
       let hiragana = null;
 
       if (isKanji) {
         kanji = word;
-        hiragana = jishoEntry.japanese[0].reading || await kuroshiro.convert(word, { to: "hiragana" });
+        const relevantKana = dictEntry.kana.find(k => (k.appliesToKanji || []).includes('*') || (k.appliesToKanji || []).includes(word));
+        const commonKana = dictEntry.kana.find(k => k.common);
+        hiragana = (relevantKana || commonKana || dictEntry.kana[0])?.text || await kuroshiro.convert(word, { to: "hiragana" });
       } else {
         hiragana = word;
-      }
-
-      if (!hiragana && jishoEntry.japanese[0].word) {
-        hiragana = jishoEntry.japanese[0].word;
       }
 
       const katakana = wanakana.toKatakana(hiragana);
       const romaji = wanakana.toRomaji(hiragana);
 
-      const override = MEANING_OVERRIDES[word];
-      const englishMeanings = (override && override.englishMeanings) || jishoEntry.senses[0].english_definitions;
-
-      let partOfSpeech = "noun";
-      let verbType = null;
-      let isNaAdjective = false;
-
-      if (override && override.partOfSpeech) {
-        partOfSpeech = override.partOfSpeech;
-      } else {
-      const partsOfSpeech = jishoEntry.senses[0].parts_of_speech.join(', ').toLowerCase();
-
-      // Use word-boundary matching — plain .includes('verb') also matches "adverb".
-      if (/\bverb\b/.test(partsOfSpeech)) {
-        partOfSpeech = "verb";
-        if (partsOfSpeech.includes('ichidan')) verbType = "ichidan";
-        else if (partsOfSpeech.includes('suru')) verbType = "suru";
-        else if (partsOfSpeech.includes('kuru')) verbType = "kuru";
-        else verbType = "godan";
-      } else if (partsOfSpeech.includes('adjective') || partsOfSpeech.includes('adjectival')) {
-        partOfSpeech = "adjective";
-        if (partsOfSpeech.includes('na-adjective')) isNaAdjective = true;
-      } else if (partsOfSpeech.includes('interjection')) {
-        partOfSpeech = "interjection";
-      } else if (partsOfSpeech.includes('expressions') || partsOfSpeech.includes('expression')) {
-        partOfSpeech = "expression";
-      } else if (partsOfSpeech.includes('pronoun')) {
-        partOfSpeech = "pronoun";
-      }
-      }
-
-      const jlptLevel = jishoEntry.jlpt.length > 0 ? jishoEntry.jlpt[0].toUpperCase() : "N5";
+      const englishMeanings = jmdict.englishMeanings(dictEntry);
+      const { partOfSpeech, verbType, isNaAdjective } = jmdict.classify(dictEntry);
 
       // Kanji SVGs
       const strokeOrderSvgs = [];
@@ -418,6 +411,8 @@ async function build() {
         }
       }
 
+      const packs = computePacks(partOfSpeech, theme, wlEntry.packs);
+
       const card = {
         id,
         kanji,
@@ -426,10 +421,10 @@ async function build() {
         romaji,
         englishMeanings,
         partOfSpeech,
-        jlptLevel,
         tier: tierNumber,
         tierName,
         theme,
+        packs,
         audio: { ttsText: kanji || hiragana, lang: "ja-JP" },
         strokeOrderSvgs
       };
@@ -452,10 +447,15 @@ async function build() {
         if (particleUsage) card.particleUsage = particleUsage;
       }
 
-      // Example sentence — hand-authored for quality, not scraped.
-      const bankEntry = sentenceBank[word];
-      const sentenceObj = bankEntry
-        ? { japanese: bankEntry.japanese, english: bankEntry.english, source: "curated" }
+      // Example sentence — sourced from the Tanaka Corpus, scored for
+      // comprehensibility against vocabulary from earlier tiers. Every known
+      // spelling of the word is tried, since the corpus sometimes lemma-tags
+      // a word under a different surface form than the one we display (e.g.
+      // する is indexed under its rare kanji form 為る).
+      const aliases = [...new Set([word, ...dictEntry.kanji.map(k => k.text), ...dictEntry.kana.map(k => k.text)])];
+      const picked = tanaka.pickSentence(corpus, aliases, knownSet);
+      const sentenceObj = picked
+        ? { japanese: picked.japanese, english: picked.english, source: "tanaka" }
         : { japanese: `これは${kanji || hiragana}です。`, english: `This is ${englishMeanings[0]}.`, source: "fallback" };
 
       try {
@@ -477,8 +477,6 @@ async function build() {
 
       generatedCards.push(card);
       writeDatasetSafely(generatedCards);
-
-      await sleep(350); // Rate limit for Jisho API
     }
   }
 

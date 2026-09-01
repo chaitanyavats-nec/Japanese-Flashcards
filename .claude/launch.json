@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "flashcards",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", ".", "-l", "5050"],
-      "port": 5050
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }

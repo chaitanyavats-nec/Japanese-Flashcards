@@ -1,0 +1,14 @@
+{
+  "top-verbs": { "name": "Top Verbs", "description": "The most frequently used verbs, ranked by real corpus usage", "color": "var(--level-2)", "order": 1 },
+  "top-nouns": { "name": "Top Nouns", "description": "The most frequently used nouns, ranked by real corpus usage", "color": "var(--level-1)", "order": 2 },
+  "top-adjectives": { "name": "Top Adjectives", "description": "Common descriptive words", "color": "var(--level-4)", "order": 3 },
+  "greetings": { "name": "Greetings", "description": "Everyday greetings and set phrases", "color": "var(--level-3)", "order": 4 },
+  "numbers": { "name": "Numbers", "description": "Counting and basic numbers", "color": "var(--level-1)", "order": 5 },
+  "pronouns": { "name": "Pronouns", "description": "I, you, he, she, and friends", "color": "var(--level-1)", "order": 6 },
+  "question-words": { "name": "Question Words", "description": "Who, what, when, where, why, how", "color": "var(--level-1)", "order": 7 },
+  "family-people": { "name": "Family & People", "description": "Family members and people around you", "color": "var(--level-2)", "order": 8 },
+  "food-drink": { "name": "Food & Drink", "description": "Meals, drinks, and food vocabulary", "color": "var(--level-2)", "order": 9 },
+  "time-days": { "name": "Time & Days", "description": "Days of the week and time expressions", "color": "var(--level-2)", "order": 10 },
+  "animals": { "name": "Animals & Nature", "description": "Animals, weather, and the natural world", "color": "var(--level-3)", "order": 11 },
+  "places-transport": { "name": "Places & Transportation", "description": "Getting around and places you go", "color": "var(--level-3)", "order": 12 }
+}

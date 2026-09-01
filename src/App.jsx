@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import packsRegistry from '../packs.json';
 
 const LEVEL_COLORS = {
   1: 'var(--level-1)',
@@ -21,6 +22,7 @@ export default function App() {
   
   // App state
   const [screen, setScreen] = useState('home'); // 'home' | 'arena' | 'summary'
+  const [homeView, setHomeView] = useState('learning-path'); // 'learning-path' | 'word-packs'
   const [showKanji, setShowKanji] = useState(() => {
     const saved = localStorage.getItem('flashcards_show_kanji');
     return saved !== null ? saved === 'true' : true;
@@ -270,6 +272,22 @@ export default function App() {
     }));
   }, [allCards]);
 
+  // Group cards by word pack (packs.json registry) for the alternate,
+  // customizable browsing view — a card can belong to more than one pack.
+  const packs = React.useMemo(() => {
+    const map = new Map();
+    allCards.forEach(card => {
+      (card.packs || []).forEach(packId => {
+        if (!map.has(packId)) map.set(packId, []);
+        map.get(packId).push(card);
+      });
+    });
+    return Object.keys(packsRegistry)
+      .filter(id => map.has(id))
+      .sort((a, b) => packsRegistry[a].order - packsRegistry[b].order)
+      .map(id => ({ id, ...packsRegistry[id], cards: map.get(id) }));
+  }, [allCards]);
+
   if (loading) {
     return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>Loading datasets...</div>;
   }
@@ -301,20 +319,47 @@ export default function App() {
               <p class="streak-indicator">🔥 1 Day Streak</p>
             </div>
           </div>
+          <div class="home-view-toggle">
+            <button
+              class={homeView === 'learning-path' ? 'active' : ''}
+              onClick={() => setHomeView('learning-path')}
+            >
+              Learning Path
+            </button>
+            <button
+              class={homeView === 'word-packs' ? 'active' : ''}
+              onClick={() => setHomeView('word-packs')}
+            >
+              Word Packs
+            </button>
+          </div>
           <div id="collections-list" class="collections-grid">
-            {levels.map(({ tier, name, cards }) => {
+            {(homeView === 'learning-path'
+              ? levels.map(({ tier, name, cards }) => ({
+                  key: tier,
+                  badge: tier,
+                  title: name.replace(/^Level \d+\s*·\s*/, ''),
+                  cards,
+                  color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
+                }))
+              : packs.map(({ id, name, cards, color }) => ({
+                  key: id,
+                  badge: cards.length,
+                  title: name,
+                  cards,
+                  color
+                }))
+            ).map(({ key, badge, title, cards, color }) => {
               const knownCount = cards.filter(c => progress[c.id] && progress[c.id].status === 'know').length;
               const total = cards.length;
               const percent = total > 0 ? (knownCount / total) * 100 : 0;
-              const color = LEVEL_COLORS[tier] || LEVEL_COLORS[4];
-              const cleanTitle = name.replace(/^Level \d+\s*·\s*/, '');
 
               return (
-                <div key={tier} class="collection-card" onClick={() => startSession(cards)}>
-                  <div class="level-badge" style={{ background: color, '--level-glow': color }}>{tier}</div>
+                <div key={key} class="collection-card" onClick={() => startSession(cards)}>
+                  <div class="level-badge" style={{ background: color, '--level-glow': color }}>{badge}</div>
                   <div class="collection-main">
                     <div class="collection-header">
-                      <h3 class="collection-title">{cleanTitle}</h3>
+                      <h3 class="collection-title">{title}</h3>
                       <span class="collection-badge">{total} words</span>
                     </div>
                     <div class="collection-stats">{knownCount} / {total} known</div>
@@ -326,6 +371,7 @@ export default function App() {
               );
             })}
           </div>
+          <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0).</p>
         </div>
       )}
 
