@@ -9,6 +9,58 @@ const LEVEL_COLORS = {
   4: 'var(--level-4)'
 };
 
+const IconFlame = (props) => (
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M12 2c1.2 3 .5 4.6-.6 6.2C10 9.8 8.5 11.4 8.5 14a3.5 3.5 0 0 0 7 0c0-1-.3-1.8-.8-2.6.9.7 1.8 2 1.8 3.6a4.5 4.5 0 0 1-9 0c0-4 2.7-6 3.5-9.3.4 1 1 1.7 1 3.3s-.5 2-1 3" />
+  </svg>
+);
+
+const IconSearch = (props) => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M21 21l-4.3-4.3" />
+  </svg>
+);
+
+const IconFlip = (props) => (
+  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M17 2l4 4-4 4" />
+    <path d="M21 6H9a5 5 0 0 0-5 5v1" />
+    <path d="M7 22l-4-4 4-4" />
+    <path d="M3 18h12a5 5 0 0 0 5-5v-1" />
+  </svg>
+);
+
+const IconRoute = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="6" cy="19" r="2" />
+    <circle cx="18" cy="5" r="2" />
+    <path d="M8 19h8a4 4 0 0 0 4-4v-1a4 4 0 0 0-4-4H8a4 4 0 0 1-4-4V5" />
+  </svg>
+);
+
+const IconPackage = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M21 8l-9-5-9 5 9 5 9-5z" />
+    <path d="M3 8v8l9 5 9-5V8" />
+    <path d="M12 13v8" />
+  </svg>
+);
+
+const IconBook = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+  </svg>
+);
+
+const IconCheckCircle = (props) => (
+  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M8.5 12.5l2.3 2.3 4.7-5" />
+  </svg>
+);
+
 function speak(text, lang) {
   if (!window.speechSynthesis) return;
   const ut = new SpeechSynthesisUtterance(text);
@@ -59,6 +111,8 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [known, setKnown] = useState([]);
   const [unknown, setUnknown] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [maxIndexReached, setMaxIndexReached] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [strokeShown, setStrokeShown] = useState(false);
   const [svgsMap, setSvgsMap] = useState({});
@@ -69,6 +123,17 @@ export default function App() {
   const [hasScrollFade, setHasScrollFade] = useState(false);
   const dragRef = useRef({ startX: 0, startY: 0, startTime: 0, isDragging: false, wasDragged: false, dragX: 0 });
   const [swipeOverlay, setSwipeOverlay] = useState({ know: 0, dont: 0 });
+
+  // Search, filtering, and modal state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'know' | 'unlearnt'
+  const [tierFilter, setTierFilter] = useState('all'); // 'all' | 1 | 2 | 3 | 4
+  const [modalCardIndex, setModalCardIndex] = useState(null); // index in filtered cards
+  const [modalIsFlipped, setModalIsFlipped] = useState(false);
+  const [modalStrokeShown, setModalStrokeShown] = useState(false);
+
+  // Expandable card actions
+  const [expandedCardKey, setExpandedCardKey] = useState(null);
 
   // Load dataset
   useEffect(() => {
@@ -130,6 +195,8 @@ export default function App() {
     setRemaining(shuffle(cardsArray));
     setKnown([]);
     setUnknown([]);
+    setHistory([]);
+    setMaxIndexReached(0);
     setCurrentIndex(0);
     setIsFlipped(false);
     setStrokeShown(false);
@@ -183,13 +250,44 @@ export default function App() {
       setUnknown(prev => [...prev, currentCard]);
     }
     saveWordProgress(currentCard.id, verdict);
+    setHistory(prev => [...prev, { index: currentIndex, verdict }]);
 
     if (currentIndex + 1 >= remaining.length) {
       setScreen('summary');
     } else {
-      setCurrentIndex(prev => prev + 1);
+      const nextIndex = currentIndex + 1;
+      setMaxIndexReached(prev => Math.max(prev, nextIndex));
+      setCurrentIndex(nextIndex);
     }
   }, [currentCard, currentIndex, remaining.length]);
+
+  // Navigate to the previous card. If the current card is a fresh, unjudged
+  // one right after the last judgement, stepping back also undoes that verdict.
+  const goToPreviousCard = useCallback(() => {
+    if (currentIndex === 0) return;
+    const newIndex = currentIndex - 1;
+    const atFrontier = currentIndex === history.length;
+
+    if (atFrontier && history.length > 0) {
+      const last = history[history.length - 1];
+      const prevCard = remaining[last.index];
+      setHistory(prev => prev.slice(0, -1));
+      if (prevCard) {
+        const list = last.verdict === 'know' ? setKnown : setUnknown;
+        list(prev => {
+          const idx = prev.findIndex(c => c.id === prevCard.id);
+          return idx === -1 ? prev : [...prev.slice(0, idx), ...prev.slice(idx + 1)];
+        });
+      }
+    }
+    setCurrentIndex(newIndex);
+  }, [currentIndex, history, remaining]);
+
+  // Navigate forward again without re-judging, only through cards already visited.
+  const goToNextCard = useCallback(() => {
+    if (currentIndex >= maxIndexReached) return;
+    setCurrentIndex(prev => prev + 1);
+  }, [currentIndex, maxIndexReached]);
 
   const judgeCard = useCallback((verdict) => {
     if (!cardRef.current) {
@@ -209,7 +307,72 @@ export default function App() {
     }, 320);
   }, [advanceDeck]);
 
-  // Keyboard navigation
+  // Filtered cards calculation for All Words view
+  const [selectedPackId, setSelectedPackId] = useState('all');
+
+  const filteredCards = React.useMemo(() => {
+    return allCards.filter(card => {
+      if (searchTerm.trim()) {
+        const q = searchTerm.toLowerCase().trim();
+        const matchKanji = card.kanji && card.kanji.toLowerCase().includes(q);
+        const matchHiragana = card.hiragana && card.hiragana.toLowerCase().includes(q);
+        const matchKatakana = card.katakana && card.katakana.toLowerCase().includes(q);
+        const matchRomaji = card.romaji && card.romaji.toLowerCase().includes(q);
+        const matchEnglish = card.englishMeanings && card.englishMeanings.some(m => m.toLowerCase().includes(q));
+        if (!matchKanji && !matchHiragana && !matchKatakana && !matchRomaji && !matchEnglish) {
+          return false;
+        }
+      }
+      const status = progress[card.id]?.status;
+      if (statusFilter === 'know' && status !== 'know') return false;
+      if (statusFilter === 'unlearnt' && status === 'know') return false;
+      if (tierFilter !== 'all' && card.tier !== Number(tierFilter)) return false;
+      if (selectedPackId !== 'all' && !(card.packs || []).includes(selectedPackId)) return false;
+      return true;
+    });
+  }, [allCards, searchTerm, statusFilter, tierFilter, selectedPackId, progress]);
+
+  const modalCard = modalCardIndex !== null ? filteredCards[modalCardIndex] : null;
+
+  // Fetch stroke order SVGs for modal card if requested
+  useEffect(() => {
+    if (modalStrokeShown && modalCard && modalCard.strokeOrderSvgs) {
+      modalCard.strokeOrderSvgs.forEach(path => {
+        if (!svgsMap[path]) {
+          fetch(`/${path}`)
+            .then(res => res.text())
+            .then(text => {
+              setSvgsMap(prev => ({ ...prev, [path]: text }));
+            })
+            .catch(console.error);
+        }
+      });
+    }
+  }, [modalStrokeShown, modalCard, svgsMap]);
+
+  // Reset modal state when modalCard changes
+  useEffect(() => {
+    setModalIsFlipped(false);
+    setModalStrokeShown(false);
+  }, [modalCardIndex]);
+
+  // Modal keyboard navigation & escape key
+  useEffect(() => {
+    if (modalCardIndex === null) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setModalCardIndex(null);
+      if (e.key === 'ArrowRight') setModalCardIndex(prev => (prev + 1) % filteredCards.length);
+      if (e.key === 'ArrowLeft') setModalCardIndex(prev => (prev - 1 + filteredCards.length) % filteredCards.length);
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        setModalIsFlipped(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalCardIndex, filteredCards.length]);
+
+  // Keyboard navigation for arena
   useEffect(() => {
     if (screen !== 'arena') return;
     const handleKeyDown = (e) => {
@@ -306,8 +469,7 @@ export default function App() {
     }));
   }, [allCards]);
 
-  // Group cards by word pack (packs.json registry) for the alternate,
-  // customizable browsing view — a card can belong to more than one pack.
+  // Group cards by word pack
   const packs = React.useMemo(() => {
     const map = new Map();
     allCards.forEach(card => {
@@ -321,6 +483,10 @@ export default function App() {
       .sort((a, b) => packsRegistry[a].order - packsRegistry[b].order)
       .map(id => ({ id, ...packsRegistry[id], cards: map.get(id) }));
   }, [allCards]);
+
+  const totalLearntWords = React.useMemo(() => {
+    return Object.values(progress).filter(p => p.status === 'know').length;
+  }, [progress]);
 
   if (loading) {
     return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>Loading datasets...</div>;
@@ -337,75 +503,523 @@ export default function App() {
       {/* Home Screen */}
       {screen === 'home' && (
         <div id="home-screen">
-          <div class="home-header">
-            <div class="brand">
-              <span class="brand-mark">日</span>
-              <div class="brand-text">
-                <h1>Learning Path</h1>
-                <p class="brand-subtitle">Progress through Japanese, one level at a time</p>
+          {/* Top Hero Section */}
+          <div class="home-hero-section">
+            <div class="home-header">
+              <div class="brand">
+                <span class="brand-mark">日</span>
+                <div class="brand-text">
+                  <h1>Japanese Flashcards</h1>
+                  <p class="brand-subtitle">{totalLearntWords} of {allCards.length} words mastered</p>
+                </div>
+              </div>
+              <div class="header-actions">
+                <label class="setting-toggle">
+                  <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} aria-label="Show kanji" />
+                  <span>Kanji</span>
+                </label>
+                <p class="streak-indicator"><IconFlame /> 1 Day Streak</p>
               </div>
             </div>
-            <div class="header-actions">
-              <label class="setting-toggle">
-                <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} />
-                <span>Kanji</span>
-              </label>
-              <p class="streak-indicator">🔥 1 Day Streak</p>
-            </div>
           </div>
-          <div class="home-view-toggle">
-            <button
-              class={homeView === 'learning-path' ? 'active' : ''}
-              onClick={() => setHomeView('learning-path')}
-            >
-              Learning Path
-            </button>
-            <button
-              class={homeView === 'word-packs' ? 'active' : ''}
-              onClick={() => setHomeView('word-packs')}
-            >
-              Word Packs
-            </button>
-          </div>
-          <div id="collections-list" class="collections-grid">
-            {(homeView === 'learning-path'
-              ? levels.map(({ tier, name, cards }) => ({
-                  key: tier,
-                  badge: tier,
-                  title: name.replace(/^Level \d+\s*·\s*/, ''),
-                  cards,
-                  color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
-                }))
-              : packs.map(({ id, name, cards, color }) => ({
-                  key: id,
-                  badge: cards.length,
-                  title: name,
-                  cards,
-                  color
-                }))
-            ).map(({ key, badge, title, cards, color }) => {
-              const knownCount = cards.filter(c => progress[c.id] && progress[c.id].status === 'know').length;
-              const total = cards.length;
-              const percent = total > 0 ? (knownCount / total) * 100 : 0;
 
-              return (
-                <div key={key} class="collection-card" onClick={() => startSession(cards)}>
-                  <div class="level-badge" style={{ background: color, '--level-glow': color }}>{badge}</div>
-                  <div class="collection-main">
-                    <div class="collection-header">
-                      <h3 class="collection-title">{title}</h3>
-                      <span class="collection-badge">{total} words</span>
+          {/* 3D Sheet Section with Rounded Top Corners */}
+          <div class="home-sheet-section">
+            <div class="sheet-header">
+              <div class="sheet-title-group">
+                <h2 class="sheet-title">
+                  {homeView === 'learning-path' && 'Learning Path'}
+                  {homeView === 'word-packs' && 'Word Packs'}
+                  {homeView === 'all-words' && 'Word List & Search'}
+                </h2>
+                <span class="sheet-subtitle">
+                  {homeView === 'learning-path' && 'Progress through Japanese, one level at a time'}
+                  {homeView === 'word-packs' && 'Explore curated vocabulary sets'}
+                  {homeView === 'all-words' && 'Browse, search, & filter flashcards'}
+                </span>
+              </div>
+            </div>
+
+            {/* LEARNING PATH & WORD PACKS VIEWS */}
+            {(homeView === 'learning-path' || homeView === 'word-packs') && (
+              <div id="collections-list" class="collections-grid">
+                {(homeView === 'learning-path'
+                  ? levels.map(({ tier, name, cards }) => ({
+                      key: tier,
+                      badge: tier,
+                      title: name.replace(/^Level \d+\s*·\s*/, ''),
+                      cards,
+                      color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
+                    }))
+                  : packs.map(({ id, name, cards, color }) => ({
+                      key: id,
+                      badge: cards.length,
+                      title: name,
+                      cards,
+                      color
+                    }))
+                ).map(({ key, badge, title, cards, color }) => {
+                  const learntCards = cards.filter(c => progress[c.id] && progress[c.id].status === 'know');
+                  const knownCount = learntCards.length;
+                  const total = cards.length;
+                  const percent = total > 0 ? (knownCount / total) * 100 : 0;
+
+                  return (
+                    <div key={key} class="collection-card">
+                      <div class="collection-card-main" onClick={() => startSession(cards)}>
+                        <div class="level-badge" style={{ background: color }}>{badge}</div>
+                        <div class="collection-main">
+                          <div class="collection-header">
+                            <h3 class="collection-title">{title}</h3>
+                            <span class="collection-badge">{total} words</span>
+                          </div>
+                          <div class="collection-stats">{knownCount} / {total} known</div>
+                          <div class="collection-progress-bg">
+                            <div class="collection-progress-fill" style={{ width: `${percent}%`, background: color }}></div>
+                          </div>
+                        </div>
+                        {/* Expand/Collapse toggle chevron */}
+                        <button
+                          class={`card-expand-toggle ${expandedCardKey === key ? 'expanded' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedCardKey(prev => prev === key ? null : key);
+                          }}
+                          aria-label="Toggle actions"
+                        >
+                          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                      </div>
+
+                      {/* Expandable dropdown actions */}
+                      <div class={`collection-actions-dropdown ${expandedCardKey === key ? 'open' : ''}`}>
+                        <div class="collection-actions">
+                          <button
+                            class="btn-card-action primary"
+                            onClick={(e) => { e.stopPropagation(); startSession(cards); }}
+                            title="Start random flashcard practice session"
+                          >
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Study All ({total})
+                          </button>
+                          <button
+                            class={`btn-card-action review-learnt ${knownCount === 0 ? 'disabled' : ''}`}
+                            disabled={knownCount === 0}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (knownCount > 0) startSession(learntCards);
+                            }}
+                            title={knownCount === 0 ? "No learnt words yet in this category" : `Review ${knownCount} learnt words`}
+                          >
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Review ({knownCount})
+                          </button>
+                          <button
+                            class="btn-card-action view-words"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (homeView === 'learning-path') {
+                                setTierFilter(String(key));
+                                setSelectedPackId('all');
+                              } else {
+                                setSelectedPackId(key);
+                                setTierFilter('all');
+                              }
+                              setHomeView('all-words');
+                            }}
+                            title="See all words in this pack in a list"
+                          >
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            View ({total})
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="collection-stats">{knownCount} / {total} known</div>
-                    <div class="collection-progress-bg">
-                      <div class="collection-progress-fill" style={{ width: `${percent}%`, background: color }}></div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* ALL WORDS LIST VIEW */}
+            {homeView === 'all-words' && (
+              <div class="all-words-container">
+                <div class="all-words-controls">
+                  <div class="search-box">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input
+                      type="text"
+                      placeholder="Search Japanese, English, Romaji..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      class="word-search-input"
+                    />
+                    {searchTerm && (
+                      <button class="clear-search-btn" onClick={() => setSearchTerm('')}>✕</button>
+                    )}
+                  </div>
+
+                  <div class="filters-row">
+                    <div class="filter-group">
+                      <span class="filter-label">Status:</span>
+                      <button
+                        class={`filter-chip ${statusFilter === 'all' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('all')}
+                      >
+                        All ({allCards.length})
+                      </button>
+                      <button
+                        class={`filter-chip ${statusFilter === 'know' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('know')}
+                      >
+                        Learnt ✓ ({totalLearntWords})
+                      </button>
+                      <button
+                        class={`filter-chip ${statusFilter === 'unlearnt' ? 'active' : ''}`}
+                        onClick={() => setStatusFilter('unlearnt')}
+                      >
+                        Unlearnt ({allCards.length - totalLearntWords})
+                      </button>
+                    </div>
+
+                    <div class="filter-group">
+                      <span class="filter-label">Level:</span>
+                      <select
+                        class="tier-select-dropdown"
+                        value={tierFilter}
+                        onChange={(e) => { setTierFilter(e.target.value); }}
+                      >
+                        <option value="all">All Levels</option>
+                        <option value="1">Level 1 · Foundations</option>
+                        <option value="2">Level 2 · Essentials</option>
+                        <option value="3">Level 3 · Intermediate</option>
+                        <option value="4">Level 4 · Advanced</option>
+                      </select>
+                    </div>
+
+                    <div class="filter-group">
+                      <span class="filter-label">Pack:</span>
+                      <select
+                        class="tier-select-dropdown"
+                        value={selectedPackId}
+                        onChange={(e) => setSelectedPackId(e.target.value)}
+                      >
+                        <option value="all">All Word Packs</option>
+                        {packs.map(p => (
+                          <option key={p.id} value={p.id}>{p.name}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+
+                <div class="words-results-summary">
+                  <span>Showing <strong>{filteredCards.length}</strong> words</span>
+                  <span class="hint-text">Click any word row to open flashcard pop up</span>
+                </div>
+
+                {filteredCards.length === 0 ? (
+                  <div class="empty-words-state">
+                    <span class="empty-icon"><IconSearch /></span>
+                    <p>No words match your filters.</p>
+                    <button
+                      class="reset-filters-btn"
+                      onClick={() => { setSearchTerm(''); setStatusFilter('all'); setTierFilter('all'); setSelectedPackId('all'); }}
+                    >
+                      Reset Filters
+                    </button>
+                  </div>
+                ) : (
+                  <div class="words-list-grid">
+                    {filteredCards.map((card, idx) => {
+                      const isLearnt = progress[card.id]?.status === 'know';
+                      const mainWord = showKanji && card.kanji ? card.kanji : card.hiragana;
+                      const subWord = showKanji && card.kanji ? card.hiragana : '';
+
+                      return (
+                        <div
+                          key={card.id}
+                          class={`word-list-row ${isLearnt ? 'status-learnt' : ''}`}
+                          onClick={() => setModalCardIndex(idx)}
+                        >
+                          <div class="row-left">
+                            <div class="word-primary">{mainWord}</div>
+                            {subWord && <div class="word-secondary muted">{subWord}</div>}
+                            <div class="word-romaji">{card.romaji}</div>
+                          </div>
+
+                          <div class="row-middle">
+                            <div class="word-english">{card.englishMeanings?.join(', ')}</div>
+                            <div class="word-meta-pills">
+                              <span class="meta-pill pos">{card.partOfSpeech}</span>
+                              {card.tierName && <span class="meta-pill tier">L{card.tier}</span>}
+                            </div>
+                          </div>
+
+                          <div class="row-right">
+                            <button
+                              class="row-audio-btn"
+                              title="Listen"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                speak(card.audio.ttsText, card.audio.lang);
+                              }}
+                            >
+                              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="4 8 8 8 12 4 12 20 8 16 4 16 4 8"></polygon><path d="M16 8.5a4.5 4.5 0 0 1 0 7"></path></svg>
+                            </button>
+                            <span class={`status-badge ${isLearnt ? 'learnt' : 'unlearnt'}`}>
+                              {isLearnt ? 'Learnt ✓' : 'Unlearnt'}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0).</p>
           </div>
-          <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0).</p>
+
+          {/* Fixed Footer Navigation */}
+          <footer class="home-footer-nav">
+            <div class="footer-nav-inner" role="tablist">
+              <button
+                role="tab"
+                aria-selected={homeView === 'learning-path'}
+                class={`footer-nav-btn ${homeView === 'learning-path' ? 'active' : ''}`}
+                onClick={() => setHomeView('learning-path')}
+              >
+                <span class="nav-icon"><IconRoute /></span>
+                <span class="nav-label">Learning Path</span>
+              </button>
+              <button
+                role="tab"
+                aria-selected={homeView === 'word-packs'}
+                class={`footer-nav-btn ${homeView === 'word-packs' ? 'active' : ''}`}
+                onClick={() => setHomeView('word-packs')}
+              >
+                <span class="nav-icon"><IconPackage /></span>
+                <span class="nav-label">Word Packs</span>
+              </button>
+              <button
+                role="tab"
+                aria-selected={homeView === 'all-words'}
+                class={`footer-nav-btn ${homeView === 'all-words' ? 'active' : ''}`}
+                onClick={() => setHomeView('all-words')}
+              >
+                <span class="nav-icon"><IconBook /></span>
+                <span class="nav-label">All Words</span>
+              </button>
+            </div>
+          </footer>
+        </div>
+      )}
+
+      {/* FLASHCARD POPUP MODAL */}
+      {modalCard && (
+        <div class="modal-backdrop" onClick={() => setModalCardIndex(null)}>
+          <div class="modal-card-container" onClick={(e) => e.stopPropagation()}>
+            <div class="modal-header">
+              <div class="modal-header-info">
+                <span class="modal-counter">Word {modalCardIndex + 1} of {filteredCards.length}</span>
+                {progress[modalCard.id]?.status === 'know' ? (
+                  <span class="status-badge learnt">Learnt ✓</span>
+                ) : (
+                  <span class="status-badge unlearnt">Unlearnt</span>
+                )}
+              </div>
+              <div class="modal-header-actions">
+                <button
+                  class="modal-nav-btn"
+                  title="Previous word (Left arrow)"
+                  onClick={() => setModalCardIndex(prev => (prev - 1 + filteredCards.length) % filteredCards.length)}
+                >
+                  ←
+                </button>
+                <button
+                  class="modal-nav-btn"
+                  title="Next word (Right arrow)"
+                  onClick={() => setModalCardIndex(prev => (prev + 1) % filteredCards.length)}
+                >
+                  →
+                </button>
+                <button
+                  class="modal-close-btn"
+                  title="Close (Esc)"
+                  onClick={() => setModalCardIndex(null)}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Flashcard Component inside Modal */}
+            <div class="modal-card-body">
+              <div
+                class="modal-flashcard"
+                onClick={() => setModalIsFlipped(prev => !prev)}
+              >
+                <div class={`card-inner ${modalIsFlipped ? 'flipped' : ''}`}>
+                  {/* FRONT */}
+                  <div class="card-face modal-face-front">
+                    <div class="card-topbar">
+                      <span class="tag-chip">{modalCard.theme || modalCard.tierName}</span>
+                      <span class="muted">Tap to flip <IconFlip /></span>
+                    </div>
+                    <div class="card-body">
+                      <div class="word-group">
+                        <p class="kanji-word">{showKanji && modalCard.kanji ? modalCard.kanji : modalCard.hiragana}</p>
+                        <p class="hiragana-word muted">{showKanji && modalCard.kanji ? modalCard.hiragana : ''}</p>
+                        <p class="romaji-word-front muted">{modalCard.romaji}</p>
+                      </div>
+                      <button
+                        class="btn-audio"
+                        aria-label="Play pronunciation"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          speak(modalCard.audio.ttsText, modalCard.audio.lang);
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="4 8 8 8 12 4 12 20 8 16 4 16 4 8"></polygon><path d="M16 8.5a4.5 4.5 0 0 1 0 7"></path><path d="M18.5 6a8 8 0 0 1 0 12"></path></svg>
+                      </button>
+                      <p class="tap-hint muted">Tap to flip</p>
+                    </div>
+                  </div>
+
+                  {/* BACK */}
+                  <div class="card-face modal-face-back">
+                    <div class="card-scrollable">
+                      <div class="card-topbar">
+                        <span class="muted">Word Details</span>
+                      </div>
+                      <div class="back-word-group">
+                        <p class="japanese-word-back">{showKanji && modalCard.kanji ? modalCard.kanji : modalCard.hiragana}</p>
+                        <p class="romaji-word">{modalCard.romaji}</p>
+                        <p class="katakana-word muted">{modalCard.katakana}</p>
+                        <p class="meaning">{modalCard.englishMeanings?.join(', ')}</p>
+                        <span class="pos-pill muted">
+                          {modalCard.partOfSpeech}
+                          {modalCard.verbType ? ` (${modalCard.verbType})` : modalCard.isNaAdjective ? ' (na-adjective)' : ''}
+                        </span>
+                      </div>
+
+                      {/* Stroke order */}
+                      {showKanji && modalCard.strokeOrderSvgs && modalCard.strokeOrderSvgs.length > 0 && (
+                        <>
+                          <button
+                            class={`stroke-toggle ${modalStrokeShown ? 'expanded' : ''}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setModalStrokeShown(prev => !prev);
+                            }}
+                          >
+                            <span>{modalStrokeShown ? 'Hide stroke order' : 'Show stroke order'}</span>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                          </button>
+                          {modalStrokeShown && (
+                            <div class="kanji-vg-container playing">
+                              {modalCard.strokeOrderSvgs.map(path => (
+                                <div key={path} dangerouslySetInnerHTML={{ __html: svgsMap[path] || '' }} />
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* Breakdown */}
+                      {modalCard.breakdown && modalCard.breakdown.length > 0 && (
+                        <div class="breakdown-section">
+                          <div class="grammar-title">Word Breakdown</div>
+                          <div class="breakdown-row">
+                            {modalCard.breakdown.map((part, i) => (
+                              <React.Fragment key={i}>
+                                {i > 0 && <span class="breakdown-plus">+</span>}
+                                <div class="breakdown-chip">
+                                  <span class="breakdown-text">{part.text}</span>
+                                  <span class="breakdown-gloss">{part.gloss}</span>
+                                </div>
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Conjugations */}
+                      {modalCard.conjugations && (
+                        <div class="grammar-section">
+                          <div class="grammar-title">Tense &amp; Forms</div>
+                          <div class="conjugation-grid">
+                            {['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'].map(k => (
+                              modalCard.conjugations[k] ? (
+                                <React.Fragment key={k}>
+                                  <div class="conj-label">{k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
+                                  <div class="conj-value">{modalCard.conjugations[k]}</div>
+                                </React.Fragment>
+                              ) : null
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Particle Usage */}
+                      {modalCard.particleUsage && modalCard.particleUsage.length > 0 && (
+                        <div class="particle-section">
+                          <div class="grammar-title">Common Particles</div>
+                          <div class="particle-list">
+                            {modalCard.particleUsage.map((p, i) => (
+                              <div key={i} class="particle-row">
+                                <span class="particle-tag">{p.particle}</span>
+                                <div class="particle-text">
+                                  <span class="particle-phrase">{p.phrase}</span>
+                                  <span class="particle-english muted">{p.english}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Example Sentence */}
+                      {modalCard.exampleSentence && (
+                        <div class="sentence-section" style={{ display: 'block' }}>
+                          <div class="sentence-card">
+                            <p class="sentence-japanese">
+                              {formatSentenceJapanese(modalCard.exampleSentence, showKanji)}
+                            </p>
+                            {formatSentenceRomaji(modalCard.exampleSentence) && (
+                              <p class="sentence-romaji muted">
+                                {formatSentenceRomaji(modalCard.exampleSentence)}
+                              </p>
+                            )}
+                            <div class="sentence-divider"></div>
+                            <p class="sentence-english">{modalCard.exampleSentence.english}</p>
+                          </div>
+                        </div>
+                      )}
+                      <div class="scroll-spacer"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Bottom Action Controls */}
+            <div class="modal-footer-actions">
+              <button
+                class={`modal-action-btn dont ${progress[modalCard.id]?.status === 'dont' ? 'active' : ''}`}
+                onClick={() => saveWordProgress(modalCard.id, 'dont')}
+              >
+                Mark Unlearnt ✗
+              </button>
+              <button
+                class={`modal-action-btn know ${progress[modalCard.id]?.status === 'know' ? 'active' : ''}`}
+                onClick={() => saveWordProgress(modalCard.id, 'know')}
+              >
+                Mark Learnt ✓
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -416,10 +1030,10 @@ export default function App() {
             <div id="progress-bar-fill" style={{ width: `${(currentIndex / remaining.length) * 100}%` }}></div>
           </div>
           <div id="arena-header">
-            <button id="btn-back-home" onClick={() => setScreen('home')}>← Back</button>
+            <button id="btn-back-home" onClick={() => setScreen('home')} aria-label="Back to home">← Back</button>
             <p id="progress-label">{currentIndex + 1} of {remaining.length} cards</p>
             <label class="setting-toggle">
-              <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} />
+              <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} aria-label="Show kanji" />
               <span>Kanji</span>
             </label>
           </div>
@@ -596,13 +1210,34 @@ export default function App() {
               <div class="swipe-label swipe-dont" style={{ opacity: swipeOverlay.dont }}>✗ Don't know</div>
             </div>
           </div>
+
+          <div class="arena-bottom-nav">
+            <button
+              class="arena-nav-btn"
+              onClick={goToPreviousCard}
+              disabled={currentIndex === 0}
+              aria-label="Previous card"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              Previous
+            </button>
+            <button
+              class="arena-nav-btn"
+              onClick={goToNextCard}
+              disabled={currentIndex >= maxIndexReached}
+              aria-label="Next card"
+            >
+              Next
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
         </>
       )}
 
       {/* Summary Screen */}
       {screen === 'summary' && (
         <div id="summary">
-          <div class="summary-badge">🎉</div>
+          <div class="summary-badge"><IconCheckCircle /></div>
           <h2>Session Complete!</h2>
           <div class="summary-stats">
             <span id="known-count">{known.length} ✓</span>
@@ -632,3 +1267,4 @@ export default function App() {
     </>
   );
 }
+
