@@ -19,7 +19,7 @@
     "url": "https://github.com/chaitanyavats-nec/Kannada-Flashcards/issues"
   },
   "homepage": "https://github.com/chaitanyavats-nec/Kannada-Flashcards#readme",
-  "description": "",
+  "description": "A Japanese vocabulary flashcard app.",
   "dependencies": {
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",

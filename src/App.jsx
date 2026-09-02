@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import * as wanakana from 'wanakana';
 import packsRegistry from '../packs.json';
 
 const LEVEL_COLORS = {
@@ -14,6 +15,22 @@ function speak(text, lang) {
   ut.lang = lang;
   window.speechSynthesis.speak(ut);
 }
+
+const formatSentenceJapanese = (sentence, showKanji) => {
+  if (!sentence) return '';
+  if (showKanji) {
+    return sentence.spacedJapanese || sentence.japanese;
+  }
+  return sentence.spacedHiragana || sentence.hiragana || sentence.japanese;
+};
+
+const formatSentenceRomaji = (sentence) => {
+  if (!sentence) return '';
+  if (sentence.spacedRomaji) return sentence.spacedRomaji;
+  if (sentence.spacedHiragana) return wanakana.toRomaji(sentence.spacedHiragana);
+  if (sentence.hiragana) return wanakana.toRomaji(sentence.hiragana);
+  return sentence.romaji ? sentence.romaji.replace(/([.?!,])/g, '$1 ') : '';
+};
 
 export default function App() {
   const [allCards, setAllCards] = useState([]);
@@ -50,7 +67,7 @@ export default function App() {
   const cardRef = useRef(null);
   const scrollableRef = useRef(null);
   const [hasScrollFade, setHasScrollFade] = useState(false);
-  const dragRef = useRef({ startX: 0, startY: 0, startTime: 0, isDragging: false, dragX: 0 });
+  const dragRef = useRef({ startX: 0, startY: 0, startTime: 0, isDragging: false, wasDragged: false, dragX: 0 });
   const [swipeOverlay, setSwipeOverlay] = useState({ know: 0, dont: 0 });
 
   // Load dataset
@@ -150,8 +167,10 @@ export default function App() {
     setIsFlipped(false);
     setSwipeOverlay({ know: 0, dont: 0 });
     if (cardRef.current) {
-      cardRef.current.style.transform = 'none';
+      cardRef.current.style.transition = 'none';
+      cardRef.current.style.transform = 'translateY(0) scale(1)';
       cardRef.current.style.opacity = '1';
+      cardRef.current.style.animation = 'none';
     }
     checkScrollFade();
   }, [currentIndex, checkScrollFade]);
@@ -178,13 +197,16 @@ export default function App() {
       return;
     }
     const exitX = verdict === 'know' ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
-    const rot = verdict === 'know' ? 25 : -25;
-    cardRef.current.style.transition = 'transform 350ms ease, opacity 350ms ease';
+    const rot = verdict === 'know' ? 22 : -22;
+    setSwipeOverlay({ know: verdict === 'know' ? 1 : 0, dont: verdict === 'dont' ? 1 : 0 });
+    
+    cardRef.current.style.transition = 'transform 320ms ease-out, opacity 320ms ease-out';
     cardRef.current.style.transform = `translateX(${exitX}px) rotate(${rot}deg)`;
     cardRef.current.style.opacity = '0';
+    
     setTimeout(() => {
       advanceDeck(verdict);
-    }, 350);
+    }, 320);
   }, [advanceDeck]);
 
   // Keyboard navigation
@@ -210,11 +232,12 @@ export default function App() {
       startY: e.clientY,
       startTime: Date.now(),
       isDragging: true,
+      wasDragged: false,
       dragX: 0
     };
     if (cardRef.current) {
-      cardRef.current.setPointerCapture(e.pointerId);
       cardRef.current.style.transition = 'none';
+      cardRef.current.style.animation = 'none';
     }
   };
 
@@ -224,15 +247,25 @@ export default function App() {
     const dragY = e.clientY - dragRef.current.startY;
     dragRef.current.dragX = dragX;
 
-    if (Math.abs(dragX) > Math.abs(dragY)) e.preventDefault();
+    if (Math.abs(dragX) > 8 || Math.abs(dragY) > 8) {
+      dragRef.current.wasDragged = true;
+    }
+
+    if (Math.abs(dragX) > Math.abs(dragY) && Math.abs(dragX) > 10) {
+      try {
+        if (!cardRef.current.hasPointerCapture(e.pointerId)) {
+          cardRef.current.setPointerCapture(e.pointerId);
+        }
+      } catch (err) {}
+    }
 
     const rot = (dragX / cardRef.current.offsetWidth) * 15;
     cardRef.current.style.transform = `translateX(${dragX}px) rotate(${rot}deg)`;
 
-    const opacity = Math.min(Math.abs(dragX) / 120, 1);
-    if (dragX > 30) {
+    const opacity = Math.min(Math.abs(dragX) / 100, 1);
+    if (dragX > 20) {
       setSwipeOverlay({ know: opacity, dont: 0 });
-    } else if (dragX < -30) {
+    } else if (dragX < -20) {
       setSwipeOverlay({ know: 0, dont: opacity });
     } else {
       setSwipeOverlay({ know: 0, dont: 0 });
@@ -244,12 +277,13 @@ export default function App() {
     dragRef.current.isDragging = false;
     try {
       cardRef.current.releasePointerCapture(e.pointerId);
-    } catch {}
+    } catch (err) {}
 
     const { dragX, startTime } = dragRef.current;
-    const velocity = dragX / (Date.now() - startTime);
+    const dt = Math.max(Date.now() - startTime, 1);
+    const velocity = dragX / dt;
 
-    if (Math.abs(dragX) > 120 || Math.abs(velocity) > 0.5) {
+    if (Math.abs(dragX) > 90 || Math.abs(velocity) > 0.4) {
       judgeCard(dragX > 0 ? 'know' : 'dont');
     } else {
       cardRef.current.style.transition = 'transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -399,6 +433,7 @@ export default function App() {
               onPointerUp={handlePointerUp}
               onClick={(e) => {
                 if (e.target.closest('button') || e.target.tagName === 'A') return;
+                if (dragRef.current.wasDragged) return;
                 setIsFlipped(prev => !prev);
               }}
             >
@@ -528,12 +563,12 @@ export default function App() {
                       <div class="sentence-section" style={{ display: 'block' }}>
                         <div class="sentence-card">
                           <p class="sentence-japanese">
-                            {displayKanji ?
-                              (currentCard.exampleSentence.spacedJapanese || currentCard.exampleSentence.japanese) :
-                              (currentCard.exampleSentence.spacedHiragana || currentCard.exampleSentence.hiragana || currentCard.exampleSentence.japanese)}
+                            {formatSentenceJapanese(currentCard.exampleSentence, displayKanji)}
                           </p>
-                          {currentCard.exampleSentence.romaji && (
-                            <p class="sentence-romaji muted">{currentCard.exampleSentence.romaji}</p>
+                          {formatSentenceRomaji(currentCard.exampleSentence) && (
+                            <p class="sentence-romaji muted">
+                              {formatSentenceRomaji(currentCard.exampleSentence)}
+                            </p>
                           )}
                           <div class="sentence-divider"></div>
                           <p class="sentence-english">{currentCard.exampleSentence.english}</p>
