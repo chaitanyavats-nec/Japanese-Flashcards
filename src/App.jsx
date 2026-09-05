@@ -261,6 +261,33 @@ const WordLookupPopover = ({ lookup, showKanji, onClose }) => {
   );
 };
 
+// Per-word personal note, shown on the card's back face. Renders as a plain
+// note when saved and collapsed, or a textarea while being edited.
+const NoteSection = ({ noteText, editing, onStartEdit, onChange, onDone }) => (
+  <div class="note-section" onClick={(e) => e.stopPropagation()}>
+    {editing ? (
+      <>
+        <textarea
+          class="note-editor"
+          autoFocus
+          placeholder="Write a personal note for this word..."
+          value={noteText}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onDone}
+        />
+        <p class="note-saved-hint">Saves automatically</p>
+      </>
+    ) : noteText ? (
+      <div class="note-display" onClick={onStartEdit}>{noteText}</div>
+    ) : (
+      <button class="note-toggle" onClick={onStartEdit}>
+        <span class="note-dot"></span>
+        Add a note
+      </button>
+    )}
+  </div>
+);
+
 export default function App() {
   const [allCards, setAllCards] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -281,6 +308,23 @@ export default function App() {
       return {};
     }
   });
+  const [notes, setNotes] = useState(() => {
+    try {
+      const saved = localStorage.getItem('flashcards_notes');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Splash screen: stays up for a minimum duration so it never just flickers
+  // on a fast connection, then fades once the dataset has also finished loading.
+  const [minSplashElapsed, setMinSplashElapsed] = useState(false);
+  const [splashRemoved, setSplashRemoved] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMinSplashElapsed(true), 900);
+    return () => clearTimeout(t);
+  }, []);
 
   // Session state
   const [deck, setDeck] = useState([]);
@@ -294,6 +338,8 @@ export default function App() {
   const [strokeShown, setStrokeShown] = useState(false);
   const [svgsMap, setSvgsMap] = useState({});
   const [sentenceLookup, setSentenceLookup] = useState(null);
+  const [noteEditing, setNoteEditing] = useState(false);
+  const [modalNoteEditing, setModalNoteEditing] = useState(false);
 
   // Swipe & gesture refs
   const cardRef = useRef(null);
@@ -338,6 +384,27 @@ export default function App() {
     const val = e.target.checked;
     setShowKanji(val);
     localStorage.setItem('flashcards_show_kanji', val);
+  };
+
+  const splashFadingOut = !loading && minSplashElapsed;
+  useEffect(() => {
+    if (splashFadingOut && !splashRemoved) {
+      const t = setTimeout(() => setSplashRemoved(true), 450);
+      return () => clearTimeout(t);
+    }
+  }, [splashFadingOut, splashRemoved]);
+
+  const saveNote = (wordId, text) => {
+    setNotes(prev => {
+      const updated = { ...prev, [wordId]: text };
+      if (!text.trim()) delete updated[wordId];
+      try {
+        localStorage.setItem('flashcards_notes', JSON.stringify(updated));
+      } catch (e) {
+        console.error('Failed to save note', e);
+      }
+      return updated;
+    });
   };
 
   const saveWordProgress = (wordId, status) => {
@@ -412,6 +479,7 @@ export default function App() {
   useEffect(() => {
     setStrokeShown(false);
     setSentenceLookup(null);
+    setNoteEditing(false);
     setSwipeOverlay({ know: 0, dont: 0 });
 
     // Prevent the front/back flip transition from visibly animating when a
@@ -578,6 +646,7 @@ export default function App() {
     setModalIsFlipped(false);
     setModalStrokeShown(false);
     setSentenceLookup(null);
+    setModalNoteEditing(false);
   }, [modalCardIndex]);
 
   // Modal keyboard navigation & escape key
@@ -748,12 +817,25 @@ export default function App() {
     }));
   };
 
-  if (loading) {
-    return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>Loading datasets...</div>;
-  }
+  const splashScreen = !splashRemoved && (
+    <div id="splash-screen" class={splashFadingOut ? 'fade-out' : ''}>
+      <div class="splash-mark">日</div>
+      <p class="splash-title">Japanese Flashcards</p>
+      {loading && <div class="splash-spinner" aria-label="Loading"></div>}
+    </div>
+  );
 
   if (error) {
-    return <div style={{ color: '#ff6b6b', textAlign: 'center', padding: '40px' }}>Error: {error}</div>;
+    return (
+      <div id="app-error-state">
+        <p>Couldn't load the dataset.</p>
+        <p class="muted">{error}</p>
+      </div>
+    );
+  }
+
+  if (loading || !splashRemoved) {
+    return splashScreen;
   }
 
   const displayKanji = showKanji && currentCard?.kanji;
@@ -1048,13 +1130,18 @@ export default function App() {
           {/* Fixed Footer Navigation */}
           <footer class="home-footer-nav">
             <div class="footer-nav-inner" role="tablist">
+              <div
+                class="footer-nav-marker"
+                style={{ transform: `translateX(${['learning-path', 'word-packs', 'all-words'].indexOf(homeView) * 100}%)` }}
+                aria-hidden="true"
+              ></div>
               <button
                 role="tab"
                 aria-selected={homeView === 'learning-path'}
                 class={`footer-nav-btn ${homeView === 'learning-path' ? 'active' : ''}`}
                 onClick={() => setHomeView('learning-path')}
               >
-                <span class="nav-icon"><IconRoute width="16" height="16" /></span>
+                <span class="nav-icon"><IconRoute width="20" height="20" /></span>
                 <span class="nav-label">Path</span>
               </button>
               <button
@@ -1063,7 +1150,7 @@ export default function App() {
                 class={`footer-nav-btn ${homeView === 'word-packs' ? 'active' : ''}`}
                 onClick={() => setHomeView('word-packs')}
               >
-                <span class="nav-icon"><IconPackage width="16" height="16" /></span>
+                <span class="nav-icon"><IconPackage width="20" height="20" /></span>
                 <span class="nav-label">Packs</span>
               </button>
               <button
@@ -1072,7 +1159,7 @@ export default function App() {
                 class={`footer-nav-btn ${homeView === 'all-words' ? 'active' : ''}`}
                 onClick={() => setHomeView('all-words')}
               >
-                <span class="nav-icon"><IconBook width="16" height="16" /></span>
+                <span class="nav-icon"><IconBook width="20" height="20" /></span>
                 <span class="nav-label">Words</span>
               </button>
             </div>
@@ -1168,6 +1255,14 @@ export default function App() {
                         </span>
                       </div>
 
+                      <NoteSection
+                        noteText={notes[modalCard.id] || ''}
+                        editing={modalNoteEditing}
+                        onStartEdit={() => setModalNoteEditing(true)}
+                        onChange={(val) => saveNote(modalCard.id, val)}
+                        onDone={() => setModalNoteEditing(false)}
+                      />
+
                       {/* Stroke order */}
                       {showKanji && modalCard.strokeOrderSvgs && modalCard.strokeOrderSvgs.length > 0 && (
                         <>
@@ -1183,6 +1278,9 @@ export default function App() {
                           </button>
                           {modalStrokeShown && (
                             <div class="kanji-vg-container playing">
+                              {modalCard.strokeOrderSvgs.every(path => !svgsMap[path]) && (
+                                <p class="stroke-loading-hint">Loading stroke order…</p>
+                              )}
                               {modalCard.strokeOrderSvgs.map(path => (
                                 <div key={path} dangerouslySetInnerHTML={{ __html: svgsMap[path] || '' }} />
                               ))}
@@ -1364,6 +1462,14 @@ export default function App() {
                       </span>
                     </div>
 
+                    <NoteSection
+                      noteText={notes[currentCard.id] || ''}
+                      editing={noteEditing}
+                      onStartEdit={() => setNoteEditing(true)}
+                      onChange={(val) => saveNote(currentCard.id, val)}
+                      onDone={() => setNoteEditing(false)}
+                    />
+
                     {/* Stroke order */}
                     {displayKanji && currentCard.strokeOrderSvgs && currentCard.strokeOrderSvgs.length > 0 && (
                       <>
@@ -1380,6 +1486,9 @@ export default function App() {
                         </button>
                         {strokeShown && (
                           <div class="kanji-vg-container playing">
+                            {currentCard.strokeOrderSvgs.every(path => !svgsMap[path]) && (
+                              <p class="stroke-loading-hint">Loading stroke order…</p>
+                            )}
                             {currentCard.strokeOrderSvgs.map(path => (
                               <div key={path} dangerouslySetInnerHTML={{ __html: svgsMap[path] || '' }} />
                             ))}
