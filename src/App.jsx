@@ -68,13 +68,9 @@ function speak(text, lang) {
   window.speechSynthesis.speak(ut);
 }
 
-const formatSentenceJapanese = (sentence, showKanji) => {
-  if (!sentence) return '';
-  if (showKanji) {
-    return sentence.spacedJapanese || sentence.japanese;
-  }
-  return sentence.spacedHiragana || sentence.hiragana || sentence.japanese;
-};
+function hapticBuzz(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
 
 const formatSentenceRomaji = (sentence) => {
   if (!sentence) return '';
@@ -84,11 +80,192 @@ const formatSentenceRomaji = (sentence) => {
   return sentence.romaji ? sentence.romaji.replace(/([.?!,])/g, '$1 ') : '';
 };
 
+const hasKanji = (str) => !!str && /[一-龯]/.test(str);
+const stripPunctuation = (str) => (str || '').replace(/[。、！？!?「」・\s]/g, '');
+
+// Tokenize an example sentence into {ja, hi} pairs using the pre-computed
+// wakachigaki (word-segmented) fields, so words in the sentence can be
+// tapped individually. Falls back to treating the whole sentence as one
+// token when segmentation data isn't available.
+const tokenizeSentence = (sentence) => {
+  if (!sentence) return [];
+  const jaTokens = (sentence.spacedJapanese || sentence.japanese || '').split(' ').filter(Boolean);
+  const hiTokens = (sentence.spacedHiragana || sentence.hiragana || sentence.japanese || '').split(' ').filter(Boolean);
+  return jaTokens.map((ja, i) => ({ ja, hi: hiTokens[i] || ja }));
+};
+
+// Mirrors build-cards.js's conjugateVerb/conjugateAdjective, but always
+// conjugates from the hiragana reading rather than kanji||hiragana — used to
+// show a kanji-free version of each word form when the Kanji toggle is off,
+// and to derive furigana/romaji readings for each form either way.
+const GODAN_HIRAGANA_RULES = {
+  'う': { i: 'い', a: 'わ', ta: 'った', te: 'って', e: 'え', o: 'お' },
+  'く': { i: 'き', a: 'か', ta: 'いた', te: 'いて', e: 'け', o: 'こ' },
+  'ぐ': { i: 'ぎ', a: 'が', ta: 'いだ', te: 'いで', e: 'げ', o: 'ご' },
+  'す': { i: 'し', a: 'さ', ta: 'した', te: 'して', e: 'せ', o: 'そ' },
+  'つ': { i: 'ち', a: 'た', ta: 'った', te: 'って', e: 'て', o: 'と' },
+  'ぬ': { i: 'に', a: 'な', ta: 'んだ', te: 'んで', e: 'ね', o: 'の' },
+  'ぶ': { i: 'び', a: 'ば', ta: 'んだ', te: 'んで', e: 'べ', o: 'ぼ' },
+  'む': { i: 'み', a: 'ま', ta: 'んだ', te: 'んで', e: 'め', o: 'も' },
+  'る': { i: 'り', a: 'ら', ta: 'った', te: 'って', e: 'れ', o: 'ろ' }
+};
+
+function conjugateVerbHiragana(base, verbType) {
+  const conj = { present: base };
+  if (verbType === 'suru') {
+    Object.assign(conj, { presentPolite: 'します', past: 'した', pastPolite: 'しました', negative: 'しない', negativePolite: 'しません', teForm: 'して', potential: 'できる' });
+  } else if (verbType === 'kuru') {
+    Object.assign(conj, { presentPolite: 'きます', past: 'きた', pastPolite: 'きました', negative: 'こない', negativePolite: 'きません', teForm: 'きて', potential: 'こられる' });
+  } else if (verbType === 'ichidan') {
+    const stem = base.slice(0, -1);
+    Object.assign(conj, { presentPolite: stem + 'ます', past: stem + 'た', pastPolite: stem + 'ました', negative: stem + 'ない', negativePolite: stem + 'ません', teForm: stem + 'て', potential: stem + 'られる' });
+  } else {
+    const last = base.slice(-1);
+    const stem = base.slice(0, -1);
+    const rules = GODAN_HIRAGANA_RULES[last] || GODAN_HIRAGANA_RULES['る'];
+    Object.assign(conj, {
+      presentPolite: stem + rules.i + 'ます',
+      past: stem + rules.ta,
+      pastPolite: stem + rules.i + 'ました',
+      negative: stem + rules.a + 'ない',
+      negativePolite: stem + rules.i + 'ません',
+      teForm: stem + rules.te,
+      potential: stem + rules.e + 'る'
+    });
+  }
+  return conj;
+}
+
+function conjugateAdjectiveHiragana(base) {
+  const stem = base.slice(0, -1);
+  return {
+    present: base,
+    presentPolite: base + 'です',
+    past: stem + 'かった',
+    pastPolite: stem + 'かったです',
+    negative: stem + 'くない',
+    negativePolite: stem + 'くないです',
+    teForm: stem + 'くて'
+  };
+}
+
+function getHiraganaConjugations(card) {
+  if (!card.conjugations || !card.hiragana) return null;
+  if (card.partOfSpeech === 'verb') return conjugateVerbHiragana(card.hiragana, card.verbType);
+  if (card.partOfSpeech === 'adjective') return conjugateAdjectiveHiragana(card.hiragana);
+  return null;
+}
+
+function getDisplayConjugations(card, showKanji) {
+  if (!card.conjugations) return null;
+  if (showKanji || !card.kanji) return card.conjugations;
+  return getHiraganaConjugations(card) || card.conjugations;
+}
+
+// Plain-English descriptor for a conjugated form, built from the word's
+// primary gloss rather than an attempted English tense conjugation (English
+// irregular verbs — "go"/"went", "eat"/"ate" — can't be derived mechanically,
+// so a wrong guess would be worse than a grammatical label).
+const CONJ_ENGLISH_LABELS = {
+  present: (m) => m,
+  presentPolite: (m) => `${m} (polite)`,
+  past: (m) => `${m} (past)`,
+  pastPolite: (m) => `${m} (past, polite)`,
+  negative: (m) => `not ${m}`,
+  negativePolite: (m) => `not ${m} (polite)`,
+  teForm: (m) => `${m} (~te form)`,
+  potential: (m) => `can ${m}`
+};
+
+function getConjugationEnglish(card, key) {
+  const base = card.englishMeanings?.[0];
+  if (!base) return '';
+  const stripped = base.replace(/^to\s+/i, '');
+  const template = CONJ_ENGLISH_LABELS[key];
+  return template ? template(stripped) : stripped;
+}
+
+const CONJ_KEYS = ['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'];
+// Plain/polite pairs (present+presentPolite, past+pastPolite, negative+negativePolite)
+// are visually grouped; teForm and potential — neither of which has a polite
+// counterpart — are grouped together as a trailing "other forms" group.
+const CONJ_GROUP_STARTS = new Set(['past', 'negative', 'teForm']);
+
+// The algorithmic (stem + fixed ending) breakdown always ends in a kana
+// character even in kanji mode, so only the stem needs to be swapped for its
+// hiragana reading. Hand-curated compound breakdowns (BREAKDOWN_BANK in
+// build-cards.js) have no stored reading per chunk, so they're hidden
+// rather than guessed at when kanji is off.
+function getDisplayBreakdown(card, showKanji) {
+  if (!card.breakdown) return null;
+  if (showKanji) return card.breakdown;
+  const isAlgorithmic = card.breakdown.length === 2 &&
+    (card.breakdown[1].gloss === 'dictionary-form ending' || card.breakdown[1].gloss === 'i-adjective ending');
+  if (!isAlgorithmic) return null;
+  if (!card.hiragana) return card.breakdown;
+  return [
+    { text: card.hiragana.slice(0, -1), gloss: card.breakdown[0].gloss },
+    card.breakdown[1]
+  ];
+}
+
+// Particle example phrases are template sentences with their own kanji
+// (verbs/adjectives beyond the card's word) and no stored hiragana reading,
+// so only the ones that already happen to be kana-only can be shown once
+// kanji is switched off.
+function getDisplayParticleUsage(card, showKanji) {
+  if (!card.particleUsage) return null;
+  if (showKanji) return card.particleUsage;
+  const clean = card.particleUsage.filter(p => !hasKanji(p.phrase));
+  return clean.length > 0 ? clean : null;
+}
+
+// Renders an example sentence as individually-tappable word tokens (Duolingo-
+// style word lookup) instead of one plain string.
+const SentenceTokens = ({ sentence, showKanji, onTokenTap }) => (
+  tokenizeSentence(sentence).map((tok, i) => (
+    <span
+      key={i}
+      class="sentence-token"
+      onClick={(e) => { e.stopPropagation(); onTokenTap(tok); }}
+    >
+      {showKanji ? tok.ja : tok.hi}
+    </span>
+  ))
+);
+
+const WordLookupPopover = ({ lookup, showKanji, onClose }) => {
+  if (!lookup) return null;
+  const { card } = lookup;
+  const headword = card
+    ? (showKanji && card.kanji ? card.kanji : card.hiragana)
+    : (showKanji ? lookup.jaKey : lookup.hi);
+  return (
+    <div class="word-lookup-popover" onClick={(e) => e.stopPropagation()}>
+      <div class="word-lookup-header">
+        <span class="word-lookup-word">{headword}</span>
+        <span class="word-lookup-romaji muted">{card ? card.romaji : lookup.romaji}</span>
+        <button class="word-lookup-close" onClick={onClose} aria-label="Close word lookup">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      {card ? (
+        <>
+          <p class="word-lookup-meaning">{card.englishMeanings?.join(', ')}</p>
+          <span class="pos-pill muted">{card.partOfSpeech}</span>
+        </>
+      ) : (
+        <p class="word-lookup-meaning muted">Not in your word list yet</p>
+      )}
+    </div>
+  );
+};
+
 export default function App() {
   const [allCards, setAllCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // App state
   const [screen, setScreen] = useState('home'); // 'home' | 'arena' | 'summary'
   const [homeView, setHomeView] = useState('learning-path'); // 'learning-path' | 'word-packs'
@@ -116,9 +293,12 @@ export default function App() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [strokeShown, setStrokeShown] = useState(false);
   const [svgsMap, setSvgsMap] = useState({});
+  const [sentenceLookup, setSentenceLookup] = useState(null);
 
   // Swipe & gesture refs
   const cardRef = useRef(null);
+  const cardInnerRef = useRef(null);
+  const cardEnterAnimRef = useRef('slide'); // 'slide' | 'back-right' | 'back-left' — which entrance animation the next card mount should use
   const scrollableRef = useRef(null);
   const [hasScrollFade, setHasScrollFade] = useState(false);
   const dragRef = useRef({ startX: 0, startY: 0, startTime: 0, isDragging: false, wasDragged: false, dragX: 0 });
@@ -231,15 +411,42 @@ export default function App() {
 
   useEffect(() => {
     setStrokeShown(false);
-    setIsFlipped(false);
+    setSentenceLookup(null);
     setSwipeOverlay({ know: 0, dont: 0 });
+
+    // Prevent the front/back flip transition from visibly animating when a
+    // brand-new card mounts already facing front — without disabling it here,
+    // toggling isFlipped back to false plays a real (and wrong) flip.
+    if (cardInnerRef.current) {
+      cardInnerRef.current.style.transition = 'none';
+    }
+    setIsFlipped(false);
+
     if (cardRef.current) {
       cardRef.current.style.transition = 'none';
-      cardRef.current.style.transform = 'translateY(0) scale(1)';
+      cardRef.current.style.transform = '';
       cardRef.current.style.opacity = '1';
       cardRef.current.style.animation = 'none';
+      // Force a reflow so the browser re-arms the entrance animation below
+      // instead of skipping it (it was just set to "none").
+      void cardRef.current.offsetWidth;
+      const anim = cardEnterAnimRef.current;
+      if (anim === 'back-right') {
+        cardRef.current.style.animation = 'slideBackInRight 380ms cubic-bezier(0.16, 0.6, 0.3, 1) forwards';
+      } else if (anim === 'back-left') {
+        cardRef.current.style.animation = 'slideBackInLeft 380ms cubic-bezier(0.16, 0.6, 0.3, 1) forwards';
+      } else {
+        cardRef.current.style.animation = 'slideUp 550ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+      }
+      cardEnterAnimRef.current = 'slide';
     }
+
+    const raf = requestAnimationFrame(() => {
+      if (cardInnerRef.current) cardInnerRef.current.style.transition = '';
+    });
+
     checkScrollFade();
+    return () => cancelAnimationFrame(raf);
   }, [currentIndex, checkScrollFade]);
 
   const advanceDeck = useCallback((verdict) => {
@@ -251,6 +458,11 @@ export default function App() {
     }
     saveWordProgress(currentCard.id, verdict);
     setHistory(prev => [...prev, { index: currentIndex, verdict }]);
+
+    // Reset synchronously (same batch as the index change) rather than
+    // waiting for the [currentIndex] effect — otherwise the next card can
+    // paint one frame with the outgoing card's swipe tint still applied.
+    setSwipeOverlay({ know: 0, dont: 0 });
 
     if (currentIndex + 1 >= remaining.length) {
       setScreen('summary');
@@ -267,6 +479,11 @@ export default function App() {
     if (currentIndex === 0) return;
     const newIndex = currentIndex - 1;
     const atFrontier = currentIndex === history.length;
+
+    // Re-enter from whichever side this card originally exited toward, so
+    // it looks like it's flying back in off-screen onto the top of the stack.
+    const verdictForThisStep = history[newIndex]?.verdict;
+    cardEnterAnimRef.current = verdictForThisStep === 'dont' ? 'back-left' : 'back-right';
 
     if (atFrontier && history.length > 0) {
       const last = history[history.length - 1];
@@ -290,6 +507,8 @@ export default function App() {
   }, [currentIndex, maxIndexReached]);
 
   const judgeCard = useCallback((verdict) => {
+    hapticBuzz(verdict === 'know' ? 18 : [12, 30, 12]);
+
     if (!cardRef.current) {
       advanceDeck(verdict);
       return;
@@ -297,11 +516,11 @@ export default function App() {
     const exitX = verdict === 'know' ? window.innerWidth * 1.2 : -window.innerWidth * 1.2;
     const rot = verdict === 'know' ? 22 : -22;
     setSwipeOverlay({ know: verdict === 'know' ? 1 : 0, dont: verdict === 'dont' ? 1 : 0 });
-    
+
     cardRef.current.style.transition = 'transform 320ms ease-out, opacity 320ms ease-out';
-    cardRef.current.style.transform = `translateX(${exitX}px) rotate(${rot}deg)`;
+    cardRef.current.style.transform = `translateX(${exitX}px) rotate(${rot}deg) scale(0.94)`;
     cardRef.current.style.opacity = '0';
-    
+
     setTimeout(() => {
       advanceDeck(verdict);
     }, 320);
@@ -333,6 +552,10 @@ export default function App() {
   }, [allCards, searchTerm, statusFilter, tierFilter, selectedPackId, progress]);
 
   const modalCard = modalCardIndex !== null ? filteredCards[modalCardIndex] : null;
+  const modalDisplayBreakdown = modalCard ? getDisplayBreakdown(modalCard, showKanji) : null;
+  const modalDisplayConjugations = modalCard ? getDisplayConjugations(modalCard, showKanji) : null;
+  const modalHiraganaConjugations = modalCard ? getHiraganaConjugations(modalCard) : null;
+  const modalDisplayParticleUsage = modalCard ? getDisplayParticleUsage(modalCard, showKanji) : null;
 
   // Fetch stroke order SVGs for modal card if requested
   useEffect(() => {
@@ -354,6 +577,7 @@ export default function App() {
   useEffect(() => {
     setModalIsFlipped(false);
     setModalStrokeShown(false);
+    setSentenceLookup(null);
   }, [modalCardIndex]);
 
   // Modal keyboard navigation & escape key
@@ -388,6 +612,8 @@ export default function App() {
   }, [screen, judgeCard]);
 
   // Pointer swipe handlers
+  const SWIPE_COMMIT_DISTANCE = 90;
+
   const handlePointerDown = (e) => {
     if (e.target.closest('button') || e.target.tagName === 'A') return;
     dragRef.current = {
@@ -396,7 +622,8 @@ export default function App() {
       startTime: Date.now(),
       isDragging: true,
       wasDragged: false,
-      dragX: 0
+      dragX: 0,
+      thresholdBuzzed: false
     };
     if (cardRef.current) {
       cardRef.current.style.transition = 'none';
@@ -419,11 +646,19 @@ export default function App() {
         if (!cardRef.current.hasPointerCapture(e.pointerId)) {
           cardRef.current.setPointerCapture(e.pointerId);
         }
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const rot = (dragX / cardRef.current.offsetWidth) * 15;
     cardRef.current.style.transform = `translateX(${dragX}px) rotate(${rot}deg)`;
+
+    const pastCommit = Math.abs(dragX) > SWIPE_COMMIT_DISTANCE;
+    if (pastCommit && !dragRef.current.thresholdBuzzed) {
+      dragRef.current.thresholdBuzzed = true;
+      hapticBuzz(10);
+    } else if (!pastCommit) {
+      dragRef.current.thresholdBuzzed = false;
+    }
 
     const opacity = Math.min(Math.abs(dragX) / 100, 1);
     if (dragX > 20) {
@@ -440,13 +675,13 @@ export default function App() {
     dragRef.current.isDragging = false;
     try {
       cardRef.current.releasePointerCapture(e.pointerId);
-    } catch (err) {}
+    } catch (err) { }
 
     const { dragX, startTime } = dragRef.current;
     const dt = Math.max(Date.now() - startTime, 1);
     const velocity = dragX / dt;
 
-    if (Math.abs(dragX) > 90 || Math.abs(velocity) > 0.4) {
+    if (Math.abs(dragX) > SWIPE_COMMIT_DISTANCE || Math.abs(velocity) > 0.4) {
       judgeCard(dragX > 0 ? 'know' : 'dont');
     } else {
       cardRef.current.style.transition = 'transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -488,6 +723,31 @@ export default function App() {
     return Object.values(progress).filter(p => p.status === 'know').length;
   }, [progress]);
 
+  // Surface-form index used to look up words tapped inside example sentences.
+  const wordIndex = React.useMemo(() => {
+    const map = new Map();
+    allCards.forEach(card => {
+      [card.kanji, card.hiragana, card.katakana].forEach(form => {
+        if (form && !map.has(form)) map.set(form, card);
+      });
+    });
+    return map;
+  }, [allCards]);
+
+  const lookupSentenceToken = (tok) => {
+    const cleanJa = stripPunctuation(tok.ja);
+    const cleanHi = stripPunctuation(tok.hi);
+    if (!cleanJa) return;
+    const match = wordIndex.get(cleanJa) || wordIndex.get(cleanHi) || null;
+    setSentenceLookup(prev => (prev && prev.key === cleanJa ? null : {
+      key: cleanJa,
+      jaKey: cleanJa,
+      hi: cleanHi,
+      romaji: wanakana.toRomaji(cleanHi),
+      card: match
+    }));
+  };
+
   if (loading) {
     return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>Loading datasets...</div>;
   }
@@ -497,6 +757,10 @@ export default function App() {
   }
 
   const displayKanji = showKanji && currentCard?.kanji;
+  const currentDisplayBreakdown = currentCard ? getDisplayBreakdown(currentCard, showKanji) : null;
+  const currentDisplayConjugations = currentCard ? getDisplayConjugations(currentCard, showKanji) : null;
+  const currentHiraganaConjugations = currentCard ? getHiraganaConjugations(currentCard) : null;
+  const currentDisplayParticleUsage = currentCard ? getDisplayParticleUsage(currentCard, showKanji) : null;
 
   return (
     <>
@@ -545,19 +809,19 @@ export default function App() {
               <div id="collections-list" class="collections-grid">
                 {(homeView === 'learning-path'
                   ? levels.map(({ tier, name, cards }) => ({
-                      key: tier,
-                      badge: tier,
-                      title: name.replace(/^Level \d+\s*·\s*/, ''),
-                      cards,
-                      color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
-                    }))
+                    key: tier,
+                    badge: tier,
+                    title: name.replace(/^Level \d+\s*·\s*/, ''),
+                    cards,
+                    color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
+                  }))
                   : packs.map(({ id, name, cards, color }) => ({
-                      key: id,
-                      badge: cards.length,
-                      title: name,
-                      cards,
-                      color
-                    }))
+                    key: id,
+                    badge: cards.length,
+                    title: name,
+                    cards,
+                    color
+                  }))
                 ).map(({ key, badge, title, cards, color }) => {
                   const learntCards = cards.filter(c => progress[c.id] && progress[c.id].status === 'know');
                   const knownCount = learntCards.length;
@@ -790,8 +1054,8 @@ export default function App() {
                 class={`footer-nav-btn ${homeView === 'learning-path' ? 'active' : ''}`}
                 onClick={() => setHomeView('learning-path')}
               >
-                <span class="nav-icon"><IconRoute /></span>
-                <span class="nav-label">Learning Path</span>
+                <span class="nav-icon"><IconRoute width="16" height="16" /></span>
+                <span class="nav-label">Path</span>
               </button>
               <button
                 role="tab"
@@ -799,8 +1063,8 @@ export default function App() {
                 class={`footer-nav-btn ${homeView === 'word-packs' ? 'active' : ''}`}
                 onClick={() => setHomeView('word-packs')}
               >
-                <span class="nav-icon"><IconPackage /></span>
-                <span class="nav-label">Word Packs</span>
+                <span class="nav-icon"><IconPackage width="16" height="16" /></span>
+                <span class="nav-label">Packs</span>
               </button>
               <button
                 role="tab"
@@ -808,8 +1072,8 @@ export default function App() {
                 class={`footer-nav-btn ${homeView === 'all-words' ? 'active' : ''}`}
                 onClick={() => setHomeView('all-words')}
               >
-                <span class="nav-icon"><IconBook /></span>
-                <span class="nav-label">All Words</span>
+                <span class="nav-icon"><IconBook width="16" height="16" /></span>
+                <span class="nav-label">Words</span>
               </button>
             </div>
           </footer>
@@ -928,11 +1192,11 @@ export default function App() {
                       )}
 
                       {/* Breakdown */}
-                      {modalCard.breakdown && modalCard.breakdown.length > 0 && (
+                      {modalDisplayBreakdown && modalDisplayBreakdown.length > 0 && (
                         <div class="breakdown-section">
                           <div class="grammar-title">Word Breakdown</div>
                           <div class="breakdown-row">
-                            {modalCard.breakdown.map((part, i) => (
+                            {modalDisplayBreakdown.map((part, i) => (
                               <React.Fragment key={i}>
                                 {i > 0 && <span class="breakdown-plus">+</span>}
                                 <div class="breakdown-chip">
@@ -946,15 +1210,22 @@ export default function App() {
                       )}
 
                       {/* Conjugations */}
-                      {modalCard.conjugations && (
+                      {modalDisplayConjugations && (
                         <div class="grammar-section">
                           <div class="grammar-title">Tense &amp; Forms</div>
                           <div class="conjugation-grid">
-                            {['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'].map(k => (
-                              modalCard.conjugations[k] ? (
+                            {CONJ_KEYS.map(k => (
+                              modalDisplayConjugations[k] ? (
                                 <React.Fragment key={k}>
-                                  <div class="conj-label">{k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
-                                  <div class="conj-value">{modalCard.conjugations[k]}</div>
+                                  <div class={`conj-label ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>{k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
+                                  <div class={`conj-value-group ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>
+                                    <div class="conj-value">{modalDisplayConjugations[k]}</div>
+                                    {modalHiraganaConjugations?.[k] && modalHiraganaConjugations[k] !== modalDisplayConjugations[k] && (
+                                      <div class="conj-hiragana muted">{modalHiraganaConjugations[k]}</div>
+                                    )}
+                                    <div class="conj-romaji muted">{wanakana.toRomaji(modalHiraganaConjugations?.[k] || modalDisplayConjugations[k])}</div>
+                                  </div>
+                                  <div class={`conj-english muted ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>{getConjugationEnglish(modalCard, k)}</div>
                                 </React.Fragment>
                               ) : null
                             ))}
@@ -963,11 +1234,11 @@ export default function App() {
                       )}
 
                       {/* Particle Usage */}
-                      {modalCard.particleUsage && modalCard.particleUsage.length > 0 && (
+                      {modalDisplayParticleUsage && modalDisplayParticleUsage.length > 0 && (
                         <div class="particle-section">
                           <div class="grammar-title">Common Particles</div>
                           <div class="particle-list">
-                            {modalCard.particleUsage.map((p, i) => (
+                            {modalDisplayParticleUsage.map((p, i) => (
                               <div key={i} class="particle-row">
                                 <span class="particle-tag">{p.particle}</span>
                                 <div class="particle-text">
@@ -985,7 +1256,7 @@ export default function App() {
                         <div class="sentence-section" style={{ display: 'block' }}>
                           <div class="sentence-card">
                             <p class="sentence-japanese">
-                              {formatSentenceJapanese(modalCard.exampleSentence, showKanji)}
+                              <SentenceTokens sentence={modalCard.exampleSentence} showKanji={showKanji} onTokenTap={lookupSentenceToken} />
                             </p>
                             {formatSentenceRomaji(modalCard.exampleSentence) && (
                               <p class="sentence-romaji muted">
@@ -994,6 +1265,7 @@ export default function App() {
                             )}
                             <div class="sentence-divider"></div>
                             <p class="sentence-english">{modalCard.exampleSentence.english}</p>
+                            <WordLookupPopover lookup={sentenceLookup} showKanji={showKanji} onClose={() => setSentenceLookup(null)} />
                           </div>
                         </div>
                       )}
@@ -1039,6 +1311,7 @@ export default function App() {
           </div>
 
           <div id="card-arena">
+            <div class="card-stack-peek peek-1" aria-hidden="true"></div>
             <div
               id="card"
               ref={cardRef}
@@ -1051,13 +1324,9 @@ export default function App() {
                 setIsFlipped(prev => !prev);
               }}
             >
-              <div id="card-inner" class={isFlipped ? 'flipped' : ''}>
+              <div id="card-inner" ref={cardInnerRef} class={isFlipped ? 'flipped' : ''}>
                 {/* FRONT FACE */}
                 <div class="card-face" id="card-front">
-                  <div class="card-topbar">
-                    <span id="card-tag" class="tag-chip">{currentCard.theme || currentCard.tierName}</span>
-                    <span id="card-counter" class="muted">{currentIndex + 1} / {remaining.length}</span>
-                  </div>
                   <div class="card-body">
                     <div class="word-group">
                       <p class="kanji-word">{displayKanji ? currentCard.kanji : currentCard.hiragana}</p>
@@ -1120,11 +1389,11 @@ export default function App() {
                     )}
 
                     {/* Breakdown */}
-                    {currentCard.breakdown && currentCard.breakdown.length > 0 && (
+                    {currentDisplayBreakdown && currentDisplayBreakdown.length > 0 && (
                       <div class="breakdown-section">
                         <div class="grammar-title">Word Breakdown</div>
                         <div class="breakdown-row">
-                          {currentCard.breakdown.map((part, i) => (
+                          {currentDisplayBreakdown.map((part, i) => (
                             <React.Fragment key={i}>
                               {i > 0 && <span class="breakdown-plus">+</span>}
                               <div class="breakdown-chip">
@@ -1138,15 +1407,22 @@ export default function App() {
                     )}
 
                     {/* Conjugations */}
-                    {currentCard.conjugations && (
+                    {currentDisplayConjugations && (
                       <div class="grammar-section">
                         <div class="grammar-title">Tense &amp; Forms</div>
                         <div class="conjugation-grid">
-                          {['present', 'presentPolite', 'past', 'pastPolite', 'negative', 'negativePolite', 'teForm', 'potential'].map(k => (
-                            currentCard.conjugations[k] ? (
+                          {CONJ_KEYS.map(k => (
+                            currentDisplayConjugations[k] ? (
                               <React.Fragment key={k}>
-                                <div class="conj-label">{k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
-                                <div class="conj-value">{currentCard.conjugations[k]}</div>
+                                <div class={`conj-label ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>{k.replace(/([A-Z])/g, ' $1').toLowerCase()}</div>
+                                <div class={`conj-value-group ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>
+                                  <div class="conj-value">{currentDisplayConjugations[k]}</div>
+                                  {currentHiraganaConjugations?.[k] && currentHiraganaConjugations[k] !== currentDisplayConjugations[k] && (
+                                    <div class="conj-hiragana muted">{currentHiraganaConjugations[k]}</div>
+                                  )}
+                                  <div class="conj-romaji muted">{wanakana.toRomaji(currentHiraganaConjugations?.[k] || currentDisplayConjugations[k])}</div>
+                                </div>
+                                <div class={`conj-english muted ${CONJ_GROUP_STARTS.has(k) ? 'conj-group-start' : ''}`}>{getConjugationEnglish(currentCard, k)}</div>
                               </React.Fragment>
                             ) : null
                           ))}
@@ -1155,11 +1431,11 @@ export default function App() {
                     )}
 
                     {/* Particle Usage */}
-                    {currentCard.particleUsage && currentCard.particleUsage.length > 0 && (
+                    {currentDisplayParticleUsage && currentDisplayParticleUsage.length > 0 && (
                       <div class="particle-section">
                         <div class="grammar-title">Common Particles</div>
                         <div class="particle-list">
-                          {currentCard.particleUsage.map((p, i) => (
+                          {currentDisplayParticleUsage.map((p, i) => (
                             <div key={i} class="particle-row">
                               <span class="particle-tag">{p.particle}</span>
                               <div class="particle-text">
@@ -1177,7 +1453,7 @@ export default function App() {
                       <div class="sentence-section" style={{ display: 'block' }}>
                         <div class="sentence-card">
                           <p class="sentence-japanese">
-                            {formatSentenceJapanese(currentCard.exampleSentence, displayKanji)}
+                            <SentenceTokens sentence={currentCard.exampleSentence} showKanji={displayKanji} onTokenTap={lookupSentenceToken} />
                           </p>
                           {formatSentenceRomaji(currentCard.exampleSentence) && (
                             <p class="sentence-romaji muted">
@@ -1186,12 +1462,13 @@ export default function App() {
                           )}
                           <div class="sentence-divider"></div>
                           <p class="sentence-english">{currentCard.exampleSentence.english}</p>
+                          <WordLookupPopover lookup={sentenceLookup} showKanji={displayKanji} onClose={() => setSentenceLookup(null)} />
                         </div>
                       </div>
                     )}
                     <div class="scroll-spacer"></div>
+                    <div class={`scroll-fade ${hasScrollFade ? 'visible' : ''}`}></div>
                   </div>
-                  <div class={`scroll-fade ${hasScrollFade ? 'visible' : ''}`}></div>
 
                   <div class="action-buttons">
                     <button class="btn-dont-know" onClick={(e) => { e.stopPropagation(); judgeCard('dont'); }}>
@@ -1206,8 +1483,23 @@ export default function App() {
                 </div>
               </div>
 
-              <div class="swipe-label swipe-know" style={{ opacity: swipeOverlay.know }}>Know it ✓</div>
-              <div class="swipe-label swipe-dont" style={{ opacity: swipeOverlay.dont }}>✗ Don't know</div>
+              <div class="swipe-tint swipe-tint-know" style={{ opacity: swipeOverlay.know * 0.55 }}></div>
+              <div class="swipe-tint swipe-tint-dont" style={{ opacity: swipeOverlay.dont * 0.55 }}></div>
+
+              <div
+                class="swipe-label swipe-know"
+                style={{ opacity: swipeOverlay.know, transform: `scale(${0.7 + swipeOverlay.know * 0.3}) rotate(-8deg)` }}
+              >
+                <IconCheckCircle width="20" height="20" />
+                Know it
+              </div>
+              <div
+                class="swipe-label swipe-dont"
+                style={{ opacity: swipeOverlay.dont, transform: `scale(${0.7 + swipeOverlay.dont * 0.3}) rotate(8deg)` }}
+              >
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                Don't know
+              </div>
             </div>
           </div>
 
