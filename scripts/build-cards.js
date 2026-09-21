@@ -6,11 +6,13 @@ const KuromojiAnalyzer = require('kuroshiro-analyzer-kuromoji');
 const wanakana = require('wanakana');
 const jmdict = require('./lib/jmdict');
 const tanaka = require('./lib/tanaka');
+const sentenceTokens = require('./lib/sentence-tokens');
 
 const PUBLIC_DIR = path.join(__dirname, '../public');
 const KANJIVG_DIR = path.join(PUBLIC_DIR, 'kanjivg');
 const JMDICT_PATH = path.join(__dirname, '../data/jmdict-eng-common.json');
 const TANAKA_PATH = path.join(__dirname, '../data/examples.utf');
+const JMDICT_FULL_PATH = path.join(__dirname, '../data/jmdict-eng.json');
 const WORDLIST_PATH = path.join(__dirname, '../wordlist.json');
 const PACKS_PATH = path.join(__dirname, '../packs.json');
 
@@ -344,6 +346,9 @@ async function build() {
   console.log('Loading local JMdict + Tanaka Corpus...');
   const dict = jmdict.loadIndex(JMDICT_PATH);
   const corpus = tanaka.loadCorpus(TANAKA_PATH);
+  // Full JMdict powers the tap-a-word lookup inside example sentences (the
+  // deck itself only uses the common subset above).
+  const lookupIndex = sentenceTokens.loadLookupIndex(JMDICT_FULL_PATH);
 
   const kuroshiro = new Kuroshiro();
   await kuroshiro.init(new KuromojiAnalyzer());
@@ -465,6 +470,7 @@ async function build() {
         const tokens = await kuroshiro._analyzer.parse(sentenceObj.japanese);
         sentenceObj.spacedJapanese = wakachigaki(tokens, false);
         sentenceObj.spacedHiragana = wakachigaki(tokens, true);
+        sentenceObj.tokens = sentenceTokens.tokenizeSentence(tokens, lookupIndex, corpus);
       } catch (e) {
         console.error("Sentence conversion failed", e);
         sentenceObj.hiragana = sentenceObj.japanese;

@@ -53,6 +53,12 @@ function extractFirstFileFromTar(tarBuffer) {
   throw new Error('No regular file found in tar archive');
 }
 
+// Full JMdict (not just the common subset) — used only for the sentence
+// word-lookup index, since example sentences routinely contain words that
+// fall outside JMdict's "common" tagging (rarer nouns, inflectable forms).
+const JMDICT_FULL_URL = 'https://github.com/scriptin/jmdict-simplified/releases/download/3.6.2%2B20260831182826/jmdict-eng-3.6.2+20260831182826.json.tgz';
+const JMDICT_FULL_DEST = path.join(DATA_DIR, 'jmdict-eng.json');
+
 async function fetchTanaka() {
   if (fs.existsSync(TANAKA_DEST)) {
     console.log(`[fetch-data] Tanaka Corpus already cached at ${TANAKA_DEST}`);
@@ -78,10 +84,24 @@ async function fetchJmdict() {
   console.log(`[fetch-data] Wrote ${JMDICT_DEST} (${(json.length / 1e6).toFixed(1)} MB)`);
 }
 
+async function fetchJmdictFull() {
+  if (fs.existsSync(JMDICT_FULL_DEST)) {
+    console.log(`[fetch-data] jmdict-eng already cached at ${JMDICT_FULL_DEST}`);
+    return;
+  }
+  console.log('[fetch-data] Downloading full jmdict-eng (large)...');
+  const tgz = await fetchBuffer(JMDICT_FULL_URL);
+  const tar = zlib.gunzipSync(tgz);
+  const json = extractFirstFileFromTar(tar);
+  fs.writeFileSync(JMDICT_FULL_DEST, json);
+  console.log(`[fetch-data] Wrote ${JMDICT_FULL_DEST} (${(json.length / 1e6).toFixed(1)} MB)`);
+}
+
 async function main() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
   await fetchTanaka();
   await fetchJmdict();
+  await fetchJmdictFull();
   console.log('[fetch-data] Done.');
 }
 

@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as wanakana from 'wanakana';
 import packsRegistry from '../packs.json';
+import imageMap from '../image-map.json';
+
+const RING_RADIUS = 42;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 const LEVEL_COLORS = {
   1: 'var(--level-1)',
@@ -9,9 +13,17 @@ const LEVEL_COLORS = {
   4: 'var(--level-4)'
 };
 
-const IconFlame = (props) => (
-  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M12 2c1.2 3 .5 4.6-.6 6.2C10 9.8 8.5 11.4 8.5 14a3.5 3.5 0 0 0 7 0c0-1-.3-1.8-.8-2.6.9.7 1.8 2 1.8 3.6a4.5 4.5 0 0 1-9 0c0-4 2.7-6 3.5-9.3.4 1 1 1.7 1 3.3s-.5 2-1 3" />
+const IconRefresh = (props) => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+    <path d="M21 4v5h-5" />
+  </svg>
+);
+
+const IconSun = (props) => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
   </svg>
 );
 
@@ -39,6 +51,13 @@ const IconRoute = (props) => (
   </svg>
 );
 
+const IconHome = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M3 11l9-8 9 8" />
+    <path d="M5 10v10h5v-6h4v6h5V10" />
+  </svg>
+);
+
 const IconPackage = (props) => (
   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path d="M21 8l-9-5-9 5 9 5 9-5z" />
@@ -61,6 +80,62 @@ const IconCheckCircle = (props) => (
   </svg>
 );
 
+// Every card's front illustration is a Twemoji SVG (downloaded into
+// public/emoji by scripts/build-images.js), chosen per word in image-map.json.
+// Twemoji names each file by its codepoints joined with "-", dropping the
+// U+FE0F variation selector unless the emoji is a ZWJ sequence (mirrors
+// scripts/lib/emoji-name.js).
+const ZWJ = String.fromCodePoint(0x200d);
+const VARIATION_SELECTOR_16 = String.fromCodePoint(0xfe0f);
+function emojiFileName(emoji) {
+  const hasZwj = emoji.includes(ZWJ);
+  return [...emoji]
+    .filter(ch => hasZwj || ch !== VARIATION_SELECTOR_16)
+    .map(ch => ch.codePointAt(0).toString(16))
+    .join('-');
+}
+
+// Card illustrations are switched off for now; flip this to bring them back.
+const SHOW_CARD_IMAGES = false;
+
+const CardImage = ({ card }) => {
+  if (!SHOW_CARD_IMAGES) return null;
+  const emoji = imageMap[card.kanji || card.hiragana];
+  if (!emoji) return null;
+  return (
+    <div class="card-image" aria-hidden="true">
+      <img src={`/emoji/${emojiFileName(emoji)}.svg`} alt="" draggable={false} />
+    </div>
+  );
+};
+
+// Counts up from the previous value to `target` (from 0 on first render) so
+// hero numbers tick into place instead of appearing instantly.
+function useCountUp(target, duration = 900) {
+  const [value, setValue] = useState(0);
+  const fromRef = useRef(0);
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setValue(target);
+      fromRef.current = target;
+      return;
+    }
+    const from = fromRef.current;
+    const start = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(Math.round(from + (target - from) * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else fromRef.current = target;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, duration]);
+  return value;
+}
+
 function speak(text, lang) {
   if (!window.speechSynthesis) return;
   const ut = new SpeechSynthesisUtterance(text);
@@ -71,6 +146,11 @@ function speak(text, lang) {
 function hapticBuzz(pattern) {
   if (navigator.vibrate) navigator.vibrate(pattern);
 }
+
+// True while the user is typing into a text field (e.g. the note textarea),
+// so global shortcuts like space-to-flip don't hijack the keystroke.
+const isTypingTarget = (el) =>
+  !!el && (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.isContentEditable);
 
 const formatSentenceRomaji = (sentence) => {
   if (!sentence) return '';
@@ -83,12 +163,29 @@ const formatSentenceRomaji = (sentence) => {
 const hasKanji = (str) => !!str && /[一-龯]/.test(str);
 const stripPunctuation = (str) => (str || '').replace(/[。、！？!?「」・\s]/g, '');
 
-// Tokenize an example sentence into {ja, hi} pairs using the pre-computed
-// wakachigaki (word-segmented) fields, so words in the sentence can be
-// tapped individually. Falls back to treating the whole sentence as one
-// token when segmentation data isn't available.
+// Tokenize an example sentence into tappable word tokens. Uses the
+// pre-computed exampleSentence.tokens (each carrying its dictionary form and
+// meaning — see scripts/lib/sentence-tokens.js). Punctuation isn't tappable:
+// it's folded onto the neighbouring word as lead/trail text. Falls back to
+// the plain word-segmented strings when a card predates the token data.
+const OPENING_PUNCT = /^[「『（(]+$/;
 const tokenizeSentence = (sentence) => {
   if (!sentence) return [];
+  if (sentence.tokens) {
+    const out = [];
+    let lead = '';
+    sentence.tokens.forEach(tok => {
+      if (!tok.punct) {
+        out.push({ ...tok, lead });
+        lead = '';
+      } else if (OPENING_PUNCT.test(tok.ja)) {
+        lead += tok.ja;
+      } else if (out.length > 0) {
+        out[out.length - 1].trail = (out[out.length - 1].trail || '') + tok.ja;
+      }
+    });
+    return out;
+  }
   const jaTokens = (sentence.spacedJapanese || sentence.japanese || '').split(' ').filter(Boolean);
   const hiTokens = (sentence.spacedHiragana || sentence.hiragana || sentence.japanese || '').split(' ').filter(Boolean);
   return jaTokens.map((ja, i) => ({ ja, hi: hiTokens[i] || ja }));
@@ -229,34 +326,50 @@ const SentenceTokens = ({ sentence, showKanji, onTokenTap }) => (
       class="sentence-token"
       onClick={(e) => { e.stopPropagation(); onTokenTap(tok); }}
     >
-      {showKanji ? tok.ja : tok.hi}
+      {tok.lead}{showKanji ? tok.ja : tok.hi}{tok.trail}
     </span>
   ))
 );
 
+const POS_LABELS = { name: 'proper noun', auxiliary: 'auxiliary', adnominal: 'adnominal', filler: 'filler' };
+
 const WordLookupPopover = ({ lookup, showKanji, onClose }) => {
   if (!lookup) return null;
-  const { card } = lookup;
-  const headword = card
-    ? (showKanji && card.kanji ? card.kanji : card.hiragana)
-    : (showKanji ? lookup.jaKey : lookup.hi);
+  const { card, tok } = lookup;
+  // Prefer the dictionary gloss for this token's own sense; fall back to the
+  // deck card's meanings when the token carries none.
+  const meanings = tok.m || card?.englishMeanings;
+  const pos = card?.partOfSpeech || tok.pos;
+  const headword = showKanji ? tok.ja : tok.hi;
+  const baseForm = tok.base
+    ? (showKanji || !tok.baseHi ? tok.base : tok.baseHi)
+    : null;
   return (
     <div class="word-lookup-popover" onClick={(e) => e.stopPropagation()}>
       <div class="word-lookup-header">
         <span class="word-lookup-word">{headword}</span>
-        <span class="word-lookup-romaji muted">{card ? card.romaji : lookup.romaji}</span>
+        <span class="word-lookup-romaji muted">{hasKanji(tok.hi) ? '' : wanakana.toRomaji(tok.hi)}</span>
         <button class="word-lookup-close" onClick={onClose} aria-label="Close word lookup">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
-      {card ? (
-        <>
-          <p class="word-lookup-meaning">{card.englishMeanings?.join(', ')}</p>
-          <span class="pos-pill muted">{card.partOfSpeech}</span>
-        </>
-      ) : (
-        <p class="word-lookup-meaning muted">Not in your word list yet</p>
+      {baseForm && (
+        <p class="word-lookup-base muted">
+          Dictionary form: <span class="word-lookup-base-word">{baseForm}</span>
+          {showKanji && tok.baseHi && tok.baseHi !== tok.base && ` (${tok.baseHi})`}
+        </p>
       )}
+      {meanings && meanings.length > 0 ? (
+        <p class="word-lookup-meaning">{meanings.join(', ')}</p>
+      ) : (
+        <p class="word-lookup-meaning muted">
+          {tok.pos === 'name' ? 'A name — not in the dictionary' : 'No dictionary entry found'}
+        </p>
+      )}
+      <div class="word-lookup-tags">
+        {pos && <span class="pos-pill muted">{POS_LABELS[pos] || pos}</span>}
+        {card && <span class="in-deck-pill">In your deck</span>}
+      </div>
     </div>
   );
 };
@@ -288,6 +401,99 @@ const NoteSection = ({ noteText, editing, onStartEdit, onChange, onDone }) => (
   </div>
 );
 
+// Home's "Word of the day": a two-slide swipeable carousel — the word itself,
+// then its breakdown. The Kanji toggle lives here since it drives every card.
+const WordOfDay = ({ card, showKanji, onToggleKanji, learnt }) => {
+  const trackRef = useRef(null);
+  const [slide, setSlide] = useState(0);
+  const useKanji = showKanji && !!card.kanji;
+  const headword = useKanji ? card.kanji : card.hiragana;
+  const breakdown = getDisplayBreakdown(card, showKanji);
+  const forms = [
+    useKanji && { label: 'Kanji', value: card.kanji },
+    { label: 'Hiragana', value: card.hiragana },
+    { label: 'Katakana', value: card.katakana },
+    { label: 'Romaji', value: card.romaji }
+  ].filter(Boolean);
+
+  const goTo = (i) => {
+    const el = trackRef.current;
+    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' });
+  };
+
+  return (
+    <section class="wotd" aria-label="Word of the day">
+      <div class="wotd-topbar">
+        <span class="tag-chip">Word of the day</span>
+        {card.kanji && (
+          <label class="setting-toggle">
+            <input type="checkbox" checked={showKanji} onChange={onToggleKanji} aria-label="Show kanji" />
+            <span>Kanji</span>
+          </label>
+        )}
+      </div>
+
+      <div
+        class="wotd-track"
+        ref={trackRef}
+        onScroll={(e) => setSlide(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
+      >
+        <div class="wotd-slide">
+          <p class="kanji-word">{headword}</p>
+          {useKanji && <p class="hiragana-word muted">{card.hiragana}</p>}
+          <p class="romaji-word-front muted">{card.romaji}</p>
+          <p class="wotd-meaning">{card.englishMeanings?.slice(0, 3).join(', ')}</p>
+          <div class="wotd-meta">
+            <span class="pos-pill muted">{card.partOfSpeech}</span>
+            {learnt && <span class="in-deck-pill">Learnt</span>}
+            <button class="wotd-audio" aria-label="Play pronunciation" onClick={() => speak(card.audio.ttsText, card.audio.lang)}>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="4 8 8 8 12 4 12 20 8 16 4 16 4 8"></polygon><path d="M16 8.5a4.5 4.5 0 0 1 0 7"></path><path d="M18.5 6a8 8 0 0 1 0 12"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="wotd-slide">
+          <div class="grammar-title">Word breakdown</div>
+          {breakdown && breakdown.length > 0 && (
+            <div class="breakdown-row">
+              {breakdown.map((part, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <span class="breakdown-plus">+</span>}
+                  <div class="breakdown-chip">
+                    <span class="breakdown-text">{part.text}</span>
+                    <span class="breakdown-gloss">{part.gloss}</span>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          )}
+          <dl class="wotd-forms">
+            {forms.map(f => (
+              <div key={f.label} class="wotd-form">
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <div class="wotd-dots" role="tablist" aria-label="Word of the day slides">
+        {['Word', 'Breakdown'].map((label, i) => (
+          <button
+            key={label}
+            role="tab"
+            aria-selected={slide === i}
+            aria-label={label}
+            class={`wotd-dot ${slide === i ? 'active' : ''}`}
+            onClick={() => goTo(i)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
 export default function App() {
   const [allCards, setAllCards] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -295,7 +501,7 @@ export default function App() {
 
   // App state
   const [screen, setScreen] = useState('home'); // 'home' | 'arena' | 'summary'
-  const [homeView, setHomeView] = useState('learning-path'); // 'learning-path' | 'word-packs'
+  const [homeView, setHomeView] = useState('home'); // 'home' | 'learn' | 'all-words'
   const [showKanji, setShowKanji] = useState(() => {
     const saved = localStorage.getItem('flashcards_show_kanji');
     return saved !== null ? saved === 'true' : true;
@@ -653,7 +859,13 @@ export default function App() {
   useEffect(() => {
     if (modalCardIndex === null) return;
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setModalCardIndex(null);
+      if (e.key === 'Escape') {
+        setModalCardIndex(null);
+        return;
+      }
+      // Let typing in the note textarea behave like normal text input instead
+      // of triggering flip/navigation shortcuts (e.g. space would flip the card).
+      if (isTypingTarget(e.target)) return;
       if (e.key === 'ArrowRight') setModalCardIndex(prev => (prev + 1) % filteredCards.length);
       if (e.key === 'ArrowLeft') setModalCardIndex(prev => (prev - 1 + filteredCards.length) % filteredCards.length);
       if (e.key === ' ' || e.key === 'Enter') {
@@ -669,6 +881,7 @@ export default function App() {
   useEffect(() => {
     if (screen !== 'arena') return;
     const handleKeyDown = (e) => {
+      if (isTypingTarget(e.target)) return;
       if (e.key === 'ArrowRight') judgeCard('know');
       if (e.key === 'ArrowLeft') judgeCard('dont');
       if (e.key === 'Enter' || e.key === ' ') {
@@ -788,6 +1001,93 @@ export default function App() {
       .map(id => ({ id, ...packsRegistry[id], cards: map.get(id) }));
   }, [allCards]);
 
+  // Levels (the learning path) and packs are one list of "collections" --
+  // each is just a set of cards with a progress bar.
+  const collections = React.useMemo(() => {
+    const withStats = (c) => {
+      const learntCards = c.cards.filter(card => progress[card.id]?.status === 'know');
+      const reviewed = c.cards.filter(card => progress[card.id]);
+      const lastReviewedAt = reviewed.reduce((max, card) => {
+        const t = progress[card.id].lastReviewedAt || '';
+        return t > max ? t : max;
+      }, '');
+      return {
+        ...c,
+        learntCards,
+        knownCount: learntCards.length,
+        total: c.cards.length,
+        percent: c.cards.length > 0 ? (learntCards.length / c.cards.length) * 100 : 0,
+        started: reviewed.length > 0,
+        lastReviewedAt
+      };
+    };
+    return {
+      levels: levels.map(({ tier, name, cards }) => withStats({
+        key: `level-${tier}`,
+        kind: 'level',
+        filterValue: String(tier),
+        badge: tier,
+        title: name.replace(/^Level \d+\s*·\s*/, ''),
+        cards,
+        color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
+      })),
+      packs: packs.map(({ id, name, cards, color }) => withStats({
+        key: `pack-${id}`,
+        kind: 'pack',
+        filterValue: id,
+        badge: cards.length,
+        title: name,
+        cards,
+        color
+      }))
+    };
+  }, [levels, packs, progress]);
+
+  // Recommended lesson: the unfinished pack you're closest to completing; if
+  // nothing's been started yet, the first unfinished level on the path.
+  // Everything else on Home is "other packs": started ones by progress, then
+  // untouched ones in registry order, finished ones last.
+  const { recommended, otherPacks } = React.useMemo(() => {
+    const unfinishedPacks = collections.packs.filter(c => c.knownCount < c.total);
+    const rec = unfinishedPacks
+      .filter(c => c.knownCount > 0)
+      .sort((a, b) => b.percent - a.percent || b.lastReviewedAt.localeCompare(a.lastReviewedAt))[0]
+      || collections.levels.find(c => c.knownCount < c.total)
+      || null;
+    const rank = (c) => (c.knownCount >= c.total ? 2 : c.started ? 0 : 1);
+    return {
+      recommended: rec,
+      otherPacks: collections.packs
+        .filter(c => c.key !== rec?.key)
+        .map((c, i) => ({ c, i }))
+        .sort((a, b) => rank(a.c) - rank(b.c) || (rank(a.c) === 0 ? b.c.percent - a.c.percent : a.i - b.i))
+        .map(({ c }) => c)
+    };
+  }, [collections]);
+
+  // One new word per day, remembered so it doesn't change when you learn it
+  // mid-day. Picked from the lowest level that still has unlearnt words.
+  const wordOfDay = React.useMemo(() => {
+    if (allCards.length === 0) return null;
+    const now = new Date();
+    const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    try {
+      const saved = JSON.parse(localStorage.getItem('flashcards_wotd'));
+      const card = saved?.date === today && allCards.find(c => c.id === saved.id);
+      if (card) return card;
+    } catch { /* fall through and pick a new one */ }
+    const unlearnt = allCards.filter(c => progress[c.id]?.status !== 'know');
+    const pool = unlearnt.length > 0 ? unlearnt : allCards;
+    const minTier = Math.min(...pool.map(c => c.tier || 1));
+    const tierPool = pool.filter(c => (c.tier || 1) === minTier);
+    let hash = 0;
+    for (const ch of today) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+    const pick = tierPool[hash % tierPool.length];
+    try { localStorage.setItem('flashcards_wotd', JSON.stringify({ date: today, id: pick.id })); } catch { /* non-fatal */ }
+    return pick;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allCards]);
+
   const totalLearntWords = React.useMemo(() => {
     return Object.values(progress).filter(p => p.status === 'know').length;
   }, [progress]);
@@ -805,16 +1105,14 @@ export default function App() {
 
   const lookupSentenceToken = (tok) => {
     const cleanJa = stripPunctuation(tok.ja);
-    const cleanHi = stripPunctuation(tok.hi);
     if (!cleanJa) return;
-    const match = wordIndex.get(cleanJa) || wordIndex.get(cleanHi) || null;
-    setSentenceLookup(prev => (prev && prev.key === cleanJa ? null : {
-      key: cleanJa,
-      jaKey: cleanJa,
-      hi: cleanHi,
-      romaji: wanakana.toRomaji(cleanHi),
-      card: match
-    }));
+    // Match the deck by dictionary form first (拾っ -> 拾う), then by the
+    // surface spelling and its reading.
+    const match = (tok.base && wordIndex.get(tok.base))
+      || wordIndex.get(cleanJa)
+      || wordIndex.get(stripPunctuation(tok.hi))
+      || null;
+    setSentenceLookup(prev => (prev && prev.tok.ja === tok.ja && prev.tok.hi === tok.hi ? null : { tok, card: match }));
   };
 
   const splashScreen = !splashRemoved && (
@@ -824,6 +1122,15 @@ export default function App() {
       {loading && <div class="splash-spinner" aria-label="Loading"></div>}
     </div>
   );
+
+  const masteryPercent = allCards.length > 0 ? Math.round((totalLearntWords / allCards.length) * 100) : 0;
+  const stillLearningCount = Object.values(progress).filter(p => p.status === 'dont').length;
+  const reviewedToday = Object.values(progress)
+    .filter(p => p.lastReviewedAt && new Date(p.lastReviewedAt).toDateString() === new Date().toDateString()).length;
+  const shownPercent = useCountUp(masteryPercent, 1100);
+  const shownLearnt = useCountUp(totalLearntWords);
+  const shownLearning = useCountUp(stillLearningCount);
+  const shownToday = useCountUp(reviewedToday);
 
   if (error) {
     return (
@@ -844,6 +1151,79 @@ export default function App() {
   const currentHiraganaConjugations = currentCard ? getHiraganaConjugations(currentCard) : null;
   const currentDisplayParticleUsage = currentCard ? getDisplayParticleUsage(currentCard, showKanji) : null;
 
+  const renderCollectionCard = ({ key, kind, filterValue, badge, title, cards, color, learntCards, knownCount, total, percent }) => (
+    <div key={key} class="collection-card">
+      <div class="collection-card-main" onClick={() => startSession(cards)}>
+        <div class="level-badge" style={{ background: color }}>{badge}</div>
+        <div class="collection-main">
+          <div class="collection-header">
+            <h3 class="collection-title">{title}</h3>
+            <span class="collection-badge">{total} words</span>
+          </div>
+          <div class="collection-stats">{knownCount} / {total} known</div>
+          <div class="collection-progress-bg">
+            <div class="collection-progress-fill" style={{ width: `${percent}%`, background: color }}></div>
+          </div>
+        </div>
+        {/* Expand/Collapse toggle chevron */}
+        <button
+          class={`card-expand-toggle ${expandedCardKey === key ? 'expanded' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setExpandedCardKey(prev => prev === key ? null : key);
+          }}
+          aria-label="Toggle actions"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+
+      {/* Expandable dropdown actions */}
+      <div class={`collection-actions-dropdown ${expandedCardKey === key ? 'open' : ''}`}>
+        <div class="collection-actions">
+          <button
+            class="btn-card-action primary"
+            onClick={(e) => { e.stopPropagation(); startSession(cards); }}
+            title="Start random flashcard practice session"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            Study All ({total})
+          </button>
+          <button
+            class={`btn-card-action review-learnt ${knownCount === 0 ? 'disabled' : ''}`}
+            disabled={knownCount === 0}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (knownCount > 0) startSession(learntCards);
+            }}
+            title={knownCount === 0 ? "No learnt words yet in this category" : `Review ${knownCount} learnt words`}
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Review ({knownCount})
+          </button>
+          <button
+            class="btn-card-action view-words"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (kind === 'level') {
+                setTierFilter(filterValue);
+                setSelectedPackId('all');
+              } else {
+                setSelectedPackId(filterValue);
+                setTierFilter('all');
+              }
+              setHomeView('all-words');
+            }}
+            title="See all words in this collection in a list"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            View ({total})
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
       {/* Home Screen */}
@@ -851,138 +1231,99 @@ export default function App() {
         <div id="home-screen">
           {/* Top Hero Section */}
           <div class="home-hero-section">
-            <div class="home-header">
-              <div class="brand">
-                <span class="brand-mark">日</span>
-                <div class="brand-text">
-                  <h1>Japanese Flashcards</h1>
-                  <p class="brand-subtitle">{totalLearntWords} of {allCards.length} words mastered</p>
+            <h1 class="hero-title">Japanese Flashcards</h1>
+
+            <div class="mastery-ring" role="img" aria-label={`${masteryPercent}% of words mastered`}>
+              <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <circle class="mastery-ring-track" cx="50" cy="50" r={RING_RADIUS} />
+                <circle
+                  class="mastery-ring-fill"
+                  cx="50" cy="50" r={RING_RADIUS}
+                  style={{
+                    '--ring-circumference': RING_CIRCUMFERENCE,
+                    '--ring-offset': RING_CIRCUMFERENCE * (1 - totalLearntWords / Math.max(allCards.length, 1))
+                  }}
+                />
+              </svg>
+              <strong class="mastery-ring-value">{shownPercent}<small>%</small></strong>
+            </div>
+
+            <div class="hero-chips">
+              <div class="hero-chip chip-learnt" title={`${totalLearntWords} of ${allCards.length} words learnt`} aria-label={`${totalLearntWords} words learnt`}>
+                <IconCheckCircle width="20" height="20" />
+                <strong>{shownLearnt}</strong>
+              </div>
+              <div class="hero-chip chip-learning" title="Words still being learnt" aria-label={`${stillLearningCount} words still learning`}>
+                <IconRefresh width="20" height="20" />
+                <strong>{shownLearning}</strong>
+              </div>
+              <div class="hero-chip chip-today" title="Words reviewed today" aria-label={`${reviewedToday} words reviewed today`}>
+                <IconSun width="20" height="20" />
+                <strong>{shownToday}</strong>
+              </div>
+            </div>
+
+            <div class="hero-levels" role="group" aria-label="Progress by level">
+              {collections.levels.map((l, i) => (
+                <div
+                  key={l.key}
+                  class="hero-level"
+                  title={`Level ${l.badge}: ${l.knownCount} of ${l.total} learnt`}
+                  style={{ '--i': i }}
+                >
+                  <div class="hero-level-track">
+                    <div class="hero-level-fill" style={{ width: `${l.percent}%`, background: l.color }}></div>
+                  </div>
+                  <span class="hero-level-num" style={{ background: l.color }}>{l.badge}</span>
                 </div>
-              </div>
-              <div class="header-actions">
-                <label class="setting-toggle">
-                  <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} aria-label="Show kanji" />
-                  <span>Kanji</span>
-                </label>
-                <p class="streak-indicator"><IconFlame /> 1 Day Streak</p>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* 3D Sheet Section with Rounded Top Corners */}
           <div class="home-sheet-section">
-            <div class="sheet-header">
-              <div class="sheet-title-group">
-                <h2 class="sheet-title">
-                  {homeView === 'learning-path' && 'Learning Path'}
-                  {homeView === 'word-packs' && 'Word Packs'}
-                  {homeView === 'all-words' && 'Word List & Search'}
-                </h2>
-                <span class="sheet-subtitle">
-                  {homeView === 'learning-path' && 'Progress through Japanese, one level at a time'}
-                  {homeView === 'word-packs' && 'Explore curated vocabulary sets'}
-                  {homeView === 'all-words' && 'Browse, search, & filter flashcards'}
-                </span>
+            {homeView === 'learn' && (
+              <div class="sheet-header">
+                <div class="sheet-title-group">
+                  <h2 class="sheet-title">Learn</h2>
+                  <span class="sheet-subtitle">Follow the path, or explore themed packs</span>
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* LEARNING PATH & WORD PACKS VIEWS */}
-            {(homeView === 'learning-path' || homeView === 'word-packs') && (
+            {/* HOME: word of the day, a recommended lesson, then other packs */}
+            {homeView === 'home' && (
+              <div class="collections-grid">
+                {wordOfDay && (
+                  <WordOfDay
+                    card={wordOfDay}
+                    showKanji={showKanji}
+                    onToggleKanji={handleToggleKanji}
+                    learnt={progress[wordOfDay.id]?.status === 'know'}
+                  />
+                )}
+                {recommended && (
+                  <>
+                    <h3 class="collections-section-label">Recommended lesson</h3>
+                    {renderCollectionCard(recommended)}
+                  </>
+                )}
+                {otherPacks.length > 0 && (
+                  <>
+                    <h3 class="collections-section-label">Other card packs</h3>
+                    {otherPacks.map(c => renderCollectionCard(c))}
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* LEARN: learning path + word packs together */}
+            {homeView === 'learn' && (
               <div id="collections-list" class="collections-grid">
-                {(homeView === 'learning-path'
-                  ? levels.map(({ tier, name, cards }) => ({
-                    key: tier,
-                    badge: tier,
-                    title: name.replace(/^Level \d+\s*·\s*/, ''),
-                    cards,
-                    color: LEVEL_COLORS[tier] || LEVEL_COLORS[4]
-                  }))
-                  : packs.map(({ id, name, cards, color }) => ({
-                    key: id,
-                    badge: cards.length,
-                    title: name,
-                    cards,
-                    color
-                  }))
-                ).map(({ key, badge, title, cards, color }) => {
-                  const learntCards = cards.filter(c => progress[c.id] && progress[c.id].status === 'know');
-                  const knownCount = learntCards.length;
-                  const total = cards.length;
-                  const percent = total > 0 ? (knownCount / total) * 100 : 0;
-
-                  return (
-                    <div key={key} class="collection-card">
-                      <div class="collection-card-main" onClick={() => startSession(cards)}>
-                        <div class="level-badge" style={{ background: color }}>{badge}</div>
-                        <div class="collection-main">
-                          <div class="collection-header">
-                            <h3 class="collection-title">{title}</h3>
-                            <span class="collection-badge">{total} words</span>
-                          </div>
-                          <div class="collection-stats">{knownCount} / {total} known</div>
-                          <div class="collection-progress-bg">
-                            <div class="collection-progress-fill" style={{ width: `${percent}%`, background: color }}></div>
-                          </div>
-                        </div>
-                        {/* Expand/Collapse toggle chevron */}
-                        <button
-                          class={`card-expand-toggle ${expandedCardKey === key ? 'expanded' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedCardKey(prev => prev === key ? null : key);
-                          }}
-                          aria-label="Toggle actions"
-                        >
-                          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </button>
-                      </div>
-
-                      {/* Expandable dropdown actions */}
-                      <div class={`collection-actions-dropdown ${expandedCardKey === key ? 'open' : ''}`}>
-                        <div class="collection-actions">
-                          <button
-                            class="btn-card-action primary"
-                            onClick={(e) => { e.stopPropagation(); startSession(cards); }}
-                            title="Start random flashcard practice session"
-                          >
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                            Study All ({total})
-                          </button>
-                          <button
-                            class={`btn-card-action review-learnt ${knownCount === 0 ? 'disabled' : ''}`}
-                            disabled={knownCount === 0}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (knownCount > 0) startSession(learntCards);
-                            }}
-                            title={knownCount === 0 ? "No learnt words yet in this category" : `Review ${knownCount} learnt words`}
-                          >
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Review ({knownCount})
-                          </button>
-                          <button
-                            class="btn-card-action view-words"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (homeView === 'learning-path') {
-                                setTierFilter(String(key));
-                                setSelectedPackId('all');
-                              } else {
-                                setSelectedPackId(key);
-                                setTierFilter('all');
-                              }
-                              setHomeView('all-words');
-                            }}
-                            title="See all words in this pack in a list"
-                          >
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            View ({total})
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                <h3 class="collections-section-label">Learning path</h3>
+                {collections.levels.map(c => renderCollectionCard(c))}
+                <h3 class="collections-section-label">Word packs</h3>
+                {collections.packs.map(c => renderCollectionCard(c))}
               </div>
             )}
 
@@ -995,66 +1336,61 @@ export default function App() {
                     <input
                       type="text"
                       placeholder="Search Japanese, English, Romaji..."
+                      aria-label="Search words"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       class="word-search-input"
                     />
                     {searchTerm && (
-                      <button class="clear-search-btn" onClick={() => setSearchTerm('')}>✕</button>
+                      <button class="clear-search-btn" aria-label="Clear search" onClick={() => setSearchTerm('')}>✕</button>
                     )}
                   </div>
 
+                  <div class="status-chips" role="group" aria-label="Filter by status">
+                    <button
+                      class={`filter-chip ${statusFilter === 'all' ? 'active' : ''}`}
+                      onClick={() => setStatusFilter('all')}
+                    >
+                      All ({allCards.length})
+                    </button>
+                    <button
+                      class={`filter-chip ${statusFilter === 'know' ? 'active' : ''}`}
+                      onClick={() => setStatusFilter('know')}
+                    >
+                      Learnt ✓ ({totalLearntWords})
+                    </button>
+                    <button
+                      class={`filter-chip ${statusFilter === 'unlearnt' ? 'active' : ''}`}
+                      onClick={() => setStatusFilter('unlearnt')}
+                    >
+                      Unlearnt ({allCards.length - totalLearntWords})
+                    </button>
+                  </div>
+
                   <div class="filters-row">
-                    <div class="filter-group">
-                      <span class="filter-label">Status:</span>
-                      <button
-                        class={`filter-chip ${statusFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('all')}
-                      >
-                        All ({allCards.length})
-                      </button>
-                      <button
-                        class={`filter-chip ${statusFilter === 'know' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('know')}
-                      >
-                        Learnt ✓ ({totalLearntWords})
-                      </button>
-                      <button
-                        class={`filter-chip ${statusFilter === 'unlearnt' ? 'active' : ''}`}
-                        onClick={() => setStatusFilter('unlearnt')}
-                      >
-                        Unlearnt ({allCards.length - totalLearntWords})
-                      </button>
-                    </div>
+                    <select
+                      class="tier-select-dropdown"
+                      aria-label="Filter by level"
+                      value={tierFilter}
+                      onChange={(e) => { setTierFilter(e.target.value); }}
+                    >
+                      <option value="all">All Levels</option>
+                      {levels.map(({ tier, name }) => (
+                        <option key={tier} value={String(tier)}>{name}</option>
+                      ))}
+                    </select>
 
-                    <div class="filter-group">
-                      <span class="filter-label">Level:</span>
-                      <select
-                        class="tier-select-dropdown"
-                        value={tierFilter}
-                        onChange={(e) => { setTierFilter(e.target.value); }}
-                      >
-                        <option value="all">All Levels</option>
-                        <option value="1">Level 1 · Foundations</option>
-                        <option value="2">Level 2 · Essentials</option>
-                        <option value="3">Level 3 · Intermediate</option>
-                        <option value="4">Level 4 · Advanced</option>
-                      </select>
-                    </div>
-
-                    <div class="filter-group">
-                      <span class="filter-label">Pack:</span>
-                      <select
-                        class="tier-select-dropdown"
-                        value={selectedPackId}
-                        onChange={(e) => setSelectedPackId(e.target.value)}
-                      >
-                        <option value="all">All Word Packs</option>
-                        {packs.map(p => (
-                          <option key={p.id} value={p.id}>{p.name}</option>
-                        ))}
-                      </select>
-                    </div>
+                    <select
+                      class="tier-select-dropdown"
+                      aria-label="Filter by pack"
+                      value={selectedPackId}
+                      onChange={(e) => setSelectedPackId(e.target.value)}
+                    >
+                      <option value="all">All Word Packs</option>
+                      {packs.map(p => (
+                        <option key={p.id} value={p.id}>{p.name}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
@@ -1124,7 +1460,7 @@ export default function App() {
               </div>
             )}
 
-            <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0).</p>
+            <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0). Word meanings from JMdict (EDRDG). Illustrations: Twemoji (CC BY 4.0).</p>
           </div>
 
           {/* Fixed Footer Navigation */}
@@ -1132,26 +1468,26 @@ export default function App() {
             <div class="footer-nav-inner" role="tablist">
               <div
                 class="footer-nav-marker"
-                style={{ transform: `translateX(${['learning-path', 'word-packs', 'all-words'].indexOf(homeView) * 100}%)` }}
+                style={{ transform: `translateX(${['home', 'learn', 'all-words'].indexOf(homeView) * 100}%)` }}
                 aria-hidden="true"
               ></div>
               <button
                 role="tab"
-                aria-selected={homeView === 'learning-path'}
-                class={`footer-nav-btn ${homeView === 'learning-path' ? 'active' : ''}`}
-                onClick={() => setHomeView('learning-path')}
+                aria-selected={homeView === 'home'}
+                class={`footer-nav-btn ${homeView === 'home' ? 'active' : ''}`}
+                onClick={() => setHomeView('home')}
               >
-                <span class="nav-icon"><IconRoute width="20" height="20" /></span>
-                <span class="nav-label">Path</span>
+                <span class="nav-icon"><IconHome width="20" height="20" /></span>
+                <span class="nav-label">Home</span>
               </button>
               <button
                 role="tab"
-                aria-selected={homeView === 'word-packs'}
-                class={`footer-nav-btn ${homeView === 'word-packs' ? 'active' : ''}`}
-                onClick={() => setHomeView('word-packs')}
+                aria-selected={homeView === 'learn'}
+                class={`footer-nav-btn ${homeView === 'learn' ? 'active' : ''}`}
+                onClick={() => setHomeView('learn')}
               >
-                <span class="nav-icon"><IconPackage width="20" height="20" /></span>
-                <span class="nav-label">Packs</span>
+                <span class="nav-icon"><IconRoute width="20" height="20" /></span>
+                <span class="nav-label">Learn</span>
               </button>
               <button
                 role="tab"
@@ -1219,6 +1555,7 @@ export default function App() {
                       <span class="muted">Tap to flip <IconFlip /></span>
                     </div>
                     <div class="card-body">
+                      <CardImage card={modalCard} />
                       <div class="word-group">
                         <p class="kanji-word">{showKanji && modalCard.kanji ? modalCard.kanji : modalCard.hiragana}</p>
                         <p class="hiragana-word muted">{showKanji && modalCard.kanji ? modalCard.hiragana : ''}</p>
@@ -1401,7 +1738,10 @@ export default function App() {
           </div>
           <div id="arena-header">
             <button id="btn-back-home" onClick={() => setScreen('home')} aria-label="Back to home">← Back</button>
-            <p id="progress-label">{currentIndex + 1} of {remaining.length} cards</p>
+            <p id="progress-label">
+              {currentIndex + 1} of {remaining.length} cards
+              {currentIndex === remaining.length - 1 && <span class="last-card-badge">Last card</span>}
+            </p>
             <label class="setting-toggle">
               <input type="checkbox" checked={showKanji} onChange={handleToggleKanji} aria-label="Show kanji" />
               <span>Kanji</span>
@@ -1426,6 +1766,7 @@ export default function App() {
                 {/* FRONT FACE */}
                 <div class="card-face" id="card-front">
                   <div class="card-body">
+                    <CardImage card={currentCard} />
                     <div class="word-group">
                       <p class="kanji-word">{displayKanji ? currentCard.kanji : currentCard.hiragana}</p>
                       <p class="hiragana-word muted">{displayKanji ? currentCard.hiragana : ''}</p>
@@ -1562,7 +1903,7 @@ export default function App() {
                       <div class="sentence-section" style={{ display: 'block' }}>
                         <div class="sentence-card">
                           <p class="sentence-japanese">
-                            <SentenceTokens sentence={currentCard.exampleSentence} showKanji={displayKanji} onTokenTap={lookupSentenceToken} />
+                            <SentenceTokens sentence={currentCard.exampleSentence} showKanji={showKanji} onTokenTap={lookupSentenceToken} />
                           </p>
                           {formatSentenceRomaji(currentCard.exampleSentence) && (
                             <p class="sentence-romaji muted">
@@ -1571,7 +1912,7 @@ export default function App() {
                           )}
                           <div class="sentence-divider"></div>
                           <p class="sentence-english">{currentCard.exampleSentence.english}</p>
-                          <WordLookupPopover lookup={sentenceLookup} showKanji={displayKanji} onClose={() => setSentenceLookup(null)} />
+                          <WordLookupPopover lookup={sentenceLookup} showKanji={showKanji} onClose={() => setSentenceLookup(null)} />
                         </div>
                       </div>
                     )}
