@@ -433,7 +433,7 @@ input[type="checkbox"] {
   display: flex;
   gap: 4px;
   width: 100%;
-  max-width: 340px;
+  max-width: 420px;
   justify-content: space-around;
 }
 
@@ -441,7 +441,7 @@ input[type="checkbox"] {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% / 3);
+  width: calc(100% / 5);
   height: 100%;
   padding: 0 2px;
   transition: transform 0.32s var(--ease-spring);
@@ -517,7 +517,7 @@ input[type="checkbox"] {
   .footer-nav-inner {
     gap: 2px;
     padding: 5px;
-    max-width: 280px;
+    max-width: 340px;
     border-radius: 999px;
     backdrop-filter: blur(22px) saturate(180%);
     -webkit-backdrop-filter: blur(22px) saturate(180%);
@@ -2638,4 +2638,370 @@ input[type="checkbox"] {
   width: 20px;
   border-radius: 4px;
   background: var(--accent);
+}
+
+/* ---------- Kana chart ---------- */
+.kana-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: 24px;
+}
+
+.kana-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kana-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kana-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kana-section-subtitle {
+  font-size: 12px;
+}
+
+.kana-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kana-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.kana-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.kana-cell:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.kana-cell-empty {
+  background: transparent;
+  border-color: transparent;
+  pointer-events: none;
+}
+
+.kana-cell-primary {
+  font-family: var(--font-jp);
+  font-size: 20px;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.kana-cell-secondary-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.kana-cell-secondary {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+.kana-cell-romaji {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
+.kana-script-toggle {
+  margin-bottom: 4px;
+}
+
+/* ---------- Kanji radical map ---------- */
+.kanji-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: 24px;
+}
+
+.radical-map {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radical-branch {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.radical-branch.open {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.radical-hub {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.radical-hub-char {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid rgba(255, 122, 89, 0.3);
+  color: var(--accent);
+  font-family: var(--font-jp);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radical-hub-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.radical-hub-meaning {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: capitalize;
+}
+
+.radical-hub-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.radical-hub-chevron {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.radical-leaves {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 0 14px 14px 32px;
+  animation: fadeIn 180ms ease-out forwards;
+}
+
+.radical-leaves-trunk {
+  flex-shrink: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--border-strong), transparent);
+  border-radius: 2px;
+}
+
+.radical-leaves-grid {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kanji-leaf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 56px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.kanji-leaf:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.kanji-leaf-char {
+  font-family: var(--font-jp);
+  font-size: 20px;
+  color: var(--text);
+}
+
+.kanji-leaf-meaning {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 68px;
+}
+
+/* Kanji detail popup, opened from a leaf chip */
+.kanji-detail-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  padding: 28px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.kanji-detail-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.kanji-detail-char {
+  font-family: var(--font-jp);
+  font-size: 64px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.kanji-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.kanji-detail-meanings {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.kanji-detail-readings {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kanji-detail-reading-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.kanji-detail-reading-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kanji-detail-reading-value {
+  font-family: var(--font-jp);
+  font-size: 13.5px;
+  color: var(--text);
+  text-align: right;
+}
+
+.kanji-detail-words {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kanji-detail-words-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kanji-word-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.kanji-word-chip:hover {
+  background: var(--accent-soft);
+  border-color: rgba(255, 122, 89, 0.3);
+}
+
+.kanji-word-chip-jp {
+  font-family: var(--font-jp);
+  font-size: 15px;
+  color: var(--text);
+}
+
+.kanji-word-chip-en {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55%;
 }

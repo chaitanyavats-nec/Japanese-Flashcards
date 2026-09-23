@@ -73,6 +73,27 @@ const IconBook = (props) => (
   </svg>
 );
 
+const IconKana = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M4 6h9" />
+    <path d="M8.5 3.5v3c0 5-1.5 8-4.5 10.5" />
+    <path d="M13 20.5c2-1 3.3-2.6 4-4.5" />
+    <path d="M14.5 10.5h6" />
+    <path d="M17.5 8v2.5c0 4-1 6.7-3 8.5" />
+    <path d="M14.5 14h6" />
+  </svg>
+);
+
+const IconRadical = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="6" cy="12" r="3" />
+    <circle cx="18" cy="5" r="2.2" />
+    <circle cx="18" cy="12" r="2.2" />
+    <circle cx="18" cy="19" r="2.2" />
+    <path d="M8.6 10.6L15.7 6M9 12h6.8M8.6 13.4L15.7 18" />
+  </svg>
+);
+
 const IconCheckCircle = (props) => (
   <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <circle cx="12" cy="12" r="9" />
@@ -331,6 +352,104 @@ const SentenceTokens = ({ sentence, showKanji, onTokenTap }) => (
   ))
 );
 
+// Gojuon (basic) syllabary, laid out in its traditional 5-column grid.
+// Katakana and romaji are derived from the hiragana via wanakana so the
+// transliteration always matches the kana shown.
+const GOJUON_ROWS = [
+  ['あ', 'い', 'う', 'え', 'お'],
+  ['か', 'き', 'く', 'け', 'こ'],
+  ['さ', 'し', 'す', 'せ', 'そ'],
+  ['た', 'ち', 'つ', 'て', 'と'],
+  ['な', 'に', 'ぬ', 'ね', 'の'],
+  ['は', 'ひ', 'ふ', 'へ', 'ほ'],
+  ['ま', 'み', 'む', 'め', 'も'],
+  ['や', null, 'ゆ', null, 'よ'],
+  ['ら', 'り', 'る', 'れ', 'ろ'],
+  ['わ', null, null, null, 'を'],
+  ['ん', null, null, null, null]
+];
+
+// Voiced (dakuten) and semi-voiced (handakuten) sounds.
+const DAKUTEN_ROWS = [
+  ['が', 'ぎ', 'ぐ', 'げ', 'ご'],
+  ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'],
+  ['だ', 'ぢ', 'づ', 'で', 'ど'],
+  ['ば', 'び', 'ぶ', 'べ', 'ぼ'],
+  ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ']
+];
+
+// Contracted (yoon) sounds: a base consonant + small や/ゆ/よ.
+const YOON_BASES = ['き', 'ぎ', 'し', 'じ', 'ち', 'ぢ', 'に', 'ひ', 'び', 'ぴ', 'み', 'り'];
+const YOON_ROWS = YOON_BASES.map(base => [`${base}ゃ`, `${base}ゅ`, `${base}ょ`]);
+
+const KANA_SECTIONS = [
+  { title: 'Gojūon', subtitle: 'The 46 basic sounds', rows: GOJUON_ROWS },
+  { title: 'Dakuten & Handakuten', subtitle: 'Voiced and semi-voiced sounds', rows: DAKUTEN_ROWS },
+  { title: 'Yōon', subtitle: 'Contracted sounds (consonant + ya/yu/yo)', rows: YOON_ROWS }
+];
+
+// One kana cell: the primary script large up top, its other script and the
+// romaji reading side by side underneath. Katakana and romaji are both
+// derived from the hiragana via wanakana so they can never drift out of
+// sync with the kana shown.
+const KanaCell = ({ hiragana, primaryScript }) => {
+  if (!hiragana) return <div class="kana-cell kana-cell-empty" aria-hidden="true"></div>;
+  const katakana = wanakana.toKatakana(hiragana);
+  const romaji = wanakana.toRomaji(hiragana);
+  const primary = primaryScript === 'katakana' ? katakana : hiragana;
+  const secondary = primaryScript === 'katakana' ? hiragana : katakana;
+  return (
+    <button
+      class="kana-cell"
+      onClick={() => speak(hiragana, 'ja-JP')}
+      title={`Play ${romaji}`}
+    >
+      <span class="kana-cell-primary">{primary}</span>
+      <span class="kana-cell-secondary-row">
+        <span class="kana-cell-secondary">{secondary}</span>
+        <span class="kana-cell-romaji">{romaji}</span>
+      </span>
+    </button>
+  );
+};
+
+const KanaChart = () => {
+  const [primaryScript, setPrimaryScript] = useState('hiragana');
+  return (
+    <div class="kana-chart">
+      <div class="status-chips kana-script-toggle" role="group" aria-label="Primary kana script">
+        <button
+          class={`filter-chip ${primaryScript === 'hiragana' ? 'active' : ''}`}
+          onClick={() => setPrimaryScript('hiragana')}
+        >
+          Hiragana primary
+        </button>
+        <button
+          class={`filter-chip ${primaryScript === 'katakana' ? 'active' : ''}`}
+          onClick={() => setPrimaryScript('katakana')}
+        >
+          Katakana primary
+        </button>
+      </div>
+      {KANA_SECTIONS.map(section => (
+        <section class="kana-section" key={section.title}>
+          <div class="kana-section-header">
+            <h3 class="kana-section-title">{section.title}</h3>
+            <span class="kana-section-subtitle muted">{section.subtitle}</span>
+          </div>
+          <div class="kana-grid">
+            {section.rows.map((row, i) => (
+              <div class="kana-row" key={i}>
+                {row.map((kana, j) => <KanaCell key={j} hiragana={kana} primaryScript={primaryScript} />)}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+};
+
 const POS_LABELS = { name: 'proper noun', auxiliary: 'auxiliary', adnominal: 'adnominal', filler: 'filler' };
 
 const WordLookupPopover = ({ lookup, showKanji, onClose }) => {
@@ -501,7 +620,7 @@ export default function App() {
 
   // App state
   const [screen, setScreen] = useState('home'); // 'home' | 'arena' | 'summary'
-  const [homeView, setHomeView] = useState('home'); // 'home' | 'learn' | 'all-words'
+  const [homeView, setHomeView] = useState('home'); // 'home' | 'learn' | 'all-words' | 'kana' | 'kanji'
   const [showKanji, setShowKanji] = useState(() => {
     const saved = localStorage.getItem('flashcards_show_kanji');
     return saved !== null ? saved === 'true' : true;
@@ -567,6 +686,13 @@ export default function App() {
   // Expandable card actions
   const [expandedCardKey, setExpandedCardKey] = useState(null);
 
+  // Kanji radical map (Kanji tab)
+  const [radicalMap, setRadicalMap] = useState(null);
+  const [radicalMapError, setRadicalMapError] = useState(null);
+  const [kanjiSearchTerm, setKanjiSearchTerm] = useState('');
+  const [expandedRadical, setExpandedRadical] = useState(null); // radicalNum currently branched open
+  const [selectedKanji, setSelectedKanji] = useState(null); // { kanji, ...info } for the detail popover
+
   // Load dataset
   useEffect(() => {
     fetch('/dataset.json')
@@ -582,6 +708,20 @@ export default function App() {
         console.error(err);
         setError(err.message);
         setLoading(false);
+      });
+  }, []);
+
+  // Load kanji radical map (for the Kanji tab)
+  useEffect(() => {
+    fetch('/kanji-radical-map.json')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to load kanji radical map');
+        return res.json();
+      })
+      .then(data => setRadicalMap(data))
+      .catch(err => {
+        console.error(err);
+        setRadicalMapError(err.message);
       });
   }, []);
 
@@ -825,6 +965,22 @@ export default function App() {
     });
   }, [allCards, searchTerm, statusFilter, tierFilter, selectedPackId, progress]);
 
+  // Jump from a kanji chip (Kanji tab) straight to that word's flashcard popup.
+  // Clears the All Words filters first so `filteredCards` lines up 1:1 with `allCards`.
+  const openWordFromKanji = (wordId) => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setTierFilter('all');
+    setSelectedPackId('all');
+    setHomeView('all-words');
+    const idx = allCards.findIndex(c => c.id === wordId);
+    if (idx !== -1) {
+      setModalIsFlipped(false);
+      setModalStrokeShown(false);
+      setModalCardIndex(idx);
+    }
+  };
+
   const modalCard = modalCardIndex !== null ? filteredCards[modalCardIndex] : null;
   const modalDisplayBreakdown = modalCard ? getDisplayBreakdown(modalCard, showKanji) : null;
   const modalDisplayConjugations = modalCard ? getDisplayConjugations(modalCard, showKanji) : null;
@@ -876,6 +1032,16 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [modalCardIndex, filteredCards.length]);
+
+  // Kanji detail popup: close on Escape
+  useEffect(() => {
+    if (!selectedKanji) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSelectedKanji(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedKanji]);
 
   // Keyboard navigation for arena
   useEffect(() => {
@@ -1291,6 +1457,24 @@ export default function App() {
               </div>
             )}
 
+            {homeView === 'kana' && (
+              <div class="sheet-header">
+                <div class="sheet-title-group">
+                  <h2 class="sheet-title">Kana Chart</h2>
+                  <span class="sheet-subtitle">Hiragana and katakana, with romaji readings</span>
+                </div>
+              </div>
+            )}
+
+            {homeView === 'kanji' && (
+              <div class="sheet-header">
+                <div class="sheet-title-group">
+                  <h2 class="sheet-title">Kanji Map</h2>
+                  <span class="sheet-subtitle">Every kanji you've met, grouped by its radical</span>
+                </div>
+              </div>
+            )}
+
             {/* HOME: word of the day, a recommended lesson, then other packs */}
             {homeView === 'home' && (
               <div class="collections-grid">
@@ -1460,6 +1644,99 @@ export default function App() {
               </div>
             )}
 
+            {/* KANA CHART VIEW */}
+            {homeView === 'kana' && <KanaChart />}
+
+            {/* KANJI RADICAL MAP VIEW */}
+            {homeView === 'kanji' && (
+              <div class="kanji-map-container">
+                <div class="search-box">
+                  <IconSearch width="18" height="18" />
+                  <input
+                    type="text"
+                    placeholder="Search a radical, kanji, or meaning..."
+                    aria-label="Search kanji map"
+                    value={kanjiSearchTerm}
+                    onChange={(e) => setKanjiSearchTerm(e.target.value)}
+                    class="word-search-input"
+                  />
+                  {kanjiSearchTerm && (
+                    <button class="clear-search-btn" aria-label="Clear search" onClick={() => setKanjiSearchTerm('')}>✕</button>
+                  )}
+                </div>
+
+                {radicalMapError && <p class="muted">Couldn't load the kanji map.</p>}
+
+                {radicalMap && (() => {
+                  const q = kanjiSearchTerm.trim().toLowerCase();
+                  const matchesKanji = (k) => !q ||
+                    k.kanji === kanjiSearchTerm.trim() ||
+                    (k.meanings || []).some(m => m.toLowerCase().includes(q)) ||
+                    (k.on || []).some(r => r.toLowerCase().includes(q)) ||
+                    (k.kun || []).some(r => r.toLowerCase().includes(q));
+
+                  const visibleGroups = radicalMap.groups
+                    .map(g => {
+                      const groupMatches = !q ||
+                        g.radicalChar === kanjiSearchTerm.trim() ||
+                        g.radicalMeaning.toLowerCase().includes(q);
+                      const kanjiList = groupMatches ? g.kanji : g.kanji.filter(matchesKanji);
+                      return { ...g, kanjiList };
+                    })
+                    .filter(g => g.kanjiList.length > 0);
+
+                  return (
+                    <>
+                      <div class="words-results-summary">
+                        <span><strong>{radicalMap.totalKanji}</strong> kanji across <strong>{radicalMap.groups.length}</strong> radicals</span>
+                        <span class="hint-text">Tap a radical to branch out, tap a kanji for details</span>
+                      </div>
+
+                      <div class="radical-map">
+                        {visibleGroups.map(g => {
+                          const isOpen = expandedRadical === g.radicalNum || (q && visibleGroups.length <= 8);
+                          return (
+                            <div class={`radical-branch ${isOpen ? 'open' : ''}`} key={g.radicalNum}>
+                              <button
+                                class="radical-hub"
+                                onClick={() => setExpandedRadical(prev => prev === g.radicalNum ? null : g.radicalNum)}
+                                aria-expanded={isOpen}
+                              >
+                                <span class="radical-hub-char">{g.radicalChar}</span>
+                                <span class="radical-hub-info">
+                                  <span class="radical-hub-meaning">{g.radicalMeaning}</span>
+                                  <span class="radical-hub-sub">{g.radicalStrokes} stroke{g.radicalStrokes === 1 ? '' : 's'} · {g.count} kanji</span>
+                                </span>
+                                <span class="radical-hub-chevron" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                              </button>
+
+                              {isOpen && (
+                                <div class="radical-leaves">
+                                  <div class="radical-leaves-trunk" aria-hidden="true"></div>
+                                  <div class="radical-leaves-grid">
+                                    {g.kanjiList.map(k => (
+                                      <button
+                                        key={k.kanji}
+                                        class="kanji-leaf"
+                                        onClick={() => setSelectedKanji(k)}
+                                      >
+                                        <span class="kanji-leaf-char">{k.kanji}</span>
+                                        <span class="kanji-leaf-meaning">{(k.meanings && k.meanings[0]) || ''}</span>
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            )}
+
             <p class="corpus-credit muted">Example sentences adapted from the Tanaka Corpus (CC BY 2.0). Word meanings from JMdict (EDRDG). Illustrations: Twemoji (CC BY 4.0).</p>
           </div>
 
@@ -1468,7 +1745,7 @@ export default function App() {
             <div class="footer-nav-inner" role="tablist">
               <div
                 class="footer-nav-marker"
-                style={{ transform: `translateX(${['home', 'learn', 'all-words'].indexOf(homeView) * 100}%)` }}
+                style={{ transform: `translateX(${['home', 'learn', 'all-words', 'kana', 'kanji'].indexOf(homeView) * 100}%)` }}
                 aria-hidden="true"
               ></div>
               <button
@@ -1497,6 +1774,24 @@ export default function App() {
               >
                 <span class="nav-icon"><IconBook width="20" height="20" /></span>
                 <span class="nav-label">Words</span>
+              </button>
+              <button
+                role="tab"
+                aria-selected={homeView === 'kana'}
+                class={`footer-nav-btn ${homeView === 'kana' ? 'active' : ''}`}
+                onClick={() => setHomeView('kana')}
+              >
+                <span class="nav-icon"><IconKana width="20" height="20" /></span>
+                <span class="nav-label">Kana</span>
+              </button>
+              <button
+                role="tab"
+                aria-selected={homeView === 'kanji'}
+                class={`footer-nav-btn ${homeView === 'kanji' ? 'active' : ''}`}
+                onClick={() => setHomeView('kanji')}
+              >
+                <span class="nav-icon"><IconRadical width="20" height="20" /></span>
+                <span class="nav-label">Kanji</span>
               </button>
             </div>
           </footer>
@@ -1726,6 +2021,60 @@ export default function App() {
                 Mark Learnt ✓
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* KANJI DETAIL POPUP (from the Kanji Map tab) */}
+      {selectedKanji && (
+        <div class="modal-backdrop" onClick={() => setSelectedKanji(null)}>
+          <div class="kanji-detail-card" onClick={(e) => e.stopPropagation()}>
+            <button class="modal-close-btn kanji-detail-close" title="Close (Esc)" onClick={() => setSelectedKanji(null)}>✕</button>
+
+            <div class="kanji-detail-char">{selectedKanji.kanji}</div>
+
+            <div class="kanji-detail-meta">
+              {selectedKanji.strokes != null && <span class="tag-chip">{selectedKanji.strokes} strokes</span>}
+              {selectedKanji.jlpt != null && <span class="tag-chip">JLPT N{selectedKanji.jlpt}</span>}
+              {selectedKanji.grade != null && <span class="tag-chip">Grade {selectedKanji.grade}</span>}
+            </div>
+
+            {selectedKanji.meanings && selectedKanji.meanings.length > 0 && (
+              <p class="kanji-detail-meanings">{selectedKanji.meanings.join(', ')}</p>
+            )}
+
+            <div class="kanji-detail-readings">
+              {selectedKanji.on && selectedKanji.on.length > 0 && (
+                <div class="kanji-detail-reading-row">
+                  <span class="kanji-detail-reading-label">On'yomi</span>
+                  <span class="kanji-detail-reading-value">{selectedKanji.on.join('、')}</span>
+                </div>
+              )}
+              {selectedKanji.kun && selectedKanji.kun.length > 0 && (
+                <div class="kanji-detail-reading-row">
+                  <span class="kanji-detail-reading-label">Kun'yomi</span>
+                  <span class="kanji-detail-reading-value">{selectedKanji.kun.join('、')}</span>
+                </div>
+              )}
+            </div>
+
+            {selectedKanji.words && selectedKanji.words.length > 0 && (
+              <div class="kanji-detail-words">
+                <span class="collections-section-label">Appears in your words</span>
+                <div class="kanji-detail-words-list">
+                  {selectedKanji.words.map(w => (
+                    <button
+                      key={w.id}
+                      class="kanji-word-chip"
+                      onClick={() => { setSelectedKanji(null); openWordFromKanji(w.id); }}
+                    >
+                      <span class="kanji-word-chip-jp">{w.kanji}</span>
+                      <span class="kanji-word-chip-en">{w.meaning}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

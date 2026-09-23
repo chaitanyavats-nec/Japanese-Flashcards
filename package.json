@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chaitanyavats-nec/Kannada-Flashcards.git"
+    "url": "git+https://github.com/chaitanyavats-nec/Japanese-Flashcards.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chaitanyavats-nec/Kannada-Flashcards/issues"
+    "url": "https://github.com/chaitanyavats-nec/Japanese-Flashcards/issues"
   },
-  "homepage": "https://github.com/chaitanyavats-nec/Kannada-Flashcards#readme",
+  "homepage": "https://github.com/chaitanyavats-nec/Japanese-Flashcards#readme",
   "description": "A Japanese vocabulary flashcard app.",
   "dependencies": {
     "kuroshiro": "^1.2.0",
