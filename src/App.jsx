@@ -450,6 +450,132 @@ const KanaChart = () => {
   );
 };
 
+// The kanji data carries KANJIDIC's old 4-level JLPT scale (4 = easiest), which
+// has no exact match on today's N5-N1 scale: 4 -> N5, 3 -> N4, 2 spans N3 and
+// N2, 1 -> N1.
+const JLPT_LEVELS = [
+  { jlpt: 4, key: 'n5', badge: 'N5', label: 'N5', color: 'var(--level-1)' },
+  { jlpt: 3, key: 'n4', badge: 'N4', label: 'N4', color: 'var(--level-2)' },
+  { jlpt: 2, key: 'n3n2', badge: 'N3', label: 'N3 – N2', color: 'var(--level-3)' },
+  { jlpt: 1, key: 'n1', badge: 'N1', label: 'N1', color: 'var(--level-4)' },
+  { jlpt: null, key: 'unlisted', badge: '?', label: 'Not on JLPT', color: 'var(--text-faint)' }
+];
+const jlptLabel = (jlpt) => (JLPT_LEVELS.find(l => l.jlpt === (jlpt ?? null)) || JLPT_LEVELS[4]).label;
+
+const shuffled = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+const RadicalChip = ({ radical, onOpen }) => {
+  const inner = (
+    <>
+      <span class="radical-chip-char">{radical.drawn || radical.char}</span>
+      <span class="radical-chip-meaning">{radical.meaning}</span>
+      {radical.main && <span class="radical-chip-main">main</span>}
+    </>
+  );
+  return onOpen ? (
+    <button class="radical-chip" onClick={() => onOpen(radical)} title={`Show kanji with the ${radical.meaning} radical`}>{inner}</button>
+  ) : (
+    <span class="radical-chip">{inner}</span>
+  );
+};
+
+// Flip-card practice for one batch of kanji: front shows the character, back
+// its meaning, readings and radicals. Self-contained; reports each verdict up
+// so progress can be saved.
+const KanjiPractice = ({ title, kanji, onJudge, onClose }) => {
+  const [deck, setDeck] = useState(() => shuffled(kanji));
+  const [index, setIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const [missed, setMissed] = useState([]);
+  const [knownCount, setKnownCount] = useState(0);
+  const done = index >= deck.length;
+  const current = deck[index];
+
+  const judge = useCallback((verdict) => {
+    if (!current) return;
+    hapticBuzz(verdict === 'know' ? 18 : [12, 30, 12]);
+    onJudge(current, verdict);
+    if (verdict === 'know') setKnownCount(n => n + 1);
+    else setMissed(prev => [...prev, current]);
+    setFlipped(false);
+    setIndex(i => i + 1);
+  }, [current, onJudge]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (done) return;
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setFlipped(f => !f); }
+      if (e.key === 'ArrowRight') judge('know');
+      if (e.key === 'ArrowLeft') judge('dont');
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [done, judge, onClose]);
+
+  const restart = (list) => {
+    setDeck(shuffled(list));
+    setIndex(0);
+    setFlipped(false);
+    setMissed([]);
+    setKnownCount(0);
+  };
+
+  return (
+    <div class="kanji-practice" role="dialog" aria-label={`Kanji practice: ${title}`}>
+      <div class="kanji-practice-bar">
+        <button class="kanji-practice-back" onClick={onClose}>← Back</button>
+        <span class="kanji-practice-title">{title}</span>
+        <span class="kanji-practice-count muted">{done ? deck.length : index + 1} / {deck.length}</span>
+      </div>
+      <div class="kanji-practice-track"><div class="kanji-practice-fill" style={{ width: `${(index / deck.length) * 100}%` }}></div></div>
+
+      {done ? (
+        <div class="kanji-practice-summary">
+          <h2>{missed.length === 0 ? 'All known!' : 'Round complete'}</h2>
+          <p class="muted">{knownCount} known · {missed.length} still learning</p>
+          <div class="kanji-practice-actions">
+            {missed.length > 0 && (
+              <button class="btn-card-action primary" onClick={() => restart(missed)}>Retry {missed.length} missed</button>
+            )}
+            <button class="btn-card-action" onClick={() => restart(kanji)}>Practice all again</button>
+            <button class="btn-card-action" onClick={onClose}>Done</button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <button class={`kanji-practice-card ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped(f => !f)} aria-label={flipped ? 'Show kanji only' : 'Reveal answer'}>
+            <span class="kanji-practice-char">{current.kanji}</span>
+            {flipped ? (
+              <span class="kanji-practice-answer">
+                <span class="kanji-practice-meanings">{(current.meanings || []).slice(0, 4).join(', ')}</span>
+                {current.on?.length > 0 && <span class="kanji-practice-reading"><b>On</b> {current.on.join('、')}</span>}
+                {current.kun?.length > 0 && <span class="kanji-practice-reading"><b>Kun</b> {current.kun.join('、')}</span>}
+                <span class="kanji-practice-radicals">
+                  {(current.radicals || []).map(r => <RadicalChip key={r.num} radical={r} />)}
+                </span>
+              </span>
+            ) : (
+              <span class="kanji-practice-hint muted">Tap to reveal</span>
+            )}
+          </button>
+          <div class="kanji-practice-judge">
+            <button class="kanji-practice-btn dont" onClick={() => judge('dont')}>Still learning</button>
+            <button class="kanji-practice-btn know" onClick={() => judge('know')}>Know it</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 const POS_LABELS = { name: 'proper noun', auxiliary: 'auxiliary', adnominal: 'adnominal', filler: 'filler' };
 
 const WordLookupPopover = ({ lookup, showKanji, onClose }) => {
@@ -692,6 +818,38 @@ export default function App() {
   const [kanjiSearchTerm, setKanjiSearchTerm] = useState('');
   const [expandedRadical, setExpandedRadical] = useState(null); // radicalNum currently branched open
   const [selectedKanji, setSelectedKanji] = useState(null); // { kanji, ...info } for the detail popover
+  const [kanjiMode, setKanjiMode] = useState('map'); // 'map' | 'practice'
+  const [kanjiSession, setKanjiSession] = useState(null); // { title, kanji } while practising a JLPT level
+  const [kanjiProgress, setKanjiProgress] = useState(() => {
+    try {
+      const saved = localStorage.getItem('flashcards_kanji_progress');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const saveKanjiProgress = useCallback((k, verdict) => {
+    setKanjiProgress(prev => {
+      const updated = { ...prev, [k.kanji]: verdict };
+      try {
+        localStorage.setItem('flashcards_kanji_progress', JSON.stringify(updated));
+      } catch (e) {
+        console.error('Failed to save kanji progress', e);
+      }
+      return updated;
+    });
+  }, []);
+
+  // Open the Radical map on a given radical's branch (from a radical chip).
+  const openRadicalBranch = (radical) => {
+    setSelectedKanji(null);
+    setKanjiSession(null);
+    setKanjiMode('map');
+    setKanjiSearchTerm('');
+    setExpandedRadical(radical.num);
+    setHomeView('kanji');
+  };
 
   // Load dataset
   useEffect(() => {
@@ -1469,8 +1627,10 @@ export default function App() {
             {homeView === 'kanji' && (
               <div class="sheet-header">
                 <div class="sheet-title-group">
-                  <h2 class="sheet-title">Kanji Map</h2>
-                  <span class="sheet-subtitle">Every kanji you've met, grouped by its radical</span>
+                  <h2 class="sheet-title">Kanji</h2>
+                  <span class="sheet-subtitle">
+                    {kanjiMode === 'map' ? "Every kanji you've met, grouped by its radical" : 'Practise the kanji you\'ve met, by JLPT level'}
+                  </span>
                 </div>
               </div>
             )}
@@ -1649,6 +1809,46 @@ export default function App() {
 
             {/* KANJI RADICAL MAP VIEW */}
             {homeView === 'kanji' && (
+              <div class="status-chips kanji-mode-toggle" role="group" aria-label="Kanji mode">
+                <button class={`filter-chip ${kanjiMode === 'map' ? 'active' : ''}`} onClick={() => setKanjiMode('map')}>Radical map</button>
+                <button class={`filter-chip ${kanjiMode === 'practice' ? 'active' : ''}`} onClick={() => setKanjiMode('practice')}>Practice</button>
+              </div>
+            )}
+
+            {/* KANJI PRACTICE: JLPT levels */}
+            {homeView === 'kanji' && kanjiMode === 'practice' && (
+              <div class="collections-grid kanji-practice-levels">
+                {!radicalMap && !radicalMapError && <p class="muted">Loading kanji…</p>}
+                {radicalMapError && <p class="muted">Couldn't load the kanji.</p>}
+                {radicalMap && (() => {
+                  const allKanji = radicalMap.groups.flatMap(g => g.kanji);
+                  return JLPT_LEVELS.map(level => {
+                    const list = allKanji.filter(k => (k.jlpt ?? null) === level.jlpt);
+                    if (list.length === 0) return null;
+                    const knownCount = list.filter(k => kanjiProgress[k.kanji] === 'know').length;
+                    return (
+                      <div key={level.key} class="collection-card">
+                        <div class="collection-card-main" onClick={() => setKanjiSession({ title: `JLPT ${level.label}`, kanji: list })}>
+                          <div class="level-badge" style={{ background: level.color }}>{level.badge}</div>
+                          <div class="collection-main">
+                            <div class="collection-header">
+                              <h3 class="collection-title">{level.jlpt === null ? level.label : `JLPT ${level.label}`}</h3>
+                              <span class="collection-badge">{list.length} kanji</span>
+                            </div>
+                            <div class="collection-stats">{knownCount} / {list.length} known</div>
+                            <div class="collection-progress-bg">
+                              <div class="collection-progress-fill" style={{ width: `${(knownCount / list.length) * 100}%`, background: level.color }}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+            )}
+
+            {homeView === 'kanji' && kanjiMode === 'map' && (
               <div class="kanji-map-container">
                 <div class="search-box">
                   <IconSearch width="18" height="18" />
@@ -2025,6 +2225,16 @@ export default function App() {
         </div>
       )}
 
+      {kanjiSession && (
+        <KanjiPractice
+          key={kanjiSession.title}
+          title={kanjiSession.title}
+          kanji={kanjiSession.kanji}
+          onJudge={saveKanjiProgress}
+          onClose={() => setKanjiSession(null)}
+        />
+      )}
+
       {/* KANJI DETAIL POPUP (from the Kanji Map tab) */}
       {selectedKanji && (
         <div class="modal-backdrop" onClick={() => setSelectedKanji(null)}>
@@ -2035,12 +2245,27 @@ export default function App() {
 
             <div class="kanji-detail-meta">
               {selectedKanji.strokes != null && <span class="tag-chip">{selectedKanji.strokes} strokes</span>}
-              {selectedKanji.jlpt != null && <span class="tag-chip">JLPT N{selectedKanji.jlpt}</span>}
+              {selectedKanji.jlpt != null && <span class="tag-chip">JLPT {jlptLabel(selectedKanji.jlpt)}</span>}
               {selectedKanji.grade != null && <span class="tag-chip">Grade {selectedKanji.grade}</span>}
             </div>
 
             {selectedKanji.meanings && selectedKanji.meanings.length > 0 && (
               <p class="kanji-detail-meanings">{selectedKanji.meanings.join(', ')}</p>
+            )}
+
+            {selectedKanji.radicals && selectedKanji.radicals.length > 0 && (
+              <div class="kanji-detail-radicals">
+                <span class="collections-section-label">Radicals in this kanji</span>
+                <div class="kanji-detail-radicals-list">
+                  {selectedKanji.radicals.map(r => (
+                    <RadicalChip
+                      key={r.num}
+                      radical={r}
+                      onOpen={radicalMap?.groups.some(g => g.radicalNum === r.num) ? openRadicalBranch : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
             )}
 
             <div class="kanji-detail-readings">

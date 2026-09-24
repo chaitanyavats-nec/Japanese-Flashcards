@@ -2879,6 +2879,232 @@ input[type="checkbox"] {
   max-width: 68px;
 }
 
+.kanji-mode-toggle {
+  margin-bottom: var(--space-4);
+}
+
+/* Radical chips (kanji detail popup + practice answer) */
+.radical-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 12px;
+}
+
+button.radical-chip {
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+button.radical-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-strong);
+}
+
+.radical-chip-char {
+  font-family: var(--font-jp);
+  font-size: 17px;
+  line-height: 1;
+}
+
+.radical-chip-meaning {
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.radical-chip-main {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.kanji-detail-radicals {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--space-3);
+}
+
+.kanji-detail-radicals-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Kanji practice session (full-screen, over the home sheet) */
+.kanji-practice {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--bg);
+  overflow-y: auto;
+}
+
+.kanji-practice > * {
+  width: 100%;
+  max-width: 420px;
+}
+
+.kanji-practice-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.kanji-practice-back {
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 6px 4px;
+}
+
+.kanji-practice-title {
+  font-weight: 700;
+}
+
+.kanji-practice-count {
+  font-size: 13px;
+  min-width: 56px;
+  text-align: right;
+}
+
+.kanji-practice-track {
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.kanji-practice-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.kanji-practice-card {
+  flex: 1;
+  min-height: 300px;
+  max-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  color: var(--text);
+  text-align: center;
+}
+
+.kanji-practice-char {
+  font-family: var(--font-jp);
+  font-size: 110px;
+  line-height: 1;
+}
+
+.kanji-practice-card.flipped .kanji-practice-char {
+  font-size: 64px;
+}
+
+.kanji-practice-hint {
+  font-size: 13px;
+}
+
+.kanji-practice-answer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: fadeIn 180ms ease-out forwards;
+}
+
+.kanji-practice-meanings {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.kanji-practice-reading {
+  font-family: var(--font-jp);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.kanji-practice-reading b {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 6px;
+  color: var(--text-faint);
+}
+
+.kanji-practice-radicals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.kanji-practice-judge {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.kanji-practice-btn {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid transparent;
+}
+
+.kanji-practice-btn.dont {
+  background: var(--dont-soft);
+  color: var(--dont);
+  border-color: var(--dont);
+}
+
+.kanji-practice-btn.know {
+  background: var(--know-soft);
+  color: var(--know);
+  border-color: var(--know);
+}
+
+.kanji-practice-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  text-align: center;
+}
+
+.kanji-practice-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+}
+
 /* Kanji detail popup, opened from a leaf chip */
 .kanji-detail-card {
   position: relative;
