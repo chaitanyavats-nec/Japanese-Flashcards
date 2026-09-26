@@ -49,7 +49,7 @@ KANGXI.forEach((entry, i) => {
   const [char, ...rest] = entry.split(' ');
   const variants = rest.filter(w => [...w].length === 1 && /[^\x00-\x7f]/.test(w));
   const meaning = rest.filter(w => !variants.includes(w)).join(' ');
-  const radical = { num: i + 1, char, meaning };
+  const radical = { num: i + 1, char, meaning, forms: variants };
   for (const form of [char, ...variants]) if (!RADICALS.has(form)) RADICALS.set(form, radical);
 });
 
@@ -58,22 +58,74 @@ const attr = (tag, name) => {
   return m ? m[1] : null;
 };
 
-// Every kvg:element in the SVG except the kanji's own root group, nested or not.
-function extractElements(svg, kanji) {
-  const out = [];
-  const tagRe = /<g\b([^>]*)>/g;
+// The component tree of a kanji from its KanjiVG SVG: nested <g kvg:element>
+// groups become nested nodes. Groups with no element are transparent (their
+// children attach to the nearest ancestor that has one), and the second half
+// of a split component (kvg:part >= 2) is skipped so it isn't listed twice.
+function extractPartsTree(svg, kanji) {
+  const root = { children: [] };
+  const stack = [];
+  const top = () => {
+    for (let i = stack.length - 1; i >= 0; i--) if (stack[i]) return stack[i];
+    return root;
+  };
+  const tagRe = /<g\b([^>]*)>|<\/g>/g;
   let m;
   while ((m = tagRe.exec(svg))) {
+    if (m[0] === '</g>') { stack.pop(); continue; }
     const element = attr(m[1], 'kvg:element');
-    if (!element || element === kanji) continue;
-    out.push({ element, original: attr(m[1], 'kvg:original') });
+    const part = Number(attr(m[1], 'kvg:part') || 1);
+    if (!element || part > 1) { stack.push(null); continue; }
+    if (element === kanji && top() === root) { stack.push(root); continue; }
+    const original = attr(m[1], 'kvg:original');
+    const node = {
+      char: original || element,
+      drawn: original ? element : undefined,
+      position: attr(m[1], 'kvg:position') || undefined,
+      children: []
+    };
+    top().children.push(node);
+    stack.push(node);
   }
-  return out;
+  return root.children;
 }
 
 const map = JSON.parse(fs.readFileSync(MAP_PATH, 'utf8'));
+const allKanji = map.groups.flatMap(g => g.kanji);
+const kanjiMeaning = new Map(allKanji.map(k => [k.kanji, (k.meanings || [])[0]]));
+
+// Attach what the app needs to label each node: the Kangxi radical it is
+// (number + meaning + variant shapes) or, failing that, its meaning as a kanji.
+function annotate(nodes) {
+  return nodes.map(n => {
+    const r = RADICALS.get(n.char) || (n.drawn && RADICALS.get(n.drawn));
+    const out = { char: r ? r.char : n.char };
+    const drawn = n.drawn || (r && n.char !== r.char ? n.char : undefined);
+    if (drawn && drawn !== out.char) out.drawn = drawn;
+    if (r) { out.radical = r.num; out.meaning = r.meaning; }
+    else if (kanjiMeaning.get(n.char)) out.meaning = kanjiMeaning.get(n.char);
+    if (n.position) out.position = n.position;
+    if (n.children.length > 0) out.children = annotate(n.children);
+    return out;
+  });
+}
+
+// Every distinct Kangxi radical anywhere in a parts tree, first-seen order.
+function collectRadicals(nodes, seen, out) {
+  for (const n of nodes) {
+    if (n.radical && !seen.has(n.radical)) {
+      seen.add(n.radical);
+      const r = KANGXI_BY_NUM.get(n.radical);
+      out.push({ char: r.char, drawn: n.drawn, meaning: r.meaning, num: r.num, forms: r.forms });
+    }
+    if (n.children) collectRadicals(n.children, seen, out);
+  }
+  return out;
+}
+const KANGXI_BY_NUM = new Map([...RADICALS.values()].map(r => [r.num, r]));
+
 let total = 0;
-let withExtra = 0;
+let withParts = 0;
 
 for (const group of map.groups) {
   const mainRadical = RADICALS.get(group.radicalChar);
@@ -82,24 +134,26 @@ for (const group of map.groups) {
   for (const k of group.kanji) {
     total++;
     delete k.components;
-    const radicals = [{ char: mainRadical.char, meaning: mainRadical.meaning, num: mainRadical.num, main: true }];
-    const seen = new Set([mainRadical.num]);
 
     const file = path.join(SVG_DIR, `${k.kanji.codePointAt(0).toString(16).padStart(5, '0')}.svg`);
-    if (fs.existsSync(file)) {
-      for (const { element, original } of extractElements(fs.readFileSync(file, 'utf8'), k.kanji)) {
-        const r = RADICALS.get(original || element) || RADICALS.get(element);
-        if (!r || seen.has(r.num)) continue;
-        seen.add(r.num);
-        // Show the shape actually drawn in the kanji (氵), not the base form (水).
-        const drawn = element !== r.char ? element : undefined;
-        radicals.push({ char: r.char, drawn, meaning: r.meaning, num: r.num });
-      }
-    }
-    if (radicals.length > 1) withExtra++;
+    const parts = fs.existsSync(file) ? annotate(extractPartsTree(fs.readFileSync(file, 'utf8'), k.kanji)) : [];
+
+    const seen = new Set([mainRadical.num]);
+    const radicals = [
+      { char: mainRadical.char, meaning: mainRadical.meaning, num: mainRadical.num, forms: mainRadical.forms, main: true },
+      ...collectRadicals(parts, seen, [])
+    ];
     k.radicals = radicals;
+
+    if (parts.length > 0) { k.parts = parts; withParts++; }
+    else delete k.parts;
+
+    // A kanji that is itself a radical (人, 水) or a radical's variant shape (王).
+    const self = RADICALS.get(k.kanji);
+    if (self) k.asRadical = { char: self.char, meaning: self.meaning, num: self.num, forms: self.forms };
+    else delete k.asRadical;
   }
 }
 
 fs.writeFileSync(MAP_PATH, JSON.stringify(map));
-console.log(`Added radicals to ${total} kanji (${withExtra} contain more than their main radical)`);
+console.log(`Processed ${total} kanji (${withParts} with a component breakdown)`);

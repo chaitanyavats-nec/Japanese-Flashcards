@@ -6,6 +6,7 @@
   --surface-3: #26263450;
   --border: rgba(255, 255, 255, 0.09);
   --border-strong: rgba(255, 255, 255, 0.16);
+  --tint: rgba(255, 255, 255, 0.05);
   --text: #F5F5F7;
   --text-muted: #ABAAB8;
   --text-faint: #868594;
@@ -55,6 +56,7 @@
     --surface-3: #ffffff80;
     --border: rgba(15, 15, 25, 0.08);
     --border-strong: rgba(15, 15, 25, 0.14);
+    --tint: rgba(15, 15, 25, 0.04);
     --text: #17161D;
     --text-muted: #6B6A78;
     --text-faint: #8B8A97;
@@ -2883,226 +2885,489 @@ input[type="checkbox"] {
   margin-bottom: var(--space-4);
 }
 
-/* Radical chips (kanji detail popup + practice answer) */
-.radical-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px 5px 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  border-radius: 999px;
+/* ---------- Kanji detail: popup, practice card back, peek sheet ----------
+   One rhythm throughout: 24px between sections, 10px from a label to its
+   content, 12px between a headline and what follows it. */
+.reading-chip {
+  font-family: var(--font-jp);
+  font-size: 17px;
+  line-height: 1.3;
   color: var(--text);
-  font-size: 12px;
-}
-
-button.radical-chip {
-  cursor: pointer;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid transparent;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-button.radical-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--border-strong);
+.reading-chip:hover {
+  background: var(--accent-soft);
+  border-color: rgba(255, 122, 89, 0.3);
 }
 
-.radical-chip-char {
+.kanji-detail-topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 var(--space-2);
+}
+
+.kanji-detail-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kanji-card-char {
   font-family: var(--font-jp);
-  font-size: 17px;
+  font-size: clamp(96px, 30vw, 132px);
   line-height: 1;
+  font-weight: 500;
+  margin: 0;
+  color: var(--text);
 }
 
-.radical-chip-meaning {
-  color: var(--text-muted);
-  text-transform: capitalize;
+.arena-header-spacer {
+  width: 60px;
 }
 
-.radical-chip-main {
-  font-size: 9px;
+/* Headline: the character, then its meaning, then the play button */
+.kd-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: var(--space-1);
+}
+
+.kd-char {
+  font-family: var(--font-jp);
+  font-size: clamp(72px, 22vw, 88px);
+  line-height: 1;
+  font-weight: 500;
+  margin: 0;
+  color: var(--text);
+}
+
+.kd-meaning {
+  margin: var(--space-3) 0 0;
+  max-width: 28ch;
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  line-height: 1.3;
   color: var(--accent);
 }
 
-.kanji-detail-radicals {
+.kd-meaning::first-letter,
+.peek-meaning::first-letter,
+.kd-node-title::first-letter {
+  text-transform: uppercase;
+}
+
+.btn-audio.kd-audio {
+  width: 38px;
+  height: 38px;
+  margin: var(--space-4) 0 0;
+}
+
+.kd-body {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: var(--space-3);
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+  text-align: left;
 }
 
-.kanji-detail-radicals-list {
+.kd-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kd-label {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.kd-sublabel {
+  margin: var(--space-2) 0 -2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+.kd-empty {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.kd-fineprint {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* Readings: one quiet panel, two rows */
+.kd-readings {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 14px;
+  background: var(--tint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.kd-reading-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+}
+
+.kd-reading-row + .kd-reading-row {
+  border-top: 1px solid var(--border);
+}
+
+.kd-reading-label {
+  flex: 0 0 62px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.kd-reading-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 2px 4px;
+  margin-left: -9px;
 }
 
-/* Kanji practice session (full-screen, over the home sheet) */
+/* Structure: is it a radical, and what is it made of */
+.kd-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--tint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.kd-identity-title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.kd-identity-title strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kd-identity-title span {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.kd-identity-note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.kd-forms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 26px;
+}
+
+.kd-form {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.kd-form-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.kd-form-char {
+  font-family: var(--font-jp);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.kd-form + .kd-form .kd-form-char {
+  color: var(--accent);
+}
+
+.kd-form-note {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* The tree: one row per part, parts of a part nested and joined by a line.
+   Radicals are tinted so a separate radical list isn't needed. */
+.kd-tree {
+  --row-h: 44px;
+  --glyph: 36px;
+  list-style: none;
+  margin: 0 -4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.kd-tree-nested {
+  --row-h: 38px;
+  --glyph: 30px;
+  margin: 0 0 0 22px;
+}
+
+.kd-tree-nested .kd-tree-nested {
+  margin-left: 19px;
+}
+
+.kd-tree-nested > .kd-item {
+  position: relative;
+  padding-left: 18px;
+}
+
+.kd-tree-nested > .kd-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-left: 1.5px solid var(--border-strong);
+}
+
+.kd-tree-nested > .kd-item:last-child::before {
+  bottom: auto;
+  height: calc(var(--row-h) / 2);
+}
+
+.kd-tree-nested > .kd-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: calc(var(--row-h) / 2);
+  width: 14px;
+  border-top: 1.5px solid var(--border-strong);
+}
+
+.kd-node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--row-h);
+  padding: 4px 10px 4px 4px;
+  border-radius: 12px;
+  text-align: left;
+  color: inherit;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+button.kd-node {
+  cursor: pointer;
+}
+
+button.kd-node:hover {
+  background: var(--tint);
+}
+
+button.kd-node:active {
+  transform: scale(0.99);
+}
+
+button.kd-node:focus-visible,
+.kd-word:focus-visible,
+.peek-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.kd-glyph {
+  flex: 0 0 var(--glyph);
+  width: var(--glyph);
+  height: var(--glyph);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--tint);
+  border: 1px solid var(--border);
+  font-family: var(--font-jp);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.kd-tree-nested .kd-glyph {
+  font-size: 17px;
+}
+
+.kd-glyph.is-radical {
+  background: var(--accent-soft);
+  border-color: rgba(255, 122, 89, 0.3);
+  color: var(--accent);
+}
+
+.kd-node-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.kd-node-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kd-node-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.kd-node-chevron {
+  display: flex;
+  color: var(--text-faint);
+}
+
+/* Deck words containing the kanji */
+.kd-words {
+  display: flex;
+  flex-direction: column;
+  margin: 0 -10px;
+}
+
+.kd-word {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.kd-word:hover {
+  background: var(--tint);
+}
+
+.kd-word-jp {
+  flex-shrink: 0;
+  font-family: var(--font-jp);
+  font-size: 16px;
+  color: var(--text);
+}
+
+.kd-word-en {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kd-word svg {
+  flex-shrink: 0;
+  color: var(--text-faint);
+}
+
+/* Quiet tools: stroke order and note, as two plain rows */
+.kd-tools {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.kd-disclosure {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 0;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.kd-disclosure-label {
+  flex: 1;
+}
+
+.kd-disclosure-meta {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.kd-disclosure svg {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.kd-disclosure.expanded svg {
+  transform: rotate(180deg);
+}
+
+.kd-tools .kanji-vg-container {
+  margin: 0 0 var(--space-4);
+}
+
+.kd-tools .note-section {
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+
+.kd-tools .note-toggle {
+  padding: 14px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.kd-tools .note-editor,
+.kd-tools .note-display {
+  margin: 12px 0 4px;
+}
+
+/* Kanji practice session: the word-flashcard arena, full screen over the home sheet */
 .kanji-practice {
   position: fixed;
   inset: 0;
   z-index: 950;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4);
   background: var(--bg);
-  overflow-y: auto;
-}
-
-.kanji-practice > * {
-  width: 100%;
-  max-width: 420px;
-}
-
-.kanji-practice-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.kanji-practice-back {
-  color: var(--text-muted);
-  font-weight: 600;
-  padding: 6px 4px;
-}
-
-.kanji-practice-title {
-  font-weight: 700;
-}
-
-.kanji-practice-count {
-  font-size: 13px;
-  min-width: 56px;
-  text-align: right;
-}
-
-.kanji-practice-track {
-  height: 4px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
-}
-
-.kanji-practice-fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.25s ease;
-}
-
-.kanji-practice-card {
-  flex: 1;
-  min-height: 300px;
-  max-height: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  padding: var(--space-6) var(--space-4);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-  color: var(--text);
-  text-align: center;
-}
-
-.kanji-practice-char {
-  font-family: var(--font-jp);
-  font-size: 110px;
-  line-height: 1;
-}
-
-.kanji-practice-card.flipped .kanji-practice-char {
-  font-size: 64px;
-}
-
-.kanji-practice-hint {
-  font-size: 13px;
-}
-
-.kanji-practice-answer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  animation: fadeIn 180ms ease-out forwards;
-}
-
-.kanji-practice-meanings {
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: capitalize;
-}
-
-.kanji-practice-reading {
-  font-family: var(--font-jp);
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.kanji-practice-reading b {
-  font-family: var(--font-ui);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-right: 6px;
-  color: var(--text-faint);
-}
-
-.kanji-practice-radicals {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.kanji-practice-judge {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
-}
-
-.kanji-practice-btn {
-  padding: 14px;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: 15px;
-  border: 1px solid transparent;
-}
-
-.kanji-practice-btn.dont {
-  background: var(--dont-soft);
-  color: var(--dont);
-  border-color: var(--dont);
-}
-
-.kanji-practice-btn.know {
-  background: var(--know-soft);
-  color: var(--know);
-  border-color: var(--know);
-}
-
-.kanji-practice-summary {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-  text-align: center;
-}
-
-.kanji-practice-actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 100%;
-  margin-top: var(--space-3);
 }
 
 /* Kanji detail popup, opened from a leaf chip */
@@ -3116,118 +3381,177 @@ button.radical-chip:hover {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-  padding: 28px 22px 22px;
+  padding: 16px 22px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
   animation: slideUp 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.kanji-detail-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-}
-
-.kanji-detail-char {
-  font-family: var(--font-jp);
-  font-size: 64px;
-  line-height: 1;
-  color: var(--text);
-}
-
-.kanji-detail-meta {
+/* Peek sheet: details for a tapped kanji / radical / part, over the lesson */
+.peek-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-end;
   justify-content: center;
-  gap: 6px;
+  background: rgba(4, 4, 10, 0.55);
+  animation: fadeIn 200ms ease-out both;
 }
 
-.kanji-detail-meanings {
-  text-align: center;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  text-transform: capitalize;
-  margin: 0;
-}
-
-.kanji-detail-readings {
+.peek-sheet {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  max-width: 440px;
+  max-height: 78dvh;
+  min-height: min(48dvh, 420px); /* stops the sheet jumping in height as you step between examples */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 22px calc(28px + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-bottom: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
+  animation: peekRise 320ms var(--ease-spring) both;
 }
 
-.kanji-detail-reading-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-}
-
-.kanji-detail-reading-label {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.kanji-detail-reading-value {
-  font-family: var(--font-jp);
-  font-size: 13.5px;
-  color: var(--text);
-  text-align: right;
-}
-
-.kanji-detail-words {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.kanji-detail-words-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.kanji-word-chip {
+.peek-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 9px 12px;
-  background: rgba(255, 255, 255, 0.04);
+  min-height: 56px;
+  background: var(--surface);
+}
+
+.peek-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.peek-back:hover {
+  background: var(--tint);
+  color: var(--text);
+}
+
+.peek-back-char {
+  font-family: var(--font-jp);
+  font-size: 17px;
+  line-height: 1;
+}
+
+.peek-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.peek-char {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-jp);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.peek-titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.peek-meaning {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--accent);
+}
+
+.peek-sub {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.peek-head .btn-audio.kd-audio {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.peek-sheet .kd-body {
+  margin-top: var(--space-5);
+}
+
+.peek-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.peek-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 9px;
+  background: var(--tint);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  text-align: left;
+  border-radius: 999px;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.kanji-word-chip:hover {
+.peek-chip:hover {
   background: var(--accent-soft);
   border-color: rgba(255, 122, 89, 0.3);
 }
 
-.kanji-word-chip-jp {
+.peek-chip-char {
   font-family: var(--font-jp);
-  font-size: 15px;
+  font-size: 20px;
+  line-height: 1;
   color: var(--text);
 }
 
-.kanji-word-chip-en {
+.peek-chip.is-radical .peek-chip-char {
+  color: var(--accent);
+}
+
+.peek-chip-meaning {
+  max-width: 11ch;
   font-size: 12px;
   color: var(--text-muted);
-  text-transform: capitalize;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 55%;
+}
+
+.peek-link {
+  align-self: flex-start;
+  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@keyframes peekRise {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peek-backdrop,
+  .peek-sheet {
+    animation: none;
+  }
 }
