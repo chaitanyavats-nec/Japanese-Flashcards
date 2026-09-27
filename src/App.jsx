@@ -462,6 +462,23 @@ const JLPT_LEVELS = [
 ];
 const jlptLabel = (jlpt) => (JLPT_LEVELS.find(l => l.jlpt === (jlpt ?? null)) || JLPT_LEVELS[4]).label;
 
+// The order the footer nav and the swipe-between-tabs gesture use.
+const NAV_ORDER = ['home', 'learn', 'all-words', 'kana', 'kanji'];
+
+// Splits a JLPT level's kanji into practicable stroke-count bands, so a level
+// with dozens of kanji can be drilled in smaller, still-meaningful chunks.
+// Bands with nothing in them are dropped.
+const STROKE_BANDS = [
+  { key: '1-4', label: '1-4 strokes', test: (s) => s <= 4 },
+  { key: '5-7', label: '5-7 strokes', test: (s) => s >= 5 && s <= 7 },
+  { key: '8-10', label: '8-10 strokes', test: (s) => s >= 8 && s <= 10 },
+  { key: '11+', label: '11+ strokes', test: (s) => s >= 11 }
+];
+const kanjiCategories = (list, progressMap) => STROKE_BANDS
+  .map(band => ({ ...band, list: list.filter(k => band.test(k.strokes)) }))
+  .filter(band => band.list.length > 0)
+  .map(band => ({ ...band, knownCount: band.list.filter(k => progressMap[k.kanji] === 'know').length }));
+
 const shuffled = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -608,19 +625,21 @@ const KanjiReadings = ({ k }) => {
   );
 };
 
-// Deck words containing a kanji. With `onOpenWord` a row opens the word card;
-// without it (mid-lesson) a row just plays the word so the lesson isn't left.
+// Deck words containing a kanji, as pills (same affordance as the reading
+// chips above them: tap to hear it). With `onOpenWord` a pill opens the word
+// card instead; without it (mid-lesson) it just plays so the lesson isn't left.
 const KanjiWords = ({ words, onOpenWord }) => (
   <div class="kd-words">
     {words.map(w => (
       <button
         key={w.id}
         class="kd-word"
+        title={onOpenWord ? 'Open word' : 'Play'}
         onClick={(e) => { e.stopPropagation(); if (onOpenWord) onOpenWord(w.id); else speak(w.kanji, 'ja-JP'); }}
       >
         <span class="kd-word-jp">{w.kanji}</span>
         <span class="kd-word-en">{w.meaning}</span>
-        {onOpenWord ? <IconChevron /> : <IconSpeaker size={14} />}
+        {onOpenWord ? <IconChevron size={12} /> : <IconSpeaker size={13} />}
       </button>
     ))}
   </div>
@@ -1420,6 +1439,7 @@ export default function App() {
   const [expandedRadical, setExpandedRadical] = useState(null); // radicalNum currently branched open
   const [selectedKanji, setSelectedKanji] = useState(null); // { kanji, ...info } for the detail popover
   const [kanjiMode, setKanjiMode] = useState('map'); // 'map' | 'practice'
+  const [expandedPracticeLevel, setExpandedPracticeLevel] = useState(null); // JLPT level key with its stroke categories open
   const [kanjiSession, setKanjiSession] = useState(null); // { title, kanji } while practising a JLPT level
   const [kanjiProgress, setKanjiProgress] = useState(() => {
     try {
@@ -2087,6 +2107,71 @@ export default function App() {
   const shownLearning = useCountUp(stillLearningCount);
   const shownToday = useCountUp(reviewedToday);
 
+  // Kanji you've already put a verdict on, for the "revise / review" CTAs in
+  // the Kanji tab hero.
+  const allKanjiFlat = React.useMemo(() => (radicalMap ? radicalMap.groups.flatMap(g => g.kanji) : []), [radicalMap]);
+  const learnedKanjiList = React.useMemo(() => allKanjiFlat.filter(k => kanjiProgress[k.kanji] === 'know'), [allKanjiFlat, kanjiProgress]);
+  const practicedKanjiList = React.useMemo(() => allKanjiFlat.filter(k => kanjiProgress[k.kanji]), [allKanjiFlat, kanjiProgress]);
+
+  // The footer nav marker is measured against the real button rects (not a
+  // naive width/5 guess) so it always lands centered on the active tab, gaps
+  // and all.
+  const footerNavRef = useRef(null);
+  const [navMarkerRect, setNavMarkerRect] = useState({ x: 0, y: 0, w: 0, h: 0 });
+  useEffect(() => {
+    const container = footerNavRef.current;
+    if (!container) return;
+    const measure = () => {
+      const idx = NAV_ORDER.indexOf(homeView);
+      const btn = container.querySelectorAll('.footer-nav-btn')[idx];
+      if (!btn) return;
+      // getBoundingClientRect deltas rather than offsetLeft/offsetTop: the
+      // latter measures from the padding edge while the button sits inside
+      // the content box, so on the padded mobile pill they're off by exactly
+      // the container's own padding. A plain rect subtraction has no such
+      // reference-frame ambiguity.
+      const cRect = container.getBoundingClientRect();
+      const bRect = btn.getBoundingClientRect();
+      // Ignore a zero-size read (a resize/orientation event caught mid-layout)
+      // rather than snapping the marker to nothing with no later event to fix it.
+      if (bRect.width > 0) {
+        setNavMarkerRect({ x: bRect.left - cRect.left, y: bRect.top - cRect.top, w: bRect.width, h: bRect.height });
+      }
+    };
+    measure();
+    const raf = requestAnimationFrame(measure); // re-check after first layout/font settle
+    const ro = new ResizeObserver(measure);
+    ro.observe(container);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+    // splashRemoved: the footer isn't in the DOM (footerNavRef.current is
+    // still null) until the splash screen unmounts, which doesn't otherwise
+    // change homeView/screen — without this the effect never re-runs after
+    // the real footer appears and the marker is stuck at its zero default.
+  }, [homeView, screen, splashRemoved]);
+
+  // Swiping anywhere on the home screen (hero or sheet) steps to the
+  // neighbouring nav tab, mirroring the footer nav's order. Drags that start
+  // in a horizontally-scrolling control (chip rows) or a text field are left
+  // alone so they keep their own behaviour.
+  const homeSwipe = useRef({ x: 0, y: 0, active: false });
+  const handleHomeSwipeStart = (e) => {
+    if (e.target.closest('input, textarea, select, .status-chips')) return;
+    homeSwipe.current = { x: e.clientX, y: e.clientY, active: true };
+  };
+  const handleHomeSwipeEnd = (e) => {
+    const drag = homeSwipe.current;
+    if (!drag.active) return;
+    drag.active = false;
+    const dx = e.clientX - drag.x;
+    const dy = e.clientY - drag.y;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+    const idx = NAV_ORDER.indexOf(homeView);
+    const next = idx + (dx < 0 ? 1 : -1);
+    if (next < 0 || next >= NAV_ORDER.length) return;
+    setHomeView(NAV_ORDER[next]);
+  };
+  const cancelHomeSwipe = () => { homeSwipe.current.active = false; };
+
   if (error) {
     return (
       <div id="app-error-state">
@@ -2183,89 +2268,124 @@ export default function App() {
     <>
       {/* Home Screen */}
       {screen === 'home' && (
-        <div id="home-screen">
-          {/* Top Hero Section */}
-          <div class="home-hero-section">
-            <h1 class="hero-title">Japanese Flashcards</h1>
+        <div
+          id="home-screen"
+          onPointerDown={handleHomeSwipeStart}
+          onPointerUp={handleHomeSwipeEnd}
+          onPointerCancel={cancelHomeSwipe}
+        >
+          {/* Top Hero Section: doubles as each tab's header since the sheet no longer has its own title */}
+          <div class={`home-hero-section ${homeView !== 'home' ? 'home-hero-compact' : ''}`}>
+            {homeView === 'home' && (
+              <>
+                <h1 class="hero-title">Japanese Flashcards</h1>
 
-            <div class="mastery-ring" role="img" aria-label={`${masteryPercent}% of words mastered`}>
-              <svg viewBox="0 0 100 100" width="100%" height="100%">
-                <circle class="mastery-ring-track" cx="50" cy="50" r={RING_RADIUS} />
-                <circle
-                  class="mastery-ring-fill"
-                  cx="50" cy="50" r={RING_RADIUS}
-                  style={{
-                    '--ring-circumference': RING_CIRCUMFERENCE,
-                    '--ring-offset': RING_CIRCUMFERENCE * (1 - totalLearntWords / Math.max(allCards.length, 1))
-                  }}
-                />
-              </svg>
-              <strong class="mastery-ring-value">{shownPercent}<small>%</small></strong>
-            </div>
-
-            <div class="hero-chips">
-              <div class="hero-chip chip-learnt" title={`${totalLearntWords} of ${allCards.length} words learnt`} aria-label={`${totalLearntWords} words learnt`}>
-                <IconCheckCircle width="20" height="20" />
-                <strong>{shownLearnt}</strong>
-              </div>
-              <div class="hero-chip chip-learning" title="Words still being learnt" aria-label={`${stillLearningCount} words still learning`}>
-                <IconRefresh width="20" height="20" />
-                <strong>{shownLearning}</strong>
-              </div>
-              <div class="hero-chip chip-today" title="Words reviewed today" aria-label={`${reviewedToday} words reviewed today`}>
-                <IconSun width="20" height="20" />
-                <strong>{shownToday}</strong>
-              </div>
-            </div>
-
-            <div class="hero-levels" role="group" aria-label="Progress by level">
-              {collections.levels.map((l, i) => (
-                <div
-                  key={l.key}
-                  class="hero-level"
-                  title={`Level ${l.badge}: ${l.knownCount} of ${l.total} learnt`}
-                  style={{ '--i': i }}
-                >
-                  <div class="hero-level-track">
-                    <div class="hero-level-fill" style={{ width: `${l.percent}%`, background: l.color }}></div>
-                  </div>
-                  <span class="hero-level-num" style={{ background: l.color }}>{l.badge}</span>
+                <div class="mastery-ring" role="img" aria-label={`${masteryPercent}% of words mastered`}>
+                  <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <circle class="mastery-ring-track" cx="50" cy="50" r={RING_RADIUS} />
+                    <circle
+                      class="mastery-ring-fill"
+                      cx="50" cy="50" r={RING_RADIUS}
+                      style={{
+                        '--ring-circumference': RING_CIRCUMFERENCE,
+                        '--ring-offset': RING_CIRCUMFERENCE * (1 - totalLearntWords / Math.max(allCards.length, 1))
+                      }}
+                    />
+                  </svg>
+                  <strong class="mastery-ring-value">{shownPercent}<small>%</small></strong>
                 </div>
-              ))}
-            </div>
+
+                <div class="hero-chips">
+                  <div class="hero-chip chip-learnt" title={`${totalLearntWords} of ${allCards.length} words learnt`} aria-label={`${totalLearntWords} words learnt`}>
+                    <IconCheckCircle width="20" height="20" />
+                    <strong>{shownLearnt}</strong>
+                  </div>
+                  <div class="hero-chip chip-learning" title="Words still being learnt" aria-label={`${stillLearningCount} words still learning`}>
+                    <IconRefresh width="20" height="20" />
+                    <strong>{shownLearning}</strong>
+                  </div>
+                  <div class="hero-chip chip-today" title="Words reviewed today" aria-label={`${reviewedToday} words reviewed today`}>
+                    <IconSun width="20" height="20" />
+                    <strong>{shownToday}</strong>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {homeView === 'learn' && (
+              <>
+                <h1 class="hero-title">Learn</h1>
+                <p class="hero-subtitle">Follow the path, or explore themed packs</p>
+                <div class="hero-levels" role="group" aria-label="Progress by level">
+                  {collections.levels.map((l, i) => (
+                    <div
+                      key={l.key}
+                      class="hero-level"
+                      title={`Level ${l.badge}: ${l.knownCount} of ${l.total} learnt`}
+                      style={{ '--i': i }}
+                    >
+                      <div class="hero-level-track">
+                        <div class="hero-level-fill" style={{ width: `${l.percent}%`, background: l.color }}></div>
+                      </div>
+                      <span class="hero-level-num" style={{ background: l.color }}>{l.badge}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {homeView === 'all-words' && (
+              <>
+                <h1 class="hero-title">Words</h1>
+                <p class="hero-subtitle">Search and browse every word in your deck</p>
+                <div class="hero-chips">
+                  <div class="hero-chip chip-learnt" title={`${totalLearntWords} of ${allCards.length} words learnt`} aria-label={`${totalLearntWords} words learnt`}>
+                    <IconCheckCircle width="20" height="20" />
+                    <strong>{shownLearnt}</strong>
+                  </div>
+                  <div class="hero-chip chip-remaining" title="Words not yet learnt" aria-label={`${allCards.length - totalLearntWords} words remaining`}>
+                    <IconBook width="20" height="20" />
+                    <strong>{allCards.length - totalLearntWords}</strong>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {homeView === 'kana' && (
+              <>
+                <h1 class="hero-title">Kana</h1>
+                <p class="hero-subtitle">Hiragana and katakana, with romaji readings</p>
+              </>
+            )}
+
+            {homeView === 'kanji' && (
+              <>
+                <h1 class="hero-title">Kanji</h1>
+                <p class="hero-subtitle">
+                  {kanjiMode === 'map' ? "Every kanji you've met, grouped by its radical" : "Practise the kanji you've met, by JLPT level"}
+                </p>
+                <div class="hero-cta-row">
+                  <button
+                    class="hero-cta-btn"
+                    disabled={learnedKanjiList.length === 0}
+                    onClick={() => { setKanjiMode('practice'); setKanjiSession({ title: 'Learned kanji', kanji: learnedKanjiList }); }}
+                  >
+                    Revise learned <span class="hero-cta-count">{learnedKanjiList.length}</span>
+                  </button>
+                  <button
+                    class="hero-cta-btn"
+                    disabled={practicedKanjiList.length === 0}
+                    onClick={() => { setKanjiMode('practice'); setKanjiSession({ title: 'Practiced kanji', kanji: practicedKanjiList }); }}
+                  >
+                    Review practiced <span class="hero-cta-count">{practicedKanjiList.length}</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
           {/* 3D Sheet Section with Rounded Top Corners */}
           <div class="home-sheet-section">
-            {homeView === 'learn' && (
-              <div class="sheet-header">
-                <div class="sheet-title-group">
-                  <h2 class="sheet-title">Learn</h2>
-                  <span class="sheet-subtitle">Follow the path, or explore themed packs</span>
-                </div>
-              </div>
-            )}
-
-            {homeView === 'kana' && (
-              <div class="sheet-header">
-                <div class="sheet-title-group">
-                  <h2 class="sheet-title">Kana Chart</h2>
-                  <span class="sheet-subtitle">Hiragana and katakana, with romaji readings</span>
-                </div>
-              </div>
-            )}
-
-            {homeView === 'kanji' && (
-              <div class="sheet-header">
-                <div class="sheet-title-group">
-                  <h2 class="sheet-title">Kanji</h2>
-                  <span class="sheet-subtitle">
-                    {kanjiMode === 'map' ? "Every kanji you've met, grouped by its radical" : 'Practise the kanji you\'ve met, by JLPT level'}
-                  </span>
-                </div>
-              </div>
-            )}
-
             {/* HOME: word of the day, a recommended lesson, then other packs */}
             {homeView === 'home' && (
               <div class="collections-grid">
@@ -2440,42 +2560,68 @@ export default function App() {
 
             {/* KANJI RADICAL MAP VIEW */}
             {homeView === 'kanji' && (
-              <div class="status-chips kanji-mode-toggle" role="group" aria-label="Kanji mode">
-                <button class={`filter-chip ${kanjiMode === 'map' ? 'active' : ''}`} onClick={() => setKanjiMode('map')}>Radical map</button>
-                <button class={`filter-chip ${kanjiMode === 'practice' ? 'active' : ''}`} onClick={() => setKanjiMode('practice')}>Practice</button>
+              <div class="kanji-tabbar" role="tablist" aria-label="Kanji mode">
+                <button role="tab" aria-selected={kanjiMode === 'map'} class={`kanji-tab ${kanjiMode === 'map' ? 'active' : ''}`} onClick={() => setKanjiMode('map')}>Radical map</button>
+                <button role="tab" aria-selected={kanjiMode === 'practice'} class={`kanji-tab ${kanjiMode === 'practice' ? 'active' : ''}`} onClick={() => setKanjiMode('practice')}>Practice</button>
               </div>
             )}
 
-            {/* KANJI PRACTICE: JLPT levels */}
+            {/* KANJI PRACTICE: JLPT levels, each further split into practicable stroke-count bands */}
             {homeView === 'kanji' && kanjiMode === 'practice' && (
-              <div class="collections-grid kanji-practice-levels">
-                {!radicalMap && !radicalMapError && <p class="muted">Loading kanji…</p>}
-                {radicalMapError && <p class="muted">Couldn't load the kanji.</p>}
-                {radicalMap && (() => {
-                  const allKanji = radicalMap.groups.flatMap(g => g.kanji);
-                  return JLPT_LEVELS.map(level => {
-                    const list = allKanji.filter(k => (k.jlpt ?? null) === level.jlpt);
-                    if (list.length === 0) return null;
-                    const knownCount = list.filter(k => kanjiProgress[k.kanji] === 'know').length;
-                    return (
-                      <div key={level.key} class="collection-card">
-                        <div class="collection-card-main" onClick={() => setKanjiSession({ title: level.jlpt === null ? level.label : `JLPT ${level.label}`, kanji: list })}>
+              <div class="kanji-practice-levels">
+                {!radicalMap && !radicalMapError && <p class="muted" style={{ gridColumn: '1 / -1' }}>Loading kanji…</p>}
+                {radicalMapError && <p class="muted" style={{ gridColumn: '1 / -1' }}>Couldn't load the kanji.</p>}
+                {radicalMap && JLPT_LEVELS.map(level => {
+                  const list = allKanjiFlat.filter(k => (k.jlpt ?? null) === level.jlpt);
+                  if (list.length === 0) return null;
+                  const title = level.jlpt === null ? level.label : `JLPT ${level.label}`;
+                  const knownCount = list.filter(k => kanjiProgress[k.kanji] === 'know').length;
+                  const categories = kanjiCategories(list, kanjiProgress);
+                  const isExpanded = expandedPracticeLevel === level.key;
+                  return (
+                    <div key={level.key} class={`kanji-level-tile-wrap ${isExpanded ? 'expanded' : ''}`}>
+                      <div class="collection-card kanji-level-tile">
+                        <button class="kanji-level-face" onClick={() => setKanjiSession({ title, kanji: list })}>
                           <div class="level-badge" style={{ background: level.color }}>{level.badge}</div>
-                          <div class="collection-main">
-                            <div class="collection-header">
-                              <h3 class="collection-title">{level.jlpt === null ? level.label : `JLPT ${level.label}`}</h3>
-                              <span class="collection-badge">{list.length} kanji</span>
-                            </div>
-                            <div class="collection-stats">{knownCount} / {list.length} known</div>
-                            <div class="collection-progress-bg">
-                              <div class="collection-progress-fill" style={{ width: `${(knownCount / list.length) * 100}%`, background: level.color }}></div>
+                          <h3 class="collection-title">{title}</h3>
+                          <span class="collection-badge">{list.length} kanji</span>
+                          <div class="collection-progress-bg">
+                            <div class="collection-progress-fill" style={{ width: `${(knownCount / list.length) * 100}%`, background: level.color }}></div>
+                          </div>
+                          <div class="collection-stats">{knownCount} / {list.length} known</div>
+                        </button>
+
+                        {categories.length > 1 && (
+                          <button
+                            class={`card-expand-toggle ${isExpanded ? 'expanded' : ''}`}
+                            onClick={() => setExpandedPracticeLevel(prev => prev === level.key ? null : level.key)}
+                            aria-label="Toggle practice categories"
+                            aria-expanded={isExpanded}
+                          >
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                          </button>
+                        )}
+
+                        {categories.length > 1 && (
+                          <div class={`collection-actions-dropdown ${isExpanded ? 'open' : ''}`}>
+                            <div class="kanji-level-categories">
+                              {categories.map(cat => (
+                                <button
+                                  key={cat.key}
+                                  class="kanji-category-chip"
+                                  onClick={() => setKanjiSession({ title: `${title}, ${cat.label}`, kanji: cat.list })}
+                                >
+                                  <span>{cat.label}</span>
+                                  <span class="kanji-category-count">{cat.knownCount}/{cat.list.length}</span>
+                                </button>
+                              ))}
                             </div>
                           </div>
-                        </div>
+                        )}
                       </div>
-                    );
-                  });
-                })()}
+                    </div>
+                  );
+                })}
               </div>
             )}
 
@@ -2573,10 +2719,10 @@ export default function App() {
 
           {/* Fixed Footer Navigation */}
           <footer class="home-footer-nav">
-            <div class="footer-nav-inner" role="tablist">
+            <div class="footer-nav-inner" role="tablist" ref={footerNavRef}>
               <div
                 class="footer-nav-marker"
-                style={{ transform: `translateX(${['home', 'learn', 'all-words', 'kana', 'kanji'].indexOf(homeView) * 100}%)` }}
+                style={{ transform: `translate(${navMarkerRect.x}px, ${navMarkerRect.y}px)`, width: `${navMarkerRect.w}px`, height: `${navMarkerRect.h}px` }}
                 aria-hidden="true"
               ></div>
               <button
