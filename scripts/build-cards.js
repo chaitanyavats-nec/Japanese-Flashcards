@@ -7,6 +7,10 @@ const wanakana = require('wanakana');
 const jmdict = require('./lib/jmdict');
 const tanaka = require('./lib/tanaka');
 const sentenceTokens = require('./lib/sentence-tokens');
+const { buildSentence, showsWordAsCard } = require('./lib/sentence-build');
+
+// How many sentences beyond the main example each card carries.
+const EXTRA_SENTENCES = 2;
 
 const PUBLIC_DIR = path.join(__dirname, '../public');
 const KANJIVG_DIR = path.join(PUBLIC_DIR, 'kanjivg');
@@ -283,20 +287,6 @@ function buildParticleUsage(word, theme, gloss) {
   return null;
 }
 
-// Space-segment a sentence at word boundaries (wakachigaki) using the
-// kuromoji tokenizer so learners can see where one word ends and the next
-// begins — plain Japanese text has no spaces natively.
-const NO_SPACE_BEFORE = new Set(['。', '、', '！', '？', '」', '・']);
-function wakachigaki(tokens, useReading) {
-  let out = '';
-  tokens.forEach((t, i) => {
-    const piece = useReading ? wanakana.toHiragana(t.reading || t.surface_form) : t.surface_form;
-    if (i > 0 && !NO_SPACE_BEFORE.has(piece)) out += ' ';
-    out += piece;
-  });
-  return out.trim();
-}
-
 function writeDatasetSafely(cards) {
   const outputPath = path.join(PUBLIC_DIR, 'dataset.json');
   const tmpPath = outputPath + '.tmp';
@@ -458,28 +448,17 @@ async function build() {
       // a word under a different surface form than the one we display (e.g.
       // する is indexed under its rare kanji form 為る).
       const aliases = [...new Set([word, ...dictEntry.kanji.map(k => k.text), ...dictEntry.kana.map(k => k.text)])];
-      const picked = tanaka.pickSentence(corpus, aliases, knownSet);
-      const sentenceObj = picked
+      // The main example plus a few more in other contexts, so reviews can
+      // rotate through them instead of showing the same one every time. All
+      // must spell the word as the card does (see showsWordAsCard).
+      const [picked, ...extras] = tanaka.pickSentences(corpus, aliases, knownSet, 1 + EXTRA_SENTENCES, { accept: showsWordAsCard(card) });
+      card.exampleSentence = await buildSentence(kuroshiro, lookupIndex, corpus, picked
         ? { japanese: picked.japanese, english: picked.english, source: "tanaka" }
-        : { japanese: `これは${kanji || hiragana}です。`, english: `This is ${englishMeanings[0]}.`, source: "fallback" };
-
-      try {
-        sentenceObj.hiragana = await kuroshiro.convert(sentenceObj.japanese, { to: "hiragana" });
-        sentenceObj.romaji = wanakana.toRomaji(sentenceObj.hiragana);
-
-        const tokens = await kuroshiro._analyzer.parse(sentenceObj.japanese);
-        sentenceObj.spacedJapanese = wakachigaki(tokens, false);
-        sentenceObj.spacedHiragana = wakachigaki(tokens, true);
-        sentenceObj.tokens = sentenceTokens.tokenizeSentence(tokens, lookupIndex, corpus);
-      } catch (e) {
-        console.error("Sentence conversion failed", e);
-        sentenceObj.hiragana = sentenceObj.japanese;
-        sentenceObj.romaji = sentenceObj.japanese;
-        sentenceObj.spacedJapanese = sentenceObj.japanese;
-        sentenceObj.spacedHiragana = sentenceObj.japanese;
+        : { japanese: `これは${kanji || hiragana}です。`, english: `This is ${englishMeanings[0]}.`, source: "fallback" });
+      if (extras.length > 0) {
+        card.moreSentences = [];
+        for (const extra of extras) card.moreSentences.push(await buildSentence(kuroshiro, lookupIndex, corpus, extra));
       }
-
-      card.exampleSentence = sentenceObj;
 
       generatedCards.push(card);
       writeDatasetSafely(generatedCards);

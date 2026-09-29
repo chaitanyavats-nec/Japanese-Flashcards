@@ -54,3 +54,31 @@ To reconstruct this project from an empty folder:
    - Create `style.css` with 3D flip mechanics and modern typography.
    - Create `app.js` to handle Pointer Events for swiping and the state machine for the deck.
 6. **Serve Locally**: Add a dev script (`"dev": "npx serve ."`) to `package.json` and run `npm run dev` to serve the static site.
+
+## 5. The Study Engine
+Everything runs in the browser and is saved to `localStorage` (keys start with `flashcards_`). Pictures, recordings and videos on the learner's own cards live in IndexedDB.
+
+### Scheduling (`src/lib/srs.js`)
+- Each word's progress record keeps the original `status` / `timesReviewed` / `lastReviewedAt` fields and adds `due`, `interval` (days), `ease`, `reps`, `lapses` and `stage`.
+- Grading is an SM-2 variant with learning steps: Again brings a word back in 10 minutes and lowers its ease; Good and Easy multiply the interval by the ease. Late answers get credit for the extra time; early answers never shorten an interval.
+- Records saved before scheduling existed are converted on read (`normalizeRecord`), so old progress carries over.
+
+### Sessions (`src/lib/queue.js`, `src/ReviewSession.jsx`)
+- **What comes up:** words due today, most at risk first (most overdue relative to their interval, then most lapses, then lowest ease). New words follow the learning path, with the learner's own cards first, capped per day. At most one word per theme goes into a batch (three for the broad "Common" themes), so related words aren't learnt side by side.
+- **How it's asked:** the question format gets harder as a word's `stage` rises. New words get an intro card first (word, meaning and example on one face). Then comes picking the meaning, then picking the word from English, then typing it, then a mix of typing, listening, the word in a sentence, and (if enabled) saying it. A miss is asked again, an easier way, a few cards later.
+- The swipe cards ("Flip all" on a collection) are real reviews too: swipes grade Again and Good, and four grade buttons are available in Settings.
+
+### Activity (`src/lib/activity.js`, `src/lib/badges.js`)
+Per-day review counts drive the streak, the daily goal, XP and levels, retention and the 12-week heatmap. Each answer's change is kept so Undo can take it back exactly.
+
+### Example sentences
+`scripts/add-sentence-variants.js` backfills `moreSentences` (two extra Tanaka sentences per word, chosen for a different form of the word where possible) and replaces any main example that doesn't contain the word as the card spells it:
+```
+node --max-old-space-size=6144 scripts/add-sentence-variants.js
+```
+Reviews rotate through the sentences, one per encounter. `build-cards.js` produces the same data for fresh builds.
+
+### Optional services
+- **AI helper** (`src/lib/ai.js`): uses the learner's own Claude API key, kept only in this browser and left out of backups. It writes extra example sentences in two styles, explains words, and auto-fills new cards. The SDK is loaded only when first used.
+- **Offline and reminders** (`public/sw.js`, `src/lib/reminders.js`): registered in production builds only. The worker caches the app, data and fonts. Reminders fire from an in-page timer while the app is open, and through periodic background sync where the browser allows it (installed Chromium apps).
+- **Backups** (`src/lib/backup.js`): a JSON file with all saved data and media, plus a tab-separated Anki export.

@@ -21,6 +21,7 @@
   "homepage": "https://github.com/chaitanyavats-nec/Japanese-Flashcards#readme",
   "description": "A Japanese vocabulary flashcard app.",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "node-fetch": "^2.7.0",

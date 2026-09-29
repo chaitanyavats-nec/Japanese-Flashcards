@@ -58,14 +58,18 @@ function loadCorpus(corpusPath) {
     const hashIdx = english.indexOf('#ID=');
     if (hashIdx !== -1) english = english.slice(0, hashIdx).trim();
 
-    const bTokens = bLine.slice(3).trim().split(/\s+/);
+    const bContent = bLine.slice(3).trim();
+    const bTokens = bContent.split(/\s+/);
     const lemmas = bTokens.map(extractLemma);
     const lemmaSet = new Set(lemmas);
+    // One shared record per sentence; `b` keeps the parse so the surface form
+    // a lemma takes in this sentence (会う -> 会えない) can be read back later.
+    const sentence = { japanese, english, lemmas: lemmaSet, b: bContent };
 
     for (const lemma of lemmaSet) {
       frequency.set(lemma, (frequency.get(lemma) || 0) + 1);
       if (!byLemma.has(lemma)) byLemma.set(lemma, []);
-      byLemma.get(lemma).push({ japanese, english, lemmas: lemmaSet });
+      byLemma.get(lemma).push(sentence);
     }
   }
 
@@ -94,30 +98,88 @@ function scoreCandidate(candidate, targetAliasSet, knownSet) {
 // する's corpus lemma is 為る), so callers pass every known spelling and we
 // pool candidates across all of them.
 function pickSentence(corpus, wordOrAliases, knownSet) {
+  return pickSentences(corpus, wordOrAliases, knownSet, 1)[0] || null;
+}
+
+// The surface form the target word takes in a sentence, read from its parse:
+// 会う[01]{会えない} -> 会えない, 会う[01] -> 会う.
+function surfaceFormIn(candidate, aliasSet) {
+  for (const token of candidate.b.split(/\s+/)) {
+    if (!aliasSet.has(extractLemma(token))) continue;
+    const braced = token.match(/\{([^}]+)\}/);
+    return braced ? braced[1] : extractLemma(token);
+  }
+  return null;
+}
+
+// Character-bigram overlap between two sentences, 0 (nothing shared) to 1.
+function bigramSimilarity(a, b) {
+  const grams = (s) => {
+    const set = new Set();
+    for (let i = 0; i < s.length - 1; i++) set.add(s.slice(i, i + 2));
+    return set;
+  };
+  const ga = grams(a);
+  const gb = grams(b);
+  if (ga.size === 0 || gb.size === 0) return 0;
+  let shared = 0;
+  for (const g of ga) if (gb.has(g)) shared++;
+  return shared / Math.min(ga.size, gb.size);
+}
+
+// Up to `count` comprehensible sentences for a word, the most comprehensible
+// first. After the first pick, later picks favour a different form of the
+// word (a new conjugation or collocation) and a sentence that doesn't read
+// like one already chosen, so rotating through them shows the word in
+// genuinely different contexts. Falls back to the next most comprehensible
+// sentences when the corpus has nothing more varied.
+function pickSentences(corpus, wordOrAliases, knownSet, count, { accept } = {}) {
   const aliases = Array.isArray(wordOrAliases) ? wordOrAliases : [wordOrAliases];
   const aliasSet = new Set(aliases);
   const primaryWord = aliases[0];
 
-  let best = null;
-  let bestScore = Infinity;
+  const seen = new Set();
+  const ranked = [];
   for (const alias of aliases) {
     const candidates = corpus.byLemma.get(alias);
     if (!candidates) continue;
     for (const candidate of candidates) {
+      if (seen.has(candidate)) continue;
+      seen.add(candidate);
       if (DENYLIST_PATTERN.test(candidate.english)) continue;
-      const score = scoreCandidate(candidate, aliasSet, knownSet);
-      if (score < bestScore || (score === bestScore && best && candidate.japanese.length < best.japanese.length)) {
-        best = candidate;
-        bestScore = score;
-      }
+      if (accept && !accept(candidate, aliasSet)) continue;
+      ranked.push({ candidate, score: scoreCandidate(candidate, aliasSet, knownSet) });
     }
   }
-  if (!best) return null;
-  return { japanese: best.japanese, english: best.english, unknownWordScore: bestScore, matchedLemma: primaryWord };
+  ranked.sort((a, b) => a.score - b.score || a.candidate.japanese.length - b.candidate.japanese.length);
+
+  const chosen = [];
+  const usedForms = new Set();
+  const isDistinct = (c) => chosen.every(p => bigramSimilarity(p.candidate.japanese, c.japanese) < 0.5);
+  // Only consider reasonably comprehensible sentences for the varied picks.
+  const pool = ranked.filter(r => r.score <= (ranked[0]?.score ?? 0) + 2);
+  for (const pass of ['new-form', 'distinct']) {
+    for (const r of pool) {
+      if (chosen.length >= count) break;
+      if (chosen.includes(r)) continue;
+      const form = surfaceFormIn(r.candidate, aliasSet);
+      if (pass === 'new-form' && chosen.length > 0 && usedForms.has(form)) continue;
+      if (!isDistinct(r.candidate)) continue;
+      chosen.push(r);
+      usedForms.add(form);
+    }
+  }
+
+  return chosen.map(r => ({
+    japanese: r.candidate.japanese,
+    english: r.candidate.english,
+    unknownWordScore: r.score,
+    matchedLemma: primaryWord
+  }));
 }
 
 function getFrequency(corpus, lemma) {
   return corpus.frequency.get(lemma) || 0;
 }
 
-module.exports = { loadCorpus, pickSentence, getFrequency, DENYLIST_PATTERN, FUNCTION_WORDS };
+module.exports = { loadCorpus, pickSentence, pickSentences, getFrequency, extractLemma, DENYLIST_PATTERN, FUNCTION_WORDS };
