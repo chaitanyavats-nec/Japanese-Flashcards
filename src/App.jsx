@@ -714,27 +714,37 @@ const KanjiPractice = ({ title, kanji, notes, paused, onNoteChange, onJudge, onP
   }, [done, paused, judge, onClose]);
 
   const handlePointerDown = (e) => {
+    if (!e.isPrimary || dragRef.current.isDragging) return;
     if (e.target.closest('button') || e.target.tagName === 'A') return;
-    dragRef.current = { startX: e.clientX, startY: e.clientY, startTime: Date.now(), isDragging: true, wasDragged: false, dragX: 0, thresholdBuzzed: false };
+    dragRef.current = { startX: e.clientX, startY: e.clientY, startTime: Date.now(), isDragging: true, wasDragged: false, dragX: 0, thresholdBuzzed: false, pointerId: e.pointerId };
     if (cardRef.current) {
       cardRef.current.style.transition = 'none';
       cardRef.current.style.animation = 'none';
+      // Capture up front so a fast flick off the card still ends here.
+      try { cardRef.current.setPointerCapture(e.pointerId); } catch { /* pointer already gone */ }
     }
+  };
+
+  // The OS took the pointer mid-drag: no verdict, just put the card back.
+  const handlePointerCancel = (e) => {
+    const drag = dragRef.current;
+    const card = cardRef.current;
+    if (!drag.isDragging || e.pointerId !== drag.pointerId) return;
+    drag.isDragging = false;
+    if (!card) return;
+    card.style.transition = 'transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    card.style.transform = 'translateX(0) rotate(0deg)';
+    setSwipe({ know: 0, dont: 0 });
   };
 
   const handlePointerMove = (e) => {
     const drag = dragRef.current;
     const card = cardRef.current;
-    if (!drag.isDragging || !card) return;
+    if (!drag.isDragging || !card || e.pointerId !== drag.pointerId) return;
     const dragX = e.clientX - drag.startX;
     const dragY = e.clientY - drag.startY;
     drag.dragX = dragX;
     if (Math.abs(dragX) > 8 || Math.abs(dragY) > 8) drag.wasDragged = true;
-    if (Math.abs(dragX) > Math.abs(dragY) && Math.abs(dragX) > 10) {
-      try {
-        if (!card.hasPointerCapture(e.pointerId)) card.setPointerCapture(e.pointerId);
-      } catch { /* pointer already gone */ }
-    }
     card.style.transform = `translateX(${dragX}px) rotate(${(dragX / card.offsetWidth) * 15}deg)`;
 
     const pastCommit = Math.abs(dragX) > KANJI_SWIPE_COMMIT_DISTANCE;
@@ -754,7 +764,7 @@ const KanjiPractice = ({ title, kanji, notes, paused, onNoteChange, onJudge, onP
   const handlePointerUp = (e) => {
     const drag = dragRef.current;
     const card = cardRef.current;
-    if (!drag.isDragging || !card) return;
+    if (!drag.isDragging || !card || e.pointerId !== drag.pointerId) return;
     drag.isDragging = false;
     try { card.releasePointerCapture(e.pointerId); } catch { /* pointer already gone */ }
 
@@ -821,6 +831,8 @@ const KanjiPractice = ({ title, kanji, notes, paused, onNoteChange, onJudge, onP
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+          onLostPointerCapture={handlePointerCancel}
           onClick={(e) => {
             if (e.target.closest('button') || e.target.tagName === 'A') return;
             if (dragRef.current.wasDragged) return;
@@ -1532,6 +1544,7 @@ export default function App() {
   const SWIPE_COMMIT_DISTANCE = 90;
 
   const handlePointerDown = (e) => {
+    if (!e.isPrimary || dragRef.current.isDragging) return;
     if (e.target.closest('button') || e.target.tagName === 'A') return;
     dragRef.current = {
       startX: e.clientX,
@@ -1540,30 +1553,37 @@ export default function App() {
       isDragging: true,
       wasDragged: false,
       dragX: 0,
-      thresholdBuzzed: false
+      thresholdBuzzed: false,
+      pointerId: e.pointerId
     };
     if (cardRef.current) {
       cardRef.current.style.transition = 'none';
       cardRef.current.style.animation = 'none';
+      // Capture up front so a fast flick that leaves the card still delivers
+      // its pointerup here instead of stranding the card mid-swipe.
+      try { cardRef.current.setPointerCapture(e.pointerId); } catch (err) { }
     }
   };
 
+  // The OS took the pointer (edge gesture, second finger, lost capture):
+  // no verdict, just put the card back.
+  const handlePointerCancel = (e) => {
+    if (!dragRef.current.isDragging || e.pointerId !== dragRef.current.pointerId) return;
+    dragRef.current.isDragging = false;
+    if (!cardRef.current) return;
+    cardRef.current.style.transition = 'transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    cardRef.current.style.transform = 'translateX(0) rotate(0deg)';
+    setSwipeOverlay({ know: 0, dont: 0 });
+  };
+
   const handlePointerMove = (e) => {
-    if (!dragRef.current.isDragging || !cardRef.current) return;
+    if (!dragRef.current.isDragging || !cardRef.current || e.pointerId !== dragRef.current.pointerId) return;
     const dragX = e.clientX - dragRef.current.startX;
     const dragY = e.clientY - dragRef.current.startY;
     dragRef.current.dragX = dragX;
 
     if (Math.abs(dragX) > 8 || Math.abs(dragY) > 8) {
       dragRef.current.wasDragged = true;
-    }
-
-    if (Math.abs(dragX) > Math.abs(dragY) && Math.abs(dragX) > 10) {
-      try {
-        if (!cardRef.current.hasPointerCapture(e.pointerId)) {
-          cardRef.current.setPointerCapture(e.pointerId);
-        }
-      } catch (err) { }
     }
 
     const rot = (dragX / cardRef.current.offsetWidth) * 15;
@@ -1588,7 +1608,7 @@ export default function App() {
   };
 
   const handlePointerUp = (e) => {
-    if (!dragRef.current.isDragging || !cardRef.current) return;
+    if (!dragRef.current.isDragging || !cardRef.current || e.pointerId !== dragRef.current.pointerId) return;
     dragRef.current.isDragging = false;
     try {
       cardRef.current.releasePointerCapture(e.pointerId);
@@ -3057,6 +3077,8 @@ export default function App() {
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+              onLostPointerCapture={handlePointerCancel}
               onClick={(e) => {
                 if (e.target.closest('button, a, input, textarea, video, audio')) return;
                 if (dragRef.current.wasDragged) return;
